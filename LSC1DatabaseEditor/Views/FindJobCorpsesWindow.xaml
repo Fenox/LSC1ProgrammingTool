@@ -1,0 +1,30 @@
+﻿<Window x:Class="LSC1DatabaseEditor.Views.FindJobCorpsesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LSC1DatabaseEditor.Views"
+        xmlns:conv="clr-namespace:LSC1DatabaseEditor.Views.Converter"
+        mc:Ignorable="d"
+         Title="Lösche Job Leichen" Height="300" Width="300">
+    <Window.Resources>
+        <conv:StringNullToBooleanConverter x:Key="converter"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="listViewCorpses" SelectedValue="{Binding SelectedJobNr}" Grid.Row="0" Margin="10,10,10,0" ItemsSource="{Binding JobCorpses}">
+
+        </ListView>
+
+        <GroupBox Header="Namen geben" IsEnabled="{Binding Converter={StaticResource converter}, Path=SelectedValue, ElementName=listViewCorpses}" Grid.Row="1" Margin="10" VerticalAlignment="Bottom" Padding="10,5,10,0">
+            <Grid>
+                <TextBox Text="{Binding NewName}" Width="100" VerticalAlignment="Center" Margin="0,-1,0,2.2" HorizontalAlignment="Left" />
+                <Button Command="{Binding TakeNameCommand}" Content="Name übernehmen" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,-1,-0.2,1.2" Width="120" />
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>
