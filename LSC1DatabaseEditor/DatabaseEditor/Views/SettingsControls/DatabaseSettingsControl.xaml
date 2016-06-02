@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="LSC1DatabaseEditor.DatabaseEditor.Views.SettingsControls.DatabaseSettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LSC1DatabaseEditor.DatabaseEditor.Views.SettingsControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="200"
+             Padding="10">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        
+        
+        <TextBlock  Grid.Row="0" Grid.Column="0" Text="Database" />
+        <TextBox Margin="0,5,0,5" Width="150" Grid.Row="0" Grid.Column="1" Text="{Binding Database}"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Server" />
+        <TextBox Margin="0,0,0,5" Width="150" Grid.Row="1" Grid.Column="1" Text="{Binding Server}"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0"  Text="UID" />
+        <TextBox Margin="0,0,0,5" Width="150" Grid.Row="2" Grid.Column="1" Text="{Binding UID}"/>
+
+        <TextBlock Margin="0,0,0,5" Grid.Row="3" Grid.Column="0"  Text="Passwort" />
+        <TextBox Margin="0,0,0,5" Width="150" Grid.Row="3" Grid.Column="1" Text="{Binding Password}"/>
+    </Grid>
+</UserControl>

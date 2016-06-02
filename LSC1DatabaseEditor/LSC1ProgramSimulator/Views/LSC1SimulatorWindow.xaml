@@ -1,0 +1,226 @@
+﻿<Window x:Class="LSC1DatabaseEditor.Views.LSC1SimulatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LSC1DatabaseEditor.Views"
+        xmlns:helix="http://helix-toolkit.org/wpf"
+        xmlns:dataStruct="clr-namespace:LSC1DatabaseEditor.ViewModel.DataStructures"
+        mc:Ignorable="d"
+        xmlns:conv="clr-namespace:LSC1DatabaseEditor.Views.Converter"
+        Title="LSC1Simulator" Height="500" Width="1000">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LSC1DatabaseEditor;component/LSC1CommonTool/LSC1TableResources.xaml"/>
+                
+                <ResourceDictionary>
+                    <conv:ColorToBrushConverter x:Key="colorBrushConverter" />
+
+                    <!--Job Data Grid-->
+                    <DataGrid x:Key="jobDataDataGrid" ItemsSource="{Binding Items1.DataTable}"
+                        SelectionUnit="Cell"
+                        AutoGenerateColumns="False"
+                        CellEditEnding="dataGrid1_CellEditEnding" CanUserAddRows="False"
+                        x:Shared="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="JobNr" Binding="{Binding JobNr}" CellStyle="{StaticResource DataGridNumericJobNrCellStyle}" />
+                            <DataGridTextColumn Header="Step" Binding="{Binding Step}" CellStyle="{StaticResource DataGridNumericStepCellStyle}" />
+                            <DataGridTextColumn Header="Who" Binding="{Binding Who}" CellStyle="{StaticResource DataGridWhoCellStyle}"/>
+                            <DataGridTextColumn Header="What" Binding="{Binding What}" CellStyle="{StaticResource DataGridWhatNameCellStyle}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" CellStyle="{StaticResource DataGridNameCellStyle}" />
+                            <DataGridTextColumn Header="MoveParam" Binding="{Binding MoveParam}"  CellStyle="{StaticResource DataGridMoveParamNameCellStyle}"/>
+                            <DataGridTextColumn Header="Frame" Binding="{Binding Frame}"  CellStyle="{StaticResource DataGridFrameNameCellStyle}"/>
+                            <DataGridTextColumn Header="Interpol" Binding="{Binding Interpol}"  CellStyle="{StaticResource DataGridInterpolNameCellStyle}"/>
+                            <DataGridTextColumn Header="WEM" Binding="{Binding WEM}"  CellStyle="{StaticResource DataGridWEMNameCellStyle}"/>
+                            <DataGridTextColumn Header="LaserProgNr" Binding="{Binding LaserProgNr}"  CellStyle="{StaticResource DataGridLaserProgNrNameCellStyle}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!--Pos Data Grid-->
+                    <DataGrid x:Key="posDataGrid" ItemsSource="{Binding Items1.DataTable}"
+                        SelectionUnit="Cell"
+                        AutoGenerateColumns="False"
+                        CellEditEnding="dataGrid1_CellEditEnding" CanUserAddRows="False"
+                        x:Shared="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Kind" Binding="{Binding Kind}" CellStyle="{StaticResource DataGridKindCellStyle}" />
+                            <DataGridTextColumn Header="x_a1" Binding="{Binding x_a1}" CellStyle="{StaticResource DataGridX_a1CellStyle}"/>
+                            <DataGridTextColumn Header="y_a2" Binding="{Binding y_a2}" CellStyle="{StaticResource DataGridY_a2CellStyle}"/>
+                            <DataGridTextColumn Header="z_a3" Binding="{Binding z_a3}" CellStyle="{StaticResource DataGridZ_a3CellStyle}"/>
+                            <DataGridTextColumn Header="rx_a4" Binding="{Binding rx_a4}" CellStyle="{StaticResource DataGridRX_a4CellStyle}"/>
+                            <DataGridTextColumn Header="ry_a5" Binding="{Binding ry_a5}" CellStyle="{StaticResource DataGridRY_a5CellStyle}"/>
+                            <DataGridTextColumn Header="rz_a6" Binding="{Binding rz_a6}" CellStyle="{StaticResource DataGridRZ_a6CellStyle}"/>
+                            <DataGridTextColumn Header="Locked" Binding="{Binding Locked}" CellStyle="{StaticResource DataGridLockedCellStyle}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!--LaserData Grid-->
+                    <DataGrid x:Key="laserDataGrid" ItemsSource="{Binding Items2.DataTable}"
+                        SelectionUnit="Cell"
+                        AutoGenerateColumns="False"
+                        CellEditEnding="dataGrid2_CellEditEnding" CanUserAddRows="False"
+                        x:Shared="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Step" Binding="{Binding Step}" CellStyle="{StaticResource DataGridNumericStepCellStyle}"/>
+                            <DataGridTextColumn Header="BeamOn" Binding="{Binding BeamOn}" CellStyle="{StaticResource DataGridBeamOnNameCellStyle}"/>
+                            <DataGridTextColumn Header="Power" Binding="{Binding Power}" CellStyle="{StaticResource DataGridPowerNameCellStyle}"/>
+                            <DataGridTextColumn Header="C_Grip" Binding="{Binding C_Grip}" CellStyle="{StaticResource DataGridC_GripNameCellStyle}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Proc PLC Data Grid -->
+                    <DataGrid x:Key="procplcDataGrid" ItemsSource="{Binding Items1.DataTable}"
+                        SelectionUnit="Cell"
+                        AutoGenerateColumns="False"
+                        CellEditEnding="dataGrid1_CellEditEnding" CanUserAddRows="False"
+                        x:Shared="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Step" Binding="{Binding Step}" CellStyle="{StaticResource DataGridNumericStepCellStyle}"/>
+                            <DataGridTextColumn Header="Actor" Binding="{Binding Actor}" CellStyle="{StaticResource DataGridActorCellStyle}"/>
+                            <DataGridTextColumn Header="Value" Binding="{Binding Value}" CellStyle="{StaticResource DataGridValueCellStyle}" />
+                            <DataGridTextColumn Header="Parameter" Binding="{Binding Parameter}" CellStyle="{StaticResource DataGridParameterCellStyle}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Proc Pulse Data Grid -->
+                    <DataGrid x:Key="procpulseDataGrid" ItemsSource="{Binding Items2.DataTable}"
+                        SelectionUnit="Cell"
+                        AutoGenerateColumns="False"
+                        CellEditEnding="dataGrid2_CellEditEnding" CanUserAddRows="False"
+                        x:Shared="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Step" Binding="{Binding Step}" CellStyle="{StaticResource DataGridNumericStepCellStyle}"/>
+                            <DataGridTextColumn Header="PulseTime" Binding="{Binding PulseTime}" CellStyle="{StaticResource DataGridActorCellStyle}"/>
+                            <DataGridTextColumn Header="Power" Binding="{Binding Power}" CellStyle="{StaticResource DataGridValueCellStyle}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!--Proc Robot DataGrid Style -->
+                    <DataGrid x:Key="procRobotDataGrid" ItemsSource="{Binding Items1.DataTable}"
+                        SelectionUnit="Cell"
+                        AutoGenerateColumns="False"
+                        CellEditEnding="dataGrid1_CellEditEnding" CanUserAddRows="False"
+                        x:Shared="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Step" Binding="{Binding Step}" CellStyle="{StaticResource DataGridNumericStepCellStyle}"/>
+                            <DataGridTextColumn Header="Kind" Binding="{Binding Kind}" CellStyle="{StaticResource DataGridKindCellStyle}"/>
+                            <DataGridTextColumn Header="Interpol" Binding="{Binding Interpol}" />
+                            <DataGridTextColumn Header="x_a1" Binding="{Binding x_a1}" CellStyle="{StaticResource DataGridX_a1CellStyle}"/>
+                            <DataGridTextColumn Header="y_a2" Binding="{Binding y_a2}" CellStyle="{StaticResource DataGridY_a2CellStyle}"/>
+                            <DataGridTextColumn Header="z_a3" Binding="{Binding z_a3}" CellStyle="{StaticResource DataGridZ_a3CellStyle}"/>
+                            <DataGridTextColumn Header="rx_a4" Binding="{Binding rx_a4}" CellStyle="{StaticResource DataGridRX_a4CellStyle}"/>
+                            <DataGridTextColumn Header="ry_a5" Binding="{Binding ry_a5}" CellStyle="{StaticResource DataGridRY_a5CellStyle}"/>
+                            <DataGridTextColumn Header="rz_a6" Binding="{Binding rz_a6}" CellStyle="{StaticResource DataGridRZ_a6CellStyle}"/>
+                            <DataGridTextColumn Header="accel" Binding="{Binding accel}" CellStyle="{StaticResource DataGridAccelCellStyle}"/>
+                            <DataGridTextColumn Header="vel" Binding="{Binding vel}" CellStyle="{StaticResource DataGridVelCellStyle}"/>
+                            <DataGridTextColumn Header="deccel" Binding="{Binding deccel}" CellStyle="{StaticResource DataGridDeccelCellStyle}"/>
+                            <DataGridTextColumn Header="tvel" Binding="{Binding tvel}" CellStyle="{StaticResource DataGridTvelCellStyle}"/>
+                            <DataGridTextColumn Header="leave" Binding="{Binding leave}" CellStyle="{StaticResource DataGridLeaveCellStyle}"/>
+                            <DataGridTextColumn Header="reach" Binding="{Binding reach}" CellStyle="{StaticResource DataGridReachCellStyle}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <!-- End Proc Robot -->
+
+                    <!-- Proc Turn DataGrid -->
+                    <DataGrid x:Key="procTurnDataGrid" ItemsSource="{Binding Items1.DataTable}"
+                        AutoGenerateColumns="False" SelectionUnit="Cell"
+                        CellEditEnding="dataGrid1_CellEditEnding" CanUserAddRows="False"
+                        x:Shared="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Step" Binding="{Binding Step}" CellStyle="{StaticResource DataGridNumericStepCellStyle}"/>
+                            <DataGridTextColumn Header="Angle" Binding="{Binding Angle}" CellStyle="{StaticResource DataGridAngleCellStyle}"/>
+                            <DataGridTextColumn Header="Speed" Binding="{Binding Speed}" CellStyle="{StaticResource DataGridSpeedCellStyle}" />
+                            <DataGridTextColumn Header="Velocity" Binding="{Binding Velocity}" CellStyle="{StaticResource DataGridVelocityCellStyle}"/>
+                            <DataGridTextColumn Header="Power" Binding="{Binding Power}" CellStyle="{StaticResource DataGridPowerCellStyle}"/>
+                            <DataGridTextColumn Header="BeamOn" Binding="{Binding BeamOn}" CellStyle="{StaticResource DataGridBeamOnNameCellStyle}"/>
+                            <DataGridTextColumn Header="WEM" Binding="{Binding WEM}" CellStyle="{StaticResource DataGridWEMNameCellStyle}"/>
+                            <DataGridTextColumn Header="PulseTime" Binding="{Binding PulseTime}" CellStyle="{StaticResource DataGridPulseTimeCellStyle}"/>
+                            <DataGridTextColumn Header="AnzPulse" Binding="{Binding AnzPulse}" CellStyle="{StaticResource DataGridAnzPulseCellStyle}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ResourceDictionary>   
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu DataContext="{Binding MenuVM}" Grid.Row="0" VerticalAlignment="Top">
+            <MenuItem Header="_Datei">
+                <MenuItem Header="_Job Laden"
+                          Command="{Binding LoadJobCommand}"/>
+                <MenuItem Header="_Modell Laden"
+                          Command="{Binding LoadModelCommand}"/>
+                <Separator />
+                <MenuItem Header="_Schließen" 
+                          Command="{Binding CloseWindowCommand}"/>                
+            </MenuItem>
+
+        </Menu>
+        
+        <Grid Grid.Row="1">            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+       
+            <TreeView Grid.Row="3" x:Name="treeView"  Width="250"
+                      ItemsSource="{Binding JobTreeView}"
+                      DataContext="{Binding TreeViewVM}"
+                      Margin="10,10,10,0" SelectedItemChanged="treeView_SelectedItemChanged">
+
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type dataStruct:LSC1TreeViewJobStepNode}"  ItemsSource="{Binding InstructionSubItems}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Text}" Background="{Binding BackgroundColor, Converter={StaticResource colorBrushConverter}}" />
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <DataTemplate DataType="{x:Type dataStruct:LSC1TreeViewPointLeaveItem}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Text}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TreeView.Resources>
+            </TreeView>
+
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" DataContext="{Binding DataGridVM}" Grid.Column="1" >
+                    <ContentControl Height="auto" x:Name="gridContainter1" />
+                    <ContentControl Height="auto" x:Name="gridContainter2" />
+                </StackPanel>
+
+                <helix:HelixViewport3D
+                x:Name="viewPort3D" Grid.Row="1" 
+                ShowCoordinateSystem="True"
+                Background="Gray">
+
+                    <helix:HelixViewport3D.Children>
+                        <helix:DefaultLights />
+                        <helix:FileModelVisual3D Source="{Binding ModelSourcePath}"/>
+                        <ContainerUIElement3D x:Name="machineTrackVisuals"/>
+                        <helix:TruncatedConeVisual3D x:Name="machineHead" Height="-20" TopRadius="1" BaseRadius="0" />
+                    </helix:HelixViewport3D.Children>
+                </helix:HelixViewport3D>
+            </Grid>
+            
+        </Grid>
+    </Grid>
+</Window>

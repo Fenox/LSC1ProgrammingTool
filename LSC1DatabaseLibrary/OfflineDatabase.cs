@@ -1,10 +1,11 @@
 ﻿using LSC1DatabaseLibrary;
+using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace LSC1DatabaseEditor.Model
+namespace LSC1Library
 {
     public static class OfflineDatabase
     {
@@ -28,92 +29,92 @@ namespace LSC1DatabaseEditor.Model
         public static List<string> AllPossibleTypValues { get; set; } = new List<string> { "Job", "WT", "0" };
 
 
-        public static void UpdateAllPosNames()
+        public static void UpdateAllPosNames(LSC1DatabaseConnectionSettings con)
         {
-            AllPosNames = GetDistinctColumnFromTable("tpos", "Name");
+            AllPosNames = GetDistinctColumnFromTable(con, "tpos", "Name");
         }
 
-        public static void UpdateAllProcNames()
+        public static void UpdateAllProcNames(LSC1DatabaseConnectionSettings con)
         {
-            AllProcNames = GetDistinctColumnFromTable("tprocRobot", "Name");
+            AllProcNames = GetDistinctColumnFromTable(con, "tprocRobot", "Name");
         }
 
-        public static void UpdateAllProcPLCNames()
+        public static void UpdateAllProcPLCNames(LSC1DatabaseConnectionSettings con)
         {
-            AllProcPLCNames = GetDistinctColumnFromTable("tprocplc", "Name");
+            AllProcPLCNames = GetDistinctColumnFromTable(con, "tprocplc", "Name");
         }
 
-        public static void UpdateAllProcPulseNames()
+        public static void UpdateAllProcPulseNames(LSC1DatabaseConnectionSettings con)
         {
-            AllProcPulseNames = GetDistinctColumnFromTable("tprocpulse", "Name");
+            AllProcPulseNames = GetDistinctColumnFromTable(con, "tprocpulse", "Name");
         }
 
-        public static void UpdateAllMoveParamNames()
+        public static void UpdateAllMoveParamNames(LSC1DatabaseConnectionSettings con)
         {
-            AllMoveParamNames = GetDistinctColumnFromTable("tmoveparam", "Name");
+            AllMoveParamNames = GetDistinctColumnFromTable(con, "tmoveparam", "Name");
         }
 
-        public static void UpdateAllFrameNames()
+        public static void UpdateAllFrameNames(LSC1DatabaseConnectionSettings con)
         {
-            AllFrameNames = GetDistinctColumnFromTable("tframe", "Name");
+            AllFrameNames = GetDistinctColumnFromTable(con, "tframe", "Name");
         }
 
-        public static void UpdateAllToolNames()
+        public static void UpdateAllToolNames(LSC1DatabaseConnectionSettings con)
         {
-            AllToolNames = GetDistinctColumnFromTable("ttool", "Name");
+            AllToolNames = GetDistinctColumnFromTable(con, "ttool", "Name");
         }
 
-        public static void UpdateAllJobNames()
+        public static void UpdateAllJobNames(LSC1DatabaseConnectionSettings con)
         {
-            AllJobNames = GetDistinctColumnFromTable("tjobname", "Name");
+            AllJobNames = GetDistinctColumnFromTable(con, "tjobname", "Name");
         }
 
-        public static List<string> GetDistinctColumnFromTable(string tableName, string columnName)
+        public static List<string> GetDistinctColumnFromTable(LSC1DatabaseConnectionSettings con, string tableName, string columnName)
         {
-            string possibleNamesQuery = "SELECT DISTINCT " + columnName + " FROM `"+ tableName +"`";
+            string possibleNamesQuery = "SELECT DISTINCT " + columnName + " FROM `" + tableName + "`";
             List<string> possibleNames = new List<string>();
 
-            LSC1DatabaseConnector db = new LSC1DatabaseConnector();
+            LSC1DatabaseConnector db = new LSC1DatabaseConnector(con);
             return db.ReadSingleColumnQuery(possibleNamesQuery);
         }
 
-        public static void UpdateAll()
+        public static void UpdateAll(LSC1DatabaseConnectionSettings con)
         {
             foreach (TablesEnum item in Enum.GetValues(typeof(TablesEnum)))
-                UpdateTable(item);
+                UpdateTable(con, item);
         }
 
-        public static void UpdateTable(TablesEnum table)
+        public static void UpdateTable(LSC1DatabaseConnectionSettings con, TablesEnum table)
         {
             //Updaten der OfflineDatenbank
             switch (table)
             {
                 case TablesEnum.tframe:
-                    OfflineDatabase.UpdateAllFrameNames();
+                    OfflineDatabase.UpdateAllFrameNames(con);
                     break;
                 case TablesEnum.tmoveparam:
-                    OfflineDatabase.UpdateAllMoveParamNames();
+                    OfflineDatabase.UpdateAllMoveParamNames(con);
                     break;
                 case TablesEnum.tpos:
-                    OfflineDatabase.UpdateAllPosNames();
+                    OfflineDatabase.UpdateAllPosNames(con);
                     break;
                 case TablesEnum.tproclaserdata:
-                    OfflineDatabase.UpdateAllProcNames();
+                    OfflineDatabase.UpdateAllProcNames(con);
                     break;
                 case TablesEnum.tprocplc:
-                    OfflineDatabase.UpdateAllProcPLCNames();
+                    OfflineDatabase.UpdateAllProcPLCNames(con);
                     break;
                 case TablesEnum.tprocpulse:
-                    OfflineDatabase.UpdateAllProcPulseNames();
+                    OfflineDatabase.UpdateAllProcPulseNames(con);
                     break;
                 case TablesEnum.tprocrobot:
-                    OfflineDatabase.UpdateAllProcNames();
+                    OfflineDatabase.UpdateAllProcNames(con);
                     break;
                 case TablesEnum.ttool:
-                    OfflineDatabase.UpdateAllToolNames();
+                    OfflineDatabase.UpdateAllToolNames(con);
                     break;
                 case TablesEnum.tjobname:
-                    OfflineDatabase.UpdateAllJobNames();
+                    OfflineDatabase.UpdateAllJobNames(con);
                     break;
                 default:
                     break;

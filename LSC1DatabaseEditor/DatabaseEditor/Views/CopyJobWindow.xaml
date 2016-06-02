@@ -1,0 +1,72 @@
+﻿<Window x:Class="LSC1DatabaseEditor.Views.CopyJobWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dataStruc="clr-namespace:LSC1DatabaseEditor.ViewModel.DataStructures"
+        xmlns:local="clr-namespace:LSC1DatabaseEditor.Views"
+        mc:Ignorable="d"
+        x:Name="copyWindow"
+        Title="Copy Job" Height="auto" Width="300">
+    <Grid Margin="10,10,10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Content="Zu kopierender Job:"/>
+            <ComboBox Grid.Column="1" ItemsSource="{Binding Jobs}" SelectedItem="{Binding SelectedJob}" DisplayMemberPath="Name" />
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Content="Neuer Job Name:"/>
+            <TextBox Grid.Column="1" Text="{Binding NewJobName}" VerticalAlignment="Center" TextChanged="TextBox_TextChanged"/>
+        </Grid>
+
+        <TextBlock Grid.Row="2" x:Name="textBlock" 
+                       Margin="10,10,10,0" TextWrapping="Wrap" 
+                       Text="Auswahl der Programme (proc) und Positionen (pos) die übernommen werden sollen." 
+                       VerticalAlignment="Top" Height="33"/>
+
+        <TreeView Grid.Row="3" x:Name="treeView" 
+                  ItemsSource="{Binding TreeItems}" Margin="10,10,10,0">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="True"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
+
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type dataStruc:TreeViewItem}" ItemsSource="{Binding SubItems}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Text}"/>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+                <DataTemplate DataType="{x:Type dataStruc:CheckableItemWithSub}">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding Checked}" Margin="0,0,10,0"/>
+                        <TextBlock Text="{Binding Text}" />
+                    </StackPanel>
+                </DataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+
+        <Button Grid.Row="4" x:Name="button" Content="Copy" 
+                Command="{Binding CopyJobCommand}"
+                CommandParameter="{Binding ElementName=copyWindow}" Margin="10" VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>

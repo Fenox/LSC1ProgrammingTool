@@ -47,12 +47,24 @@
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net40\GalaSoft.MvvmLight.Extras.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="HelixToolkit, Version=2015.1.715.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\packages\HelixToolkit.2015.1.715\lib\portable-net4+sl4+wp71+win8\HelixToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HelixToolkit.Wpf, Version=2015.1.715.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\packages\HelixToolkit.Wpf.2015.1.715\lib\net40\HelixToolkit.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCoreExtensions">
+      <HintPath>..\..\ExtensionsAndCodeSnippets\HelixExtensions\bin\Debug\PresentationCoreExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net40\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -74,44 +86,117 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Messages\JobsChangedMessage.cs" />
-    <Compile Include="Messages\TableSelectionChangedMessage.cs" />
-    <Compile Include="Messages\TreeViewBuildMessage.cs" />
-    <Compile Include="ViewModel\CopyJobViewModel.cs" />
-    <Compile Include="ViewModel\DataStructures\CheckableTreeViewStructure.cs" />
-    <Compile Include="ViewModel\DeleteJobViewModel.cs" />
-    <Compile Include="ViewModel\FindJobCorpsesViewModel.cs" />
-    <Compile Include="ViewModel\FindPosCorpsesViewModel.cs" />
-    <Compile Include="ViewModel\FindProcCorpsesViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="ViewModel\TextMessageBoxViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="Views\Converter\StringNullToBooleanConverter.cs" />
-    <Compile Include="Views\MyTextMessageBox.xaml.cs">
+    <Compile Include="Common\Messages\Model3DLoadedMessage.cs" />
+    <Compile Include="Common\Messages\UpdateViewport3DMessage.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\LSC1EditorMenuVM.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\SettingsVM.cs" />
+    <Compile Include="DatabaseEditor\Views\LSC1SettingsWindow.xaml.cs">
+      <DependentUpon>LSC1SettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseEditor\Views\SettingsControls\DatabaseSettingsControl.xaml.cs">
+      <DependentUpon>DatabaseSettingsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseEditor\Views\SettingsControls\VisualisationSettingsControl.xaml.cs">
+      <DependentUpon>VisualisationSettingsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LSC1CommonTool\LoadJob\LSC1LoadJobVM.cs" />
+    <Compile Include="LSC1CommonTool\LoadJob\LSC1LoadJobWindow.xaml.cs">
+      <DependentUpon>LSC1LoadJobWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LSC1CommonTool\Messages\DataGridCellValueChangedMessage.cs" />
+    <Compile Include="LSC1ProgramSimulator\Messages\MoveMachineHeadMessage.cs" />
+    <Compile Include="LSC1ProgramSimulator\Messages\VisualObjectChangedMessage.cs" />
+    <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1StepDataGridVM.cs" />
+    <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1ViewportWM.cs" />
+    <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1SimulatorMenuVM.cs" />
+    <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1ProgramTreeViewVM.cs" />
+    <Compile Include="Common\Messages\CameraZoomMessage.cs" />
+    <Compile Include="Common\Messages\SelectedTreeViewItemChanged.cs" />
+    <Compile Include="Common\Messages\DoubleClickMessage.cs" />
+    <Compile Include="Common\Messages\JobsChangedMessage.cs" />
+    <Compile Include="Common\Messages\SelectionChangedMessage.cs" />
+    <Compile Include="LSC1CommonTool\Messages\LSC1JobChangedMessage.cs" />
+    <Compile Include="Common\Messages\TableSelectionChangedMessage.cs" />
+    <Compile Include="Common\Messages\TextChangedMessage.cs" />
+    <Compile Include="Common\Messages\TreeViewBuildMessage.cs" />
+    <Compile Include="Common\Messages\UpdateDataGridMessage.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\CopyJobViewModel.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DataStructures\CheckableTreeViewStructure.cs" />
+    <Compile Include="LSC1ProgramSimulator\ViewModels\DataStructures\LSC1TreeViewItem.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DeleteJobViewModel.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\FindJobCorpsesViewModel.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\FindPosCorpsesViewModel.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\FindProcCorpsesViewModel.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1SimulatorViewModel.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\TableViewModel.cs" />
+    <Compile Include="Common\Viewmodels\TextMessageBoxViewModel.cs" />
+    <Compile Include="DatabaseEditor\Converter\CellValueConverter\BeamOnToBackgroundConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\CellValueConverter\FrameToBackgroundConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\CellValueConverter\InterPolToBackgroundConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\CellValueConverter\IsNumericToBackgroundConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\CellValueConverter\KindToBackgroundConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\CellValueConverter\LaserProgNrToBackgroundConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\CellValueConverter\LockedToBackgroundConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\CellValueConverter\MoveParamToBackgroundConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\CellValueConverter\NameToBackgroundConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\CellValueConverter\ToolToBackgroundConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\CellValueConverter\WEMToBackgroundConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\CellValueConverter\WhatToBackgroundConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\CellValueConverter\WhoToBackgroundConverter.cs" />
+    <Compile Include="Common\Converter\ColorToBrushConverter.cs" />
+    <Compile Include="Common\Converter\StringNullToBooleanConverter.cs" />
+    <Compile Include="LSC1ProgramSimulator\Views\LSC1SimulatorWindow.xaml.cs">
+      <DependentUpon>LSC1SimulatorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Views\MyTextMessageBox.xaml.cs">
       <DependentUpon>MyTextMessageBox.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\CopyJobWindow.xaml">
+    <Page Include="DatabaseEditor\Views\CopyJobWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DeleteJobWindow.xaml">
+    <Page Include="DatabaseEditor\Views\DeleteJobWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FindJobCorpsesWindow.xaml">
+    <Page Include="DatabaseEditor\Views\FindJobCorpsesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FindPosCorpsesWindow.xaml">
+    <Page Include="DatabaseEditor\Views\FindPosCorpsesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FindProcCorpsesWindow.xaml">
+    <Page Include="DatabaseEditor\Views\FindProcCorpsesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MainWindow.xaml">
+    <Page Include="DatabaseEditor\Views\LSC1SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DatabaseEditor\Views\SettingsControls\DatabaseSettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DatabaseEditor\Views\SettingsControls\VisualisationSettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LSC1CommonTool\LoadJob\LSC1LoadJobWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LSC1CommonTool\LSC1TableResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LSC1ProgramSimulator\Views\LSC1SimulatorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DatabaseEditor\Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -119,36 +204,35 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\OfflineDatabase.cs" />
-    <Compile Include="Views\Converter\BoolToDataGridSelectionUnitConverter.cs" />
-    <Compile Include="Views\Converter\CellValueToBackgroundConverter.cs" />
-    <Compile Include="Views\Converter\SelectedTableToNameFilterEnabledConverter.cs" />
-    <Compile Include="Views\Converter\TableToJobFilterCheckedConverter.cs" />
-    <Compile Include="Views\CopyJobWindow.xaml.cs">
+    <Compile Include="DatabaseEditor\Converter\BoolToDataGridSelectionUnitConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\SelectedTableToNameFilterEnabledConverter.cs" />
+    <Compile Include="DatabaseEditor\Converter\TableToJobFilterCheckedConverter.cs" />
+    <Compile Include="DatabaseEditor\Views\CopyJobWindow.xaml.cs">
       <DependentUpon>CopyJobWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DeleteJobWindow.xaml.cs">
+    <Compile Include="DatabaseEditor\Views\DeleteJobWindow.xaml.cs">
       <DependentUpon>DeleteJobWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FindJobCorpsesWindow.xaml.cs">
+    <Compile Include="DatabaseEditor\Views\FindJobCorpsesWindow.xaml.cs">
       <DependentUpon>FindJobCorpsesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FindPosCorpsesWindow.xaml.cs">
+    <Compile Include="DatabaseEditor\Views\FindPosCorpsesWindow.xaml.cs">
       <DependentUpon>FindPosCorpsesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FindProcCorpsesWindow.xaml.cs">
+    <Compile Include="DatabaseEditor\Views\FindProcCorpsesWindow.xaml.cs">
       <DependentUpon>FindProcCorpsesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainWindow.xaml.cs">
+    <Compile Include="DatabaseEditor\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\MyTextMessageBox.xaml">
+    <Page Include="Common\Views\MyTextMessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LSC1UserSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -174,13 +258,11 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Views\Messages\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LSC1DatabaseLibrary\LSC1DatabaseLibrary.csproj">
+    <ProjectReference Include="..\LSC1DatabaseLibrary\LSC1Library.csproj">
       <Project>{eef02e9e-900d-49ad-995f-52a1b7851577}</Project>
-      <Name>LSC1DatabaseLibrary</Name>
+      <Name>LSC1Library</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

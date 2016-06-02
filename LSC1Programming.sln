@@ -8,8 +8,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISOToLSC1CompilerEditor", "ISOToLSC1CompilerEditor\ISOToLSC1CompilerEditor.csproj", "{E0D5EB64-5073-4876-8344-DA4B98C636E5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSC1DatabaseEditor", "LSC1DatabaseEditor\LSC1DatabaseEditor.csproj", "{7815558B-0D46-4F70-84AD-EE66455C465E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EEF02E9E-900D-49AD-995F-52A1B7851577} = {EEF02E9E-900D-49AD-995F-52A1B7851577}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSC1DatabaseLibrary", "LSC1DatabaseLibrary\LSC1DatabaseLibrary.csproj", "{EEF02E9E-900D-49AD-995F-52A1B7851577}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSC1Library", "LSC1DatabaseLibrary\LSC1Library.csproj", "{EEF02E9E-900D-49AD-995F-52A1B7851577}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSC1ISOStepKonfigurator", "LSC1ISOStepKonfigurator\LSC1ISOStepKonfigurator.csproj", "{D23602D5-8B36-4D02-9765-41A4124B3366}"
 EndProject

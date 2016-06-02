@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
+﻿using LSC1Library;
 using System.Windows;
 
 namespace LSC1DatabaseEditor
@@ -12,5 +8,10 @@ namespace LSC1DatabaseEditor
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings);
+        }
+        
     }
 }

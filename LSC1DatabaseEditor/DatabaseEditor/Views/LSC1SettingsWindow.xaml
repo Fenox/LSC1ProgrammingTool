@@ -1,0 +1,25 @@
+﻿<Window x:Class="LSC1DatabaseEditor.DatabaseEditor.Views.LSC1SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LSC1DatabaseEditor.DatabaseEditor.Views"
+        mc:Ignorable="d"
+        Title="LSC1Settings" Height="300" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox Grid.Column="0" ItemsSource="{Binding SettingsItems}" SelectedItem="{Binding SelectedSettingsControl}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <ContentControl Padding="10" Grid.Column="1"  Content="{Binding SettingsControl}" />
+    </Grid>
+</Window>
