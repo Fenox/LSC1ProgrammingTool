@@ -159,18 +159,25 @@ namespace LSC1DatabaseEditor.ViewModel
         public void DeleteJob(Window wnd)
         {
             var selectedProc = new List<string>();
-            foreach (var item in TreeItems[1].SubItems.Where(it => it.Checked))
-                selectedProc.Add(item.Text);
-
+            if(TreeItems.Count > 1)
+                foreach (var item in TreeItems[1].SubItems.Where(it => it.Checked))
+                    selectedProc.Add(item.Text);
+            
             var selectedPos = new List<string>();
-            foreach (var item in TreeItems[2].SubItems.Where(it => it.Checked))
-                selectedPos.Add(item.Text);
+            if (TreeItems.Count > 2)
+                foreach (var item in TreeItems[2].SubItems.Where(it => it.Checked))
+                    selectedPos.Add(item.Text);
 
             var selectedFrames = new List<string>();
-            foreach (var item in TreeItems[3].SubItems.Where(it => it.Checked))
-                selectedFrames.Add(item.Text);
+            if (TreeItems.Count > 3)
+                foreach (var item in TreeItems[3].SubItems.Where(it => it.Checked))
+                    selectedFrames.Add(item.Text);
 
-            LSC1DatabaseFunctions.DeleteJob(LSC1UserSettings.Instance.DBSettings, SelectedJob, selectedProc, selectedPos, selectedFrames.ToList(), TreeItems[0].SubItems[0].Checked);
+            if(TreeItems.Count > 0)
+                LSC1DatabaseFunctions.DeleteJob(LSC1UserSettings.Instance.DBSettings, SelectedJob, selectedProc, selectedPos, selectedFrames, TreeItems[0].SubItems[0].Checked);
+            else
+                LSC1DatabaseFunctions.DeleteJob(LSC1UserSettings.Instance.DBSettings, SelectedJob, selectedProc, selectedPos, selectedFrames, false);
+
 
             Messenger.Default.Send(new JobsChangedMessage());
 

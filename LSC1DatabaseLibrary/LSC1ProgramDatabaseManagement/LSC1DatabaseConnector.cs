@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace LSC1DatabaseLibrary
@@ -19,8 +18,6 @@ namespace LSC1DatabaseLibrary
         public LSC1DatabaseConnector(LSC1DatabaseConnectionSettings settings)
         {
             conSettings = settings;
-
-
         }
 
         private void Initialize()
