@@ -61,6 +61,8 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public ObservableCollection<DbJobNameRow> Jobs { get; set; }
 
+        public ObservableCollection<string> Messages { get; set; }
+
         private DbJobNameRow selectedJob;
         public DbJobNameRow SelectedJob
         {
@@ -127,6 +129,7 @@ namespace LSC1DatabaseEditor.ViewModel
         //Bearbeitung Commands
         public RelayCommand<DataGrid> CopyToEndCommand { get; set; }
         public RelayCommand<DataGrid> CopyToNextRowCommand { get; set; }
+        public RelayCommand CheckMessages { get; set; }
 
         public MainWindowViewModel()
         {
@@ -156,6 +159,8 @@ namespace LSC1DatabaseEditor.ViewModel
                                         SelectedTable.Table == TablesEnum.tjobdata && JobFilterEnabled && selectedItems.Count > 0 
                                         || NameFilterEnabled && NameFilterPossible && selectedItems.Count > 0);
 
+            CheckMessages = new RelayCommand(() => CheckAllMessages());
+
             Messenger.Default.Register<JobsChangedMessage>(this, JobsChanged);
             Messenger.Default.Register<SelectionChangedMessage>(this, (list) =>
             {
@@ -168,6 +173,10 @@ namespace LSC1DatabaseEditor.ViewModel
                 SelectedJob = Jobs[0];
 
             SelectedTable = Tables.First((t) => t.Table == TablesEnum.tframe);
+
+            Messages = new ObservableCollection<string>();
+            CheckAllMessages();
+              
         }
 
         #region Messenger
@@ -187,6 +196,26 @@ namespace LSC1DatabaseEditor.ViewModel
         #endregion Messenger
 
         #region Commands
+
+        void CheckAllMessages()
+        {
+            Messages.Clear();
+            var jobCorpses = LSC1DatabaseFunctions.FindJobCorpses(LSC1UserSettings.Instance.DBSettings);
+            var posCorpses = LSC1DatabaseFunctions.FindPosCorpses(LSC1UserSettings.Instance.DBSettings).ToList();
+            var procCorpses = LSC1DatabaseFunctions.FindProcCorpses(LSC1UserSettings.Instance.DBSettings);
+
+            if (jobCorpses.Count > 0)
+                Messages.Add("Job Leichen entdeckt! Bitte beseitigen!");
+
+            if (posCorpses.Count > 0)
+                Messages.Add("pos Leichen entdeckt! Bitte beseitigen!");
+
+            if (procCorpses.Count > 0)
+                Messages.Add("proc Leichen entdeckt! Bitte beseitigen!");
+
+            if (jobCorpses.Count == 0 && posCorpses.Count == 0 && procCorpses.Count == 0)
+                Messages.Add("No Messages");
+        }
 
         void CopyToNextRow(DataGrid selectedItemsContentElement)
         {

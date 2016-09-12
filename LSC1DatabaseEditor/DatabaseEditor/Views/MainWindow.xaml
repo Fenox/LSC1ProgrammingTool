@@ -363,6 +363,19 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
+                <GroupBox Header="Nachrichten">
+                    <StackPanel>
+                        <ListView x:Name="listViewMessages" ItemsSource="{Binding Messages}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Foreground="Red"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Button Content="Nachrichten erneut prüfen" Command="{Binding CheckMessages}"/>
+                    </StackPanel>                    
+                </GroupBox>
+                
                 <GroupBox Header="Tabellen Auswahl" Padding="10" Margin="10,5,0,10"  VerticalAlignment="Top" Width="160">
                     <ListBox x:Name="listBoxTables" 
                         ItemsSource="{Binding Tables}" 

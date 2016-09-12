@@ -130,15 +130,15 @@ namespace LSC1DatabaseEditor.ViewModel
         {
             var keepFrame = new Dictionary<string, bool>();
             foreach (var item in TreeItems[1].SubItems)
-                keepFrame.Add(item.Text, item.Checked);
+                keepFrame.Add(item.Text, !item.Checked);
 
             var keepProc = new Dictionary<string, bool>();
             foreach (var item in TreeItems[2].SubItems)
-                keepProc.Add(item.Text, item.Checked);
+                keepProc.Add(item.Text, !item.Checked);
 
             var keepPos = new Dictionary<string, bool>();
             foreach (var item in TreeItems[3].SubItems)
-                keepPos.Add(item.Text, item.Checked);
+                keepPos.Add(item.Text, !item.Checked);
 
 
             LSC1DatabaseFunctions.CopyJob(LSC1UserSettings.Instance.DBSettings, NewJobName, SelectedJob.Name, keepPos, keepProc, keepFrame, !TreeItems[0].SubItems[0].Checked);

@@ -37,10 +37,17 @@
             <TextBox Grid.Column="1" Text="{Binding NewJobName}" VerticalAlignment="Center" TextChanged="TextBox_TextChanged"/>
         </Grid>
 
-        <TextBlock Grid.Row="2" x:Name="textBlock" 
+        <StackPanel Grid.Row="2">
+            <TextBlock x:Name="textBlock" 
                        Margin="10,10,10,0" TextWrapping="Wrap" 
                        Text="Auswahl der Programme (proc) und Positionen (pos) die übernommen werden sollen." 
                        VerticalAlignment="Top" Height="33"/>
+
+            <TextBlock Margin="10,10,10,0" TextWrapping="Wrap" 
+                       Text="Alle angekreuzten Objekte werden kopiert und bekommen einen neuen Name." 
+                       VerticalAlignment="Top" Height="33"/>
+        </StackPanel>
+     
 
         <TreeView Grid.Row="3" x:Name="treeView" 
                   ItemsSource="{Binding TreeItems}" Margin="10,10,10,0">
