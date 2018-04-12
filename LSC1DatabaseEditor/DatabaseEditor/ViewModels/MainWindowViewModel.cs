@@ -427,9 +427,16 @@ namespace LSC1DatabaseEditor.ViewModel
 
             if (query != string.Empty)
             {
-                var data = db.GetTable(query);
-                SelectedTable.DataTable = data;
-                RaisePropertyChanged("SelectedTable");
+                try
+                {
+                    var data = db.GetTable(query);
+                    SelectedTable.DataTable = data;
+                    RaisePropertyChanged("SelectedTable");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Fehlermeldung: " + ex.Message, "Fehler beim laden des Jobs.");
+                }
             }
         }
 
