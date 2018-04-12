@@ -363,7 +363,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <GroupBox Header="Nachrichten">
+                <GroupBox Header="Nachrichten" Padding="10" Margin="10,5,0,0">
                     <StackPanel>
                         <ListView x:Name="listViewMessages" ItemsSource="{Binding Messages}">
                             <ListView.ItemTemplate>
@@ -376,7 +376,7 @@
                     </StackPanel>                    
                 </GroupBox>
                 
-                <GroupBox Header="Tabellen Auswahl" Padding="10" Margin="10,5,0,10"  VerticalAlignment="Top" Width="160">
+                <GroupBox Header="Tabellen Auswahl" Padding="10" Margin="10,5,0,10"  VerticalAlignment="Top">
                     <ListBox x:Name="listBoxTables" 
                         ItemsSource="{Binding Tables}" 
                         SelectedValue="{Binding SelectedTable}" Margin="0">
@@ -388,7 +388,7 @@
                     </ListBox>
                 
                 </GroupBox>
-                <GroupBox Padding="10" Margin="10,5,0,10" VerticalAlignment="Top" Width="160"
+                <GroupBox Padding="10" Margin="10,5,0,10" VerticalAlignment="Top"
                           IsEnabled="{Binding ElementName=listBoxTables, Path=SelectedItem, Converter={StaticResource tableToJobFilterCheckedConverter}}">
                     <GroupBox.Header>
                             <StackPanel Orientation="Horizontal">

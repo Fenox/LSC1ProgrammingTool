@@ -6,12 +6,8 @@ using LSC1DatabaseEditor.ViewModel.DataStructures;
 using LSC1DatabaseLibrary.LSC1JobRepresentation;
 using LSC1DatabaseLibrary.LSC1JobRepresentation.JobDataConverter;
 using LSC1DatabaseLibrary.LSC1Simulation;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Windows.Media;
 
 namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
 {

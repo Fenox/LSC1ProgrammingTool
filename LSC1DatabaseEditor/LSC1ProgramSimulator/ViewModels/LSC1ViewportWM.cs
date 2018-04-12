@@ -1,5 +1,4 @@
 ﻿using ExtensionsAndCodeSnippets;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using HelixToolkit.Wpf;
 using LSC1DatabaseEditor.Messages;
@@ -11,10 +10,6 @@ using LSC1DatabaseLibrary.LSC1JobRepresentation.JobDataConverter;
 using LSC1DatabaseLibrary.LSC1Simulation;
 using LSC1DatabaseLibrary.LSC1Visualisation;
 using PresentationCoreExtensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;

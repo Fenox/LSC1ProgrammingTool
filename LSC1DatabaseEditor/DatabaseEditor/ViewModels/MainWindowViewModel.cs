@@ -5,12 +5,9 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.DatabaseEditor.ViewModels;
-using LSC1DatabaseEditor.LSC1CommonTool.Messages;
 using LSC1DatabaseEditor.Messages;
-using LSC1DatabaseEditor.Views;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.DatabaseModel;
-using LSC1Library;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +16,6 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace LSC1DatabaseEditor.ViewModel
 {

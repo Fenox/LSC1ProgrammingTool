@@ -1,6 +1,4 @@
-﻿using HelixToolkit.Wpf;
-using LSC1DatabaseLibrary.LSC1JobRepresentation;
-using PresentationCoreExtensions;
+﻿using LSC1DatabaseLibrary.LSC1JobRepresentation;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
