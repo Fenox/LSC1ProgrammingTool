@@ -8,6 +8,8 @@ using LSC1DatabaseEditor.Views;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.DatabaseModel;
 using LSC1Library;
+using Microsoft.Win32;
+using MySql.Data.MySqlClient;
 using System.Windows;
 using System.Windows.Input;
 
@@ -37,6 +39,10 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
         public ICommand CopyJobCommand { get; set; }
         public ICommand DeleteJobCommand { get; set; }
 
+        //Menu Versioning
+        public ICommand SaveVersionCommand { get; set; }
+        public ICommand LoadVersionCommand { get; set; }
+
         public LSC1EditorMenuVM()
         {
             //Menu Datei Commands
@@ -60,6 +66,10 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
             //Menu Job Commands
             CopyJobCommand = new RelayCommand(OpenCopyJobWindow);
             DeleteJobCommand = new RelayCommand(OpenDeleteJobWindow);
+
+            //Menu Versioning
+            SaveVersionCommand = new RelayCommand(SaveVersion);
+            LoadVersionCommand = new RelayCommand(LoadVersion);
         }
 
         void OpenVisualizationWindow()
@@ -202,5 +212,48 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
             window.Show();
         }
 
+        public void SaveVersion()
+        {
+            SaveFileDialog dialog = new SaveFileDialog()
+            {
+                Filter = "SQL Files(*.sql)|*.sql"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                using (MySqlConnection connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString))
+                using (MySqlCommand cmd = new MySqlCommand())
+                using (MySqlBackup mb = new MySqlBackup(cmd))
+                {
+                    cmd.Connection = connection;
+                    connection.Open();
+                    mb.ExportToFile(dialog.FileName);
+                    connection.Close();
+                    MessageBox.Show("Datenbank erfolgreich gespeichert.");
+                }
+            }
+        }
+
+        public void LoadVersion()
+        {
+            OpenFileDialog dialog = new OpenFileDialog()
+            {
+                Filter = "SQL Files(*.sql)|*.sql"
+            };
+
+            if(dialog.ShowDialog() == true)
+            {
+                using (MySqlConnection connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString))
+                using (MySqlCommand cmd = new MySqlCommand())
+                using (MySqlBackup mb = new MySqlBackup(cmd))
+                {
+                    cmd.Connection = connection;
+                    connection.Open();
+                    mb.ImportFromFile(dialog.FileName);
+                    connection.Close();
+                    MessageBox.Show("Datebank erfolgreich importiert.");
+                }
+            }
+        }
     }
 }

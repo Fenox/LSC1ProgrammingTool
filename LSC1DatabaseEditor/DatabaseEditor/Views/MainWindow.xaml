@@ -354,6 +354,14 @@
                 <MenuItem Header="_Delete Job" 
                           Command="{Binding DeleteJobCommand}"/>
             </MenuItem>
+
+            <MenuItem Header="Versionen">
+                <MenuItem Header="_Save Version"
+                            Command="{Binding SaveVersionCommand}" />
+                <MenuItem Header="_Load Version"
+                            Command="{Binding LoadVersionCommand}" />
+
+            </MenuItem>
         </Menu>
 
         <Grid Grid.Row="1">
