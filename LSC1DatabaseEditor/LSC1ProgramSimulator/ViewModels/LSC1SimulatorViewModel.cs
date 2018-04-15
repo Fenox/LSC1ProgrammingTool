@@ -2,23 +2,22 @@
 using GalaSoft.MvvmLight.Messaging;
 using HelixToolkit.Wpf;
 using LSC1DatabaseEditor.LSC1ProgramSimulator.Messages;
-using LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels;
+using LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels.DataStructures;
 using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseEditor.Messages.Common;
-using LSC1DatabaseEditor.ViewModel.DataStructures;
 using LSC1DatabaseLibrary.DatabaseModel;
 using PresentationCoreExtensions;
 using System;
 using System.Windows.Media.Media3D;
 
-namespace LSC1DatabaseEditor.ViewModel
+namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
 {
-    public class SimulatorViewModel : ViewModelBase
+    public class LSC1SimulatorViewModel : ViewModelBase
     {
-        public LSC1SimulatorMenuVM MenuVM { get; set; } = new LSC1SimulatorMenuVM();
-        public LSC1ProgramTreeViewVM TreeViewVM { get; set; } = new LSC1ProgramTreeViewVM();
-        public LSC1ViewportVM ViewPortVM { get; set; } = new LSC1ViewportVM();
-        public LSC1StepDataGridVM DataGridVM { get; set; } = new LSC1StepDataGridVM();
+        public LSC1SimulatorMenuViewModel MenuVM { get; set; } = new LSC1SimulatorMenuViewModel();
+        public LSC1ProgramTreeViewViewModel TreeViewVM { get; set; } = new LSC1ProgramTreeViewViewModel();
+        public LSC1ViewportViewModel ViewPortVM { get; set; } = new LSC1ViewportViewModel();
+        public LSC1StepDataGridViewModel DataGridVM { get; set; } = new LSC1StepDataGridViewModel();
 
         public static readonly Guid MessageToken = Guid.NewGuid();
 
@@ -33,7 +32,7 @@ namespace LSC1DatabaseEditor.ViewModel
             }
         }
                                 
-        public SimulatorViewModel()
+        public LSC1SimulatorViewModel()
         {                        
             Messenger.Default.Register<SelectedTreeViewItemChanged>(this, MessageToken, (msg) => ZoomOnSelectedObject(msg));
         }

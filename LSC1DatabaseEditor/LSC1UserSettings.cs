@@ -23,7 +23,7 @@ namespace LSC1DatabaseEditor
         }
 
         [UserScopedSetting()]
-        [DefaultSettingValue("robot2")] //lsc1
+        [DefaultSettingValue("lsc1")] //lsc1
         public string DatabaseName
         {
             get
@@ -37,7 +37,7 @@ namespace LSC1DatabaseEditor
         }
 
         [UserScopedSetting()]
-        [DefaultSettingValue("")] //sql
+        [DefaultSettingValue("sql")] //sql
         public string DatabasePasswort
         {
             get
@@ -66,7 +66,7 @@ namespace LSC1DatabaseEditor
         }
 
         [UserScopedSetting()]
-        [DefaultSettingValue("127.0.0.1")] //29.47.82.13
+        [DefaultSettingValue("29.47.82.13")] //29.47.82.13
         public string DatabaseServer
         {
             get

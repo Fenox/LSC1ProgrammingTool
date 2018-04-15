@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
-namespace LSC1DatabaseEditor.ViewModel.DataStructures
+namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels.DataStructures
 {
     public class LSC1TreeViewJobStepNode
     {

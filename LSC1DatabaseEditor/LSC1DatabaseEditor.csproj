@@ -15,6 +15,25 @@
     <WarningLevel>4</WarningLevel>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\Julian\Desktop\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <UpdateUrl>https://github.com/Fenox/LSC1ProgrammingTool/releases/</UpdateUrl>
+    <WebPage>publish.htm</WebPage>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,6 +53,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>0EE806BB30DF9BDE232B1D4C92398796ABFCE531</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>LSC1DatabaseEditor_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
@@ -111,10 +142,10 @@
     <Compile Include="LSC1CommonTool\Messages\DataGridCellValueChangedMessage.cs" />
     <Compile Include="LSC1ProgramSimulator\Messages\MoveMachineHeadMessage.cs" />
     <Compile Include="LSC1ProgramSimulator\Messages\VisualObjectChangedMessage.cs" />
-    <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1StepDataGridVM.cs" />
-    <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1ViewportWM.cs" />
-    <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1SimulatorMenuVM.cs" />
-    <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1ProgramTreeViewVM.cs" />
+    <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1StepDataGridViewModel.cs" />
+    <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1ViewportViewModel.cs" />
+    <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1SimulatorMenuViewModel.cs" />
+    <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1ProgramTreeViewViewModel.cs" />
     <Compile Include="Common\Messages\CameraZoomMessage.cs" />
     <Compile Include="Common\Messages\SelectedTreeViewItemChanged.cs" />
     <Compile Include="Common\Messages\DoubleClickMessage.cs" />
@@ -255,7 +286,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <AdditionalFiles Include="..\LSC1DependencyValidation\Level1.layerdiagram">
+      <Link>Level1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
+    <AdditionalFiles Include="..\LSC1DependencyValidation\Level2_DBEditor.layerdiagram">
+      <Link>Level2_DBEditor.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
     <None Include="app.config" />
+    <None Include="LSC1DatabaseEditor_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -268,6 +308,17 @@
       <Project>{eef02e9e-900d-49ad-995f-52a1b7851577}</Project>
       <Name>LSC1Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

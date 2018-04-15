@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISOToLSC1CompilerLibrary", "ISOToLSC1CompilerLibrary\ISOToLSC1CompilerLibrary.csproj", "{03042023-4AB7-42DB-B1E6-F3FD995BBDB8}"
 EndProject
@@ -15,6 +15,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSC1Library", "LSC1DatabaseLibrary\LSC1Library.csproj", "{EEF02E9E-900D-49AD-995F-52A1B7851577}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSC1ISOStepKonfigurator", "LSC1ISOStepKonfigurator\LSC1ISOStepKonfigurator.csproj", "{D23602D5-8B36-4D02-9765-41A4124B3366}"
+EndProject
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "LSC1DependencyValidation", "LSC1DependencyValidation\LSC1DependencyValidation.modelproj", "{C40E74B1-0619-4672-B7FB-ADD265178F2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,8 +44,15 @@ Global
 		{D23602D5-8B36-4D02-9765-41A4124B3366}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D23602D5-8B36-4D02-9765-41A4124B3366}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D23602D5-8B36-4D02-9765-41A4124B3366}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C40E74B1-0619-4672-B7FB-ADD265178F2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C40E74B1-0619-4672-B7FB-ADD265178F2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C40E74B1-0619-4672-B7FB-ADD265178F2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C40E74B1-0619-4672-B7FB-ADD265178F2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A788F912-F3A4-42D3-8952-6FEFEACEF1DC}
 	EndGlobalSection
 EndGlobal

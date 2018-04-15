@@ -12,6 +12,7 @@ using LSC1DatabaseEditor.LSC1CommonTool.Messages;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels;
 using LSC1DatabaseEditor.ViewModel.DataStructures;
+using LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels.DataStructures;
 
 namespace LSC1DatabaseEditor.Views
 {
@@ -24,12 +25,12 @@ namespace LSC1DatabaseEditor.Views
         {
             InitializeComponent();
 
-            DataContext = new SimulatorViewModel();
+            DataContext = new LSC1SimulatorViewModel();
 
-            Messenger.Default.Register<UpdateViewport3DMessage>(this, SimulatorViewModel.MessageToken, UpdateLines);
-            Messenger.Default.Register<CameraZoomMessage>(this, SimulatorViewModel.MessageToken, Zoom);
-            Messenger.Default.Register<MoveMachineHeadMessage>(this, SimulatorViewModel.MessageToken, MoveMachineHead);
-            Messenger.Default.Register<TableSelectionChangedMessage>(this, SimulatorViewModel.MessageToken, ChangeTableResource);
+            Messenger.Default.Register<UpdateViewport3DMessage>(this, LSC1SimulatorViewModel.MessageToken, UpdateLines);
+            Messenger.Default.Register<CameraZoomMessage>(this, LSC1SimulatorViewModel.MessageToken, Zoom);
+            Messenger.Default.Register<MoveMachineHeadMessage>(this, LSC1SimulatorViewModel.MessageToken, MoveMachineHead);
+            Messenger.Default.Register<TableSelectionChangedMessage>(this, LSC1SimulatorViewModel.MessageToken, ChangeTableResource);
         }
 
         private void ChangeTableResource(TableSelectionChangedMessage msg)
@@ -73,7 +74,7 @@ namespace LSC1DatabaseEditor.Views
                 string oldValue = (row.Row[columnName]).ToString();
                 row.Row[columnName] = val.Text;
 
-                Messenger.Default.Send(new DataGridCellValueChangedMessage(val.Text, oldValue, columnName, row, ((LSC1StepDataGridVM)gridContainter1.DataContext).Items1), SimulatorViewModel.MessageToken);
+                Messenger.Default.Send(new DataGridCellValueChangedMessage(val.Text, oldValue, columnName, row, ((LSC1StepDataGridViewModel)gridContainter1.DataContext).Items1), LSC1SimulatorViewModel.MessageToken);
             }
         }
 
@@ -90,7 +91,7 @@ namespace LSC1DatabaseEditor.Views
                 string oldValue = (row.Row[columnName]).ToString();
                 row.Row[columnName] = val.Text;
 
-                Messenger.Default.Send(new DataGridCellValueChangedMessage(val.Text, oldValue, columnName, row, ((LSC1StepDataGridVM)gridContainter1.DataContext).Items2), SimulatorViewModel.MessageToken);
+                Messenger.Default.Send(new DataGridCellValueChangedMessage(val.Text, oldValue, columnName, row, ((LSC1StepDataGridViewModel)gridContainter1.DataContext).Items2), LSC1SimulatorViewModel.MessageToken);
             }
         }
 
@@ -138,14 +139,14 @@ namespace LSC1DatabaseEditor.Views
             {
                 var orgS = (LSC1TreeViewPointLeaveItem)e.NewValue;
 
-                Messenger.Default.Send(new SelectedTreeViewItemChanged(sender, orgS), SimulatorViewModel.MessageToken);
+                Messenger.Default.Send(new SelectedTreeViewItemChanged(sender, orgS), LSC1SimulatorViewModel.MessageToken);
             }
 
             if (e.NewValue.GetType() == typeof(LSC1TreeViewJobStepNode))
             {
                 var orgS = (LSC1TreeViewJobStepNode)e.NewValue;
 
-                Messenger.Default.Send(new SelectedTreeViewItemChanged(sender, orgS), SimulatorViewModel.MessageToken);
+                Messenger.Default.Send(new SelectedTreeViewItemChanged(sender, orgS), LSC1SimulatorViewModel.MessageToken);
             }
         }
     }
