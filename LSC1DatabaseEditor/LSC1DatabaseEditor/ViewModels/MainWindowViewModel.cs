@@ -214,7 +214,7 @@ namespace LSC1DatabaseEditor.ViewModel
             if (procCorpses.Count() > 0)
                 Messages.Add("proc Leichen entdeckt! Bitte beseitigen!");
 
-            if (jobCorpses.Count() == 0 && posCorpses.Count == 0 && procCorpses.Count() == 0)
+            if (jobCorpses.Count() == 0 && posCorpses.Count() == 0 && procCorpses.Count() == 0)
                 Messages.Add("No Messages");
 
             logger.Info("Used: Check for all corpses");
