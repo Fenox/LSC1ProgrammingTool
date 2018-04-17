@@ -4,6 +4,7 @@ using ExtensionsAndCodeSnippets.SystemData.Extensions;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using LSC1DatabaseEditor.Common.Messages;
 using LSC1DatabaseEditor.DatabaseEditor.ViewModels;
 using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
@@ -135,13 +136,13 @@ namespace LSC1DatabaseEditor.ViewModel
         public MainWindowViewModel()
         {
             //Bearbeiten Commands
-            CopyToEndCommand = new RelayCommand<DataGrid>(CopyToEnd, (d) =>
+            CopyToEndCommand = new RelayCommand<DataGrid>(CopyToEnd, (d) => SelectedTable != null && (
                                         SelectedTable.Table == TablesEnum.tjobdata && JobFilterEnabled && selectedItems.Count > 0
-                                        || NameFilterEnabled && NameFilterPossible && selectedItems.Count > 0);
+                                        || NameFilterEnabled && NameFilterPossible && selectedItems.Count > 0));
 
-            CopyToNextRowCommand = new RelayCommand<DataGrid>(CopyToNextRow, (d) =>
+            CopyToNextRowCommand = new RelayCommand<DataGrid>(CopyToNextRow, (d) => (SelectedTable != null && selectedItems != null) && (
                                         SelectedTable.Table == TablesEnum.tjobdata && JobFilterEnabled && selectedItems.Count > 0
-                                        || NameFilterEnabled && NameFilterPossible && selectedItems.Count > 0);
+                                        || NameFilterEnabled && NameFilterPossible && selectedItems.Count > 0));
 
             CheckMessages = new RelayCommand(CheckAllMessages);
 
@@ -152,11 +153,12 @@ namespace LSC1DatabaseEditor.ViewModel
                 CopyToEndCommand.RaiseCanExecuteChanged();
                 CopyToNextRowCommand.RaiseCanExecuteChanged();
             });
+            Messenger.Default.Register<ConnectionChangedMessage>(this, (msg) => LoadData());
 
 
             Messages = new ObservableCollection<string>();
 
-            LoadData();          
+            Messenger.Default.Send(new ConnectionChangedMessage());
         }         
 
         private void LoadData()
@@ -523,4 +525,6 @@ namespace LSC1DatabaseEditor.ViewModel
             logger.Info("Updated Name Filters (job {0}, table {1})", SelectedJob, SelectedTable.DataGridName);
         }
     }
+
+   
 }

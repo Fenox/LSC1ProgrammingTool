@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using LSC1DatabaseEditor.Common.Messages;
 using MySql.Data.MySqlClient;
 using NLog;
 using System;
@@ -31,7 +33,7 @@ namespace LSC1DatabaseEditor.DatabaseEditor.Views.SettingsControls
             DataContext = this;
         }
 
-        private void TryConnectToDatabase()
+        private bool TryConnectToDatabase()
         {
             try
             {
@@ -39,6 +41,7 @@ namespace LSC1DatabaseEditor.DatabaseEditor.Views.SettingsControls
                 var connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString);
                 connection.Open();
                 MessageBox.Show("Verbindung konnte hergestellt werden.");
+                return true;
             }
             catch (MySqlException e)
             {
@@ -56,6 +59,7 @@ namespace LSC1DatabaseEditor.DatabaseEditor.Views.SettingsControls
                 }
 
                 logger.Error(e, "Faild to connect to database");
+                return false;
             }
         }
 
@@ -92,9 +96,17 @@ namespace LSC1DatabaseEditor.DatabaseEditor.Views.SettingsControls
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void TestConnection_Click(object sender, RoutedEventArgs e)
         {
             TryConnectToDatabase();
+        }
+
+        private void UseNewConnectionSettings_Click(object sender, RoutedEventArgs e)
+        {
+            if(TryConnectToDatabase())
+            {
+                Messenger.Default.Send(new ConnectionChangedMessage());
+            }
         }
     }
 }

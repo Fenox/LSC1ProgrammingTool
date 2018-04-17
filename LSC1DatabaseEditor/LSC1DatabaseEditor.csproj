@@ -139,6 +139,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Messages\ConnectionChangedMessage.cs" />
     <Compile Include="Common\Messages\Model3DLoadedMessage.cs" />
     <Compile Include="Common\Messages\UpdateViewport3DMessage.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\DbRowFactory.cs" />
