@@ -23,8 +23,7 @@ namespace LSC1DatabaseEditor.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        //public static Logger logger = LogManager.GetCurrentClassLogger();
-
+        public static Logger logger = LogManager.GetLogger("Usage");
         public LSC1EditorMenuVM MenuVM { get; set; } = new LSC1EditorMenuVM();
 
         ObservableCollection<LSC1TablePropertiesViewModelBase> tables;
@@ -217,6 +216,8 @@ namespace LSC1DatabaseEditor.ViewModel
 
             if (jobCorpses.Count() == 0 && posCorpses.Count == 0 && procCorpses.Count() == 0)
                 Messages.Add("No Messages");
+
+            logger.Info("Used: Check for all corpses");
         }
 
         void CopyToNextRow(DataGrid selectedItemsContentElement)
@@ -225,6 +226,8 @@ namespace LSC1DatabaseEditor.ViewModel
             int indexOfLast = indexOfFirst + selectedItemsContentElement.SelectedItems.Count;
 
             CopyAndInsertAt(selectedItemsContentElement, indexOfLast + 1);
+
+            logger.Info("Used CopyToNextRow");
         }
 
         void CopyAndInsertAt(DataGrid selectedItemsContentElement, int index)
@@ -309,8 +312,10 @@ namespace LSC1DatabaseEditor.ViewModel
             catch (Exception)
             {
                 MessageBox.Show("Fehler, womöglich wurde ein Primärschlüssel doppelt eingefügt. Einfach nochmal probieren...");
+                logger.Error("Error in Copy to end");
             }
 
+            logger.Info("Used: Copy and Insert at");
             ReloadGridViewData();
         }
 
@@ -404,7 +409,10 @@ namespace LSC1DatabaseEditor.ViewModel
             catch (Exception)
             {
                 MessageBox.Show("Fehler, womöglich wurde ein Primärschlüssel doppelt eingefügt. Einfach nochmal probieren...");
+                logger.Error("Error in Copy to end");
             }
+
+            logger.Info("Used: Copy to end");
         }
         #endregion Commands
 
@@ -415,8 +423,7 @@ namespace LSC1DatabaseEditor.ViewModel
                 return;
 
 
-            //logger.Info("Changed Selected Job to: {0}", SelectedJob.JobNr);
-            //logger.Debug("Changed Selected Job to: {0}", SelectedJob.JobNr);
+            logger.Info("Changed Selected Job to: {0}", SelectedJob.JobNr);
             ReloadGridViewData();
             UpdateNameFilter();
         }
@@ -429,6 +436,8 @@ namespace LSC1DatabaseEditor.ViewModel
             //Wird an die View gesendet, um dort das Tabellen-Layout zu ändern.
             Messenger.Default.Send(new TableSelectionChangedMessage(SelectedTable));
             UpdateNameFilter();
+
+            logger.Info("Changed table to {0} (Job {1}", SelectedTable.DataGridName, selectedJob.Name);
         }
 
         void ReloadGridViewData()
@@ -448,6 +457,7 @@ namespace LSC1DatabaseEditor.ViewModel
                 catch (Exception ex)
                 {
                     MessageBox.Show("Fehlermeldung: " + ex.Message, "Fehler beim laden des Jobs.");
+                    logger.Error(ex, "Error while reloading grid (job {0}, table {1})", SelectedJob, SelectedTable.DataGridName);
                 }
             }
         }
@@ -469,6 +479,8 @@ namespace LSC1DatabaseEditor.ViewModel
             {
                 SelectedNameFilter = null;
             }
+
+            logger.Info("Updated Name Filters (job {0}, table {1})", SelectedJob, SelectedTable.DataGridName);
         }
     }
 }

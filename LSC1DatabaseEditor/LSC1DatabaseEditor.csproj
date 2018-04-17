@@ -358,7 +358,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="LSC1DatabaseEditor_TemporaryKey.pfx" />
-    <None Include="NLog.config" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
