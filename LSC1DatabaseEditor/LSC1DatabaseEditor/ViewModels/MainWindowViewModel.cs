@@ -9,6 +9,7 @@ using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.CommonMySql;
 using LSC1DatabaseLibrary.DatabaseModel;
+using NLog;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ namespace LSC1DatabaseEditor.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        //public static Logger logger = LogManager.GetCurrentClassLogger();
+
         public LSC1EditorMenuVM MenuVM { get; set; } = new LSC1EditorMenuVM();
 
         ObservableCollection<LSC1TablePropertiesViewModelBase> tables;
@@ -411,6 +414,9 @@ namespace LSC1DatabaseEditor.ViewModel
             if (SelectedTable == null || SelectedJob == null)
                 return;
 
+
+            //logger.Info("Changed Selected Job to: {0}", SelectedJob.JobNr);
+            //logger.Debug("Changed Selected Job to: {0}", SelectedJob.JobNr);
             ReloadGridViewData();
             UpdateNameFilter();
         }
