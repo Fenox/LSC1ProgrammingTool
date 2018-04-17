@@ -32,9 +32,9 @@ namespace LSC1DatabaseLibrary.CommonMySql
                 CloseConnection();
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
