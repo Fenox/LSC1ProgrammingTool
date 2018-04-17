@@ -14,7 +14,6 @@ namespace LSC1DatabaseEditor
         {
             //Task t = new Task(() => OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings));
             OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings);
-        }
-            
+        }            
     }
 }
