@@ -307,13 +307,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <Menu DataContext="{Binding MenuVM}" x:Name="menu" VerticalAlignment="Top" Margin="0,0,-0.4,0">
             <MenuItem Header="_Datei" >
                 <MenuItem Header="_Visualisierung"
                           Command="{Binding OpenVisualisationCommand}" />
-                
+
                 <Separator />
                 <MenuItem Header="_Einstellungen"
                           Command="{Binding OpenSettingsCommand}" />
@@ -322,7 +323,7 @@
                 <MenuItem Header="_Schließen" 
                           Command="{Binding CloseWindowCommand}"
                           CommandParameter="{Binding ElementName=mainWindow}" />
-                
+
             </MenuItem>
             <MenuItem Header="_Fehlersuche">
                 <MenuItem Header="_Suche Job Leichen" 
@@ -371,7 +372,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                               
+
                 <GroupBox Header="Tabellen Auswahl" Padding="10" Margin="10,5,0,10"  VerticalAlignment="Top">
                     <ListBox x:Name="listBoxTables" 
                         ItemsSource="{Binding Tables}" 
@@ -382,15 +383,15 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                
+
                 </GroupBox>
                 <GroupBox Padding="10" Margin="10,5,0,10" VerticalAlignment="Top"
                           IsEnabled="{Binding ElementName=listBoxTables, Path=SelectedItem, Converter={StaticResource tableToJobFilterCheckedConverter}}">
                     <GroupBox.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding JobFilterEnabled}"/>
-                                <TextBlock Text="Job Filter" Margin="10,0,0,0"/>
-                            </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding JobFilterEnabled}"/>
+                            <TextBlock Text="Job Filter" Margin="10,0,0,0"/>
+                        </StackPanel>
                     </GroupBox.Header>
 
                     <StackPanel >
@@ -405,10 +406,10 @@
                 <GroupBox IsEnabled="{Binding NameFilterPossible}"
                           Padding="10" Margin="10,10,0,10" >
                     <GroupBox.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <CheckBox IsChecked="{Binding NameFilterEnabled}"/>
-                                <TextBlock Text="Name Filter" Margin="10,0,0,0"/>
-                            </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding NameFilterEnabled}"/>
+                            <TextBlock Text="Name Filter" Margin="10,0,0,0"/>
+                        </StackPanel>
                     </GroupBox.Header>
 
                     <ListBox x:Name="nameFilterListBox" 
@@ -450,5 +451,15 @@
 
             <ContentControl x:Name="contentDataGridControl" Grid.Column="1" Margin="10,55,10,10" Content="{StaticResource frameDataGrid}" />
         </Grid>
+
+        <StatusBar Grid.Row="2" Background="#FF007ACC">
+            
+            <StatusBarItem>
+                <Grid>
+                    <ProgressBar Background="{x:Null}" BorderBrush="Black"  Value="50" IsIndeterminate="True" />
+                    <TextBlock Text="{Binding CurrentTaskText}" Foreground="White" MinWidth="200" />
+                </Grid>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>

@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.Common.Messages;
 using LSC1DatabaseEditor.DatabaseEditor.ViewModels;
+using LSC1DatabaseEditor.LSC1DatabaseEditor.ViewModels;
 using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.CommonMySql;
@@ -19,6 +20,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -106,6 +108,17 @@ namespace LSC1DatabaseEditor.ViewModel
             }
         }
 
+        private string currentTaskText = "Bereit";
+        public string CurrentTaskText
+        {
+            get { return currentTaskText; }
+            set
+            {
+                currentTaskText = value;
+                RaisePropertyChanged("CurrentTaskText");
+            }
+        }
+
         private bool nameFilterEnabled = true;
         public bool NameFilterEnabled
         {
@@ -154,19 +167,25 @@ namespace LSC1DatabaseEditor.ViewModel
                 CopyToNextRowCommand.RaiseCanExecuteChanged();
             });
             Messenger.Default.Register<ConnectionChangedMessage>(this, (msg) => LoadData());
-
+            Messenger.Default.Register<StartedTaskMessage>(this, (msg) => CurrentTaskText = msg.TaskName);
+            Messenger.Default.Register<EndedTaskMessage>(this, (msg) => CurrentTaskText = "Bereit");
 
             Messages = new ObservableCollection<string>();
 
             Messenger.Default.Send(new ConnectionChangedMessage());
         }         
 
-        private void LoadData()
+
+        private async void LoadData()
         {
-            if (TryConnectToDatabase())
+            var taskExecuter = new LSC1AsyncTaskExecuter();
+            if (await taskExecuter.DoTaskAsync("Versuche Verbindungsaufbau", TryConnectToDatabase))
             {
-                OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings);
-                Jobs = new ObservableCollection<DbJobNameRow>(LSC1DatabaseFacade.GetJobs());
+                await taskExecuter.DoTaskAsync("Aktualisiere Datenbank", () => OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings));
+                await taskExecuter.DoTaskAsync("Aktualisiere Jobs", () =>
+                {
+                    Jobs = new ObservableCollection<DbJobNameRow>(LSC1DatabaseFacade.GetJobs());
+                });
 
                 Tables = new ObservableCollection<LSC1TablePropertiesViewModelBase>
                 {
@@ -192,6 +211,7 @@ namespace LSC1DatabaseEditor.ViewModel
 
                 CheckAllMessages();
             }
+
         }
 
         private bool TryConnectToDatabase()
@@ -240,12 +260,14 @@ namespace LSC1DatabaseEditor.ViewModel
 
         #region Commands
 
-        void CheckAllMessages()
+        async void CheckAllMessages()
         {
+            var asyncExecuter = new LSC1AsyncTaskExecuter();
+
             Messages.Clear();
-            var jobCorpses = LSC1DatabaseFacade.FindJobCorpses();
-            var posCorpses = LSC1DatabaseFacade.FindPosCorpses();
-            var procCorpses = LSC1DatabaseFacade.FindProcCorpses();
+            var jobCorpses = await asyncExecuter.DoTaskAsync("Find Job Leichen", LSC1DatabaseFacade.FindJobCorpses);
+            var posCorpses = await asyncExecuter.DoTaskAsync("Find Pos Leichen", LSC1DatabaseFacade.FindPosCorpses);
+            var procCorpses = await asyncExecuter.DoTaskAsync("Find Proc Leichen", LSC1DatabaseFacade.FindProcCorpses);
 
             if (jobCorpses.Count() > 0)
                 Messages.Add("Job Leichen entdeckt! Bitte beseitigen!");

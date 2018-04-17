@@ -140,7 +140,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\Messages\ConnectionChangedMessage.cs" />
+    <Compile Include="Common\Messages\EndedTaskMessage.cs" />
     <Compile Include="Common\Messages\Model3DLoadedMessage.cs" />
+    <Compile Include="Common\Messages\StartedTaskMessage.cs" />
     <Compile Include="Common\Messages\UpdateViewport3DMessage.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\DbRowFactory.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbFrameRow.cs" />
@@ -172,6 +174,7 @@
     <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingToolRow.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingWorkdataRow.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingWTRow.cs" />
+    <Compile Include="LSC1DatabaseEditor\ViewModels\LSC1AsyncTaskExecuter.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\LSC1EditorMenuVM.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\SettingsVM.cs" />
     <Compile Include="LSC1DatabaseEditor\Views\LSC1SettingsWindow.xaml.cs">
