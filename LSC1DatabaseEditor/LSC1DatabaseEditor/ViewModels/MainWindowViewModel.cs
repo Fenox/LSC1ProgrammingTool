@@ -9,6 +9,7 @@ using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.CommonMySql;
 using LSC1DatabaseLibrary.DatabaseModel;
+using NLog;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace LSC1DatabaseEditor.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        private static Logger logger = LogManager.GetLogger("Usage");
         public LSC1EditorMenuVM MenuVM { get; set; } = new LSC1EditorMenuVM();
 
         ObservableCollection<LSC1TablePropertiesViewModelBase> tables;
@@ -200,7 +202,7 @@ namespace LSC1DatabaseEditor.ViewModel
         {
             Messages.Clear();
             var jobCorpses = LSC1DatabaseFacade.FindJobCorpses();
-            var posCorpses = LSC1DatabaseFacade.FindPosCorpses().ToList();
+            var posCorpses = LSC1DatabaseFacade.FindPosCorpses();
             var procCorpses = LSC1DatabaseFacade.FindProcCorpses();
 
             if (jobCorpses.Count() > 0)
@@ -212,8 +214,10 @@ namespace LSC1DatabaseEditor.ViewModel
             if (procCorpses.Count() > 0)
                 Messages.Add("proc Leichen entdeckt! Bitte beseitigen!");
 
-            if (jobCorpses.Count() == 0 && posCorpses.Count == 0 && procCorpses.Count() == 0)
+            if (jobCorpses.Count() == 0 && posCorpses.Count() == 0 && procCorpses.Count() == 0)
                 Messages.Add("No Messages");
+
+            logger.Info("Used: Check for all corpses");
         }
 
         void CopyToNextRow(DataGrid selectedItemsContentElement)
@@ -222,6 +226,8 @@ namespace LSC1DatabaseEditor.ViewModel
             int indexOfLast = indexOfFirst + selectedItemsContentElement.SelectedItems.Count;
 
             CopyAndInsertAt(selectedItemsContentElement, indexOfLast + 1);
+
+            logger.Info("Used CopyToNextRow");
         }
 
         void CopyAndInsertAt(DataGrid selectedItemsContentElement, int index)
@@ -306,8 +312,10 @@ namespace LSC1DatabaseEditor.ViewModel
             catch (Exception)
             {
                 MessageBox.Show("Fehler, womöglich wurde ein Primärschlüssel doppelt eingefügt. Einfach nochmal probieren...");
+                logger.Error("Error in Copy to end");
             }
 
+            logger.Info("Used: Copy and Insert at");
             ReloadGridViewData();
         }
 
@@ -401,7 +409,10 @@ namespace LSC1DatabaseEditor.ViewModel
             catch (Exception)
             {
                 MessageBox.Show("Fehler, womöglich wurde ein Primärschlüssel doppelt eingefügt. Einfach nochmal probieren...");
+                logger.Error("Error in Copy to end");
             }
+
+            logger.Info("Used: Copy to end");
         }
         #endregion Commands
 
@@ -411,6 +422,8 @@ namespace LSC1DatabaseEditor.ViewModel
             if (SelectedTable == null || SelectedJob == null)
                 return;
 
+
+            logger.Info("Changed Selected Job to: {0}", SelectedJob.JobNr);
             ReloadGridViewData();
             UpdateNameFilter();
         }
@@ -423,6 +436,8 @@ namespace LSC1DatabaseEditor.ViewModel
             //Wird an die View gesendet, um dort das Tabellen-Layout zu ändern.
             Messenger.Default.Send(new TableSelectionChangedMessage(SelectedTable));
             UpdateNameFilter();
+
+            logger.Info("Changed table to {0} (Job {1}", SelectedTable.DataGridName, selectedJob.Name);
         }
 
         void ReloadGridViewData()
@@ -442,6 +457,7 @@ namespace LSC1DatabaseEditor.ViewModel
                 catch (Exception ex)
                 {
                     MessageBox.Show("Fehlermeldung: " + ex.Message, "Fehler beim laden des Jobs.");
+                    logger.Error(ex, "Error while reloading grid (job {0}, table {1})", SelectedJob, SelectedTable.DataGridName);
                 }
             }
         }
@@ -463,6 +479,8 @@ namespace LSC1DatabaseEditor.ViewModel
             {
                 SelectedNameFilter = null;
             }
+
+            logger.Info("Updated Name Filters (job {0}, table {1})", SelectedJob, SelectedTable.DataGridName);
         }
     }
 }

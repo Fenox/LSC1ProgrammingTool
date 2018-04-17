@@ -77,6 +77,7 @@ namespace LSC1DatabaseEditor.ViewModel
             TreeItems.Add(item0);
 
             //Laden von tprocdata
+            //TODO: Refactor most of this into one method
             string tprocdataQuery = "SELECT * FROM `tjobdata` WHERE `JobNr` = '" + SelectedJob.JobNr + "' AND `What` = 'proc' GROUP BY `Name`";
             var procDataList = LSC1DatabaseFacade.Read<DbJobDataRow>(LSC1UserSettings.Instance.DBSettings, tprocdataQuery);
 

@@ -28,24 +28,14 @@ namespace LSC1DatabaseLibrary.CommonMySql
             try
             {
                 OpenConnection();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            var result = query.Execute(connection);
-
-            try
-            {
+                var result = query.Execute(connection);
                 CloseConnection();
+                return result;
             }
-            catch (MySqlException ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
-
-            return result;
         }
 
         //TODO: test
@@ -62,24 +52,14 @@ namespace LSC1DatabaseLibrary.CommonMySql
             try
             {
                 OpenConnection();
+                var result = query.Execute(connection);
+                CloseConnection();
+                return this;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-
-            var result = query.Execute(connection);
-
-            try
-            {
-                CloseConnection();
-            }
-            catch (MySqlException ex)
-            {
-                throw ex;
-            }
-
-            return this;
         }
 
         protected abstract void OpenConnection();

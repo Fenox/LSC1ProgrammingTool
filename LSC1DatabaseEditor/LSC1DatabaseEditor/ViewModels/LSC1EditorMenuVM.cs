@@ -10,6 +10,7 @@ using LSC1DatabaseLibrary.DatabaseModel;
 using LSC1Library;
 using Microsoft.Win32;
 using MySql.Data.MySqlClient;
+using NLog;
 using System.Windows;
 using System.Windows.Input;
 
@@ -17,6 +18,8 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
 {
     public class LSC1EditorMenuVM
     {
+        private static Logger logger = LogManager.GetLogger("Usage");
+
         //Menu Datei Commands
         public ICommand CloseWindowCommand { get; set; }
         public ICommand OpenSettingsCommand { get; set; }
@@ -131,6 +134,8 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
                 LSC1DatabaseFacade.Insert(LSC1UserSettings.Instance.DBSettings, new DbFrameRow() { Name = dataContext.TextBoxText });
                 OfflineDatabase.UpdateAllFrameNames(LSC1UserSettings.Instance.DBSettings);
             }
+
+            logger.Info("Created new frame {0}", dataContext.TextBoxText);
         }
 
         void CreateNewPos()
@@ -146,6 +151,8 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
                 LSC1DatabaseFacade.Insert(LSC1UserSettings.Instance.DBSettings, new DbPosRow() { Name = dataContext.TextBoxText });
                 OfflineDatabase.UpdateAllPosNames(LSC1UserSettings.Instance.DBSettings);
             }
+
+            logger.Info("Created new pos {0}", dataContext.TextBoxText);
         }
 
         void CreateNewProc()
@@ -162,6 +169,8 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
                 LSC1DatabaseFacade.Insert(LSC1UserSettings.Instance.DBSettings, new DbProcLaserDataRow() { Name = dataContext.TextBoxText });
                 OfflineDatabase.UpdateAllProcNames(LSC1UserSettings.Instance.DBSettings);
             }
+
+            logger.Info("Created new proc {0}", dataContext.TextBoxText);
         }
 
         void CreateNewProcPlc()
@@ -177,6 +186,8 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
                 LSC1DatabaseFacade.Insert(LSC1UserSettings.Instance.DBSettings, new DbProcPlcRow() { Name = dataContext.TextBoxText });
                 OfflineDatabase.UpdateAllProcPLCNames(LSC1UserSettings.Instance.DBSettings);
             }
+
+            logger.Info("Created new procplc {0}", dataContext.TextBoxText);
         }
 
         void CreateNewMoveparam()
@@ -192,6 +203,8 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
                 LSC1DatabaseFacade.Insert(LSC1UserSettings.Instance.DBSettings, new DbMoveParamRow() { Name = dataContext.TextBoxText });
                 OfflineDatabase.UpdateAllMoveParamNames(LSC1UserSettings.Instance.DBSettings);
             }
+
+            logger.Info("Created new moveparam {0}", dataContext.TextBoxText);
         }
 
         public void OpenCopyJobWindow()
@@ -225,6 +238,9 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
                     connection.Close();
                     MessageBox.Show("Datenbank erfolgreich gespeichert.");
                 }
+
+
+                logger.Info("Saved database to", dialog.FileName);
             }
         }
 
@@ -247,6 +263,8 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
                     connection.Close();
                     MessageBox.Show("Datebank erfolgreich importiert.");
                 }
+
+                logger.Info("Loaded database from", dialog.FileName);
             }
         }
     }
