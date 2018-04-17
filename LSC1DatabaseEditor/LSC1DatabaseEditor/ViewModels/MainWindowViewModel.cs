@@ -23,7 +23,7 @@ namespace LSC1DatabaseEditor.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public static Logger logger = LogManager.GetLogger("Usage");
+        private static Logger logger = LogManager.GetLogger("Usage");
         public LSC1EditorMenuVM MenuVM { get; set; } = new LSC1EditorMenuVM();
 
         ObservableCollection<LSC1TablePropertiesViewModelBase> tables;
