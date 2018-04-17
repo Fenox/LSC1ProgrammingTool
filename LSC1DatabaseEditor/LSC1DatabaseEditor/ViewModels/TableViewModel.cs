@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
+using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.DatabaseModel;
 using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement;
@@ -67,6 +69,7 @@ namespace LSC1DatabaseEditor.ViewModel
             set
             {
                 TableData.Database = value;
+                OnDatabaseChanged();
             }
         }
         
@@ -82,6 +85,8 @@ namespace LSC1DatabaseEditor.ViewModel
         {
             TableData = new UpdatedDataTableViewModel<T>(conSettings, tableName);
         }
+
+        public virtual void OnDatabaseChanged() { }
     }
     
     public class FrameTableViewModel : LSC1TablePropertiesViewModel<UpdatingFrameRow>
@@ -120,6 +125,20 @@ namespace LSC1DatabaseEditor.ViewModel
         public JobNameTableViewModel(LSC1DatabaseConnectionSettings conSettings) : base(conSettings, TablesEnum.tjobname)
         {
 
+        }
+
+        public override void OnDatabaseChanged()
+        {
+            if (TableData != null && TableData.Database != null)
+                TableData.Database.ColumnChanged += Database_ColumnChanged;
+        }
+
+        private void Database_ColumnChanged(object sender, DataColumnChangeEventArgs e)
+        {
+            if (e.Column.ColumnName.Equals("Name"))
+            {
+                Messenger.Default.Send(new JobsChangedMessage() { });
+            }
         }
     }
 

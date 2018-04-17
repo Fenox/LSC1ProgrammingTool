@@ -15,12 +15,11 @@ namespace LSC1DatabaseEditor
         private static Logger logger = LogManager.GetLogger("Usage");
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            if(Debugger.IsAttached)
-                LSC1UserSettings.Instance.Context.Clear();
+            //if(Debugger.IsAttached)
+            //    LSC1UserSettings.Instance.Context.Clear();
 
             //Task t = new Task(() => OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings));
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings);
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

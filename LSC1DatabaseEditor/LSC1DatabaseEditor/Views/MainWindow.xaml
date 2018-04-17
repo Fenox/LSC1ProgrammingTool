@@ -324,7 +324,7 @@
                           CommandParameter="{Binding ElementName=mainWindow}" />
                 
             </MenuItem>
-            <MenuItem Header="_Suche">
+            <MenuItem Header="_Fehlersuche">
                 <MenuItem Header="_Suche Job Leichen" 
                           Command="{Binding FindJobCorpsesCommand}" />
                 <MenuItem Header="_Suche Job Leichen und erstelle Namen" 
@@ -371,19 +371,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0">
-                <GroupBox Header="Nachrichten" Padding="10" Margin="10,5,0,0">
-                    <StackPanel>
-                        <ListView x:Name="listViewMessages" ItemsSource="{Binding Messages}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding}" Foreground="Red"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        <Button Content="Nachrichten erneut prüfen" Command="{Binding CheckMessages}"/>
-                    </StackPanel>                    
-                </GroupBox>
-                
+                               
                 <GroupBox Header="Tabellen Auswahl" Padding="10" Margin="10,5,0,10"  VerticalAlignment="Top">
                     <ListBox x:Name="listBoxTables" 
                         ItemsSource="{Binding Tables}" 
@@ -427,11 +415,24 @@
                              ItemsSource="{Binding SelectedTable.NameFilterItems}" SelectedValue="{Binding SelectedNameFilter}">
                     </ListBox>
                 </GroupBox>
+
+                <GroupBox Header="Nachrichten" Padding="10" Margin="10,5,0,0">
+                    <StackPanel>
+                        <ListView x:Name="listViewMessages" ItemsSource="{Binding Messages}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Foreground="Red"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Button Content="Nachrichten erneut prüfen" Command="{Binding CheckMessages}"/>
+                    </StackPanel>
+                </GroupBox>
             </StackPanel>
 
             <GroupBox Grid.Column="1" Header="Bearbeitung" VerticalAlignment="Top" Margin="10,5,0,0">
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox Grid.Column="1" x:Name="checkBoxSelectionMode" Content="Select Rows" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                    <CheckBox Grid.Column="1" x:Name="checkBoxSelectionMode" Content="Reihenauswahl" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
                     <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="10,2" />
                     <Button Content="Kopiere nach Ende"
                             Command="{Binding CopyToEndCommand}"

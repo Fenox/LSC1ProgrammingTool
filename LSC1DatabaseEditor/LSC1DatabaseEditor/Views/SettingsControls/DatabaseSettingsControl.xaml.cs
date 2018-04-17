@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Command;
+using MySql.Data.MySqlClient;
+using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,11 +22,41 @@ namespace LSC1DatabaseEditor.DatabaseEditor.Views.SettingsControls
     /// </summary>
     public partial class DatabaseSettingsControl : UserControl
     {
+        private static Logger logger = LogManager.GetLogger("Usage");
+
         public DatabaseSettingsControl()
         {
             InitializeComponent();
 
             DataContext = this;
+        }
+
+        private void TryConnectToDatabase()
+        {
+            try
+            {
+                LSC1UserSettings.Instance.Save();
+                var connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString);
+                connection.Open();
+                MessageBox.Show("Verbindung konnte hergestellt werden.");
+            }
+            catch (MySqlException e)
+            {
+                switch (e.ErrorCode)
+                {
+                    case 0:
+                        MessageBox.Show("Keine Verbindung zur Datenbank möglich");
+                        break;
+                    case 1045:
+                        MessageBox.Show("Ungeültiger Nutzername/Passwort");
+                        break;
+                    default:
+                        MessageBox.Show("Unbekannter Fehler beim Verbinden mit der Datenbank.");
+                        break;
+                }
+
+                logger.Error(e, "Faild to connect to database");
+            }
         }
 
         public string Database
@@ -57,6 +90,11 @@ namespace LSC1DatabaseEditor.DatabaseEditor.Views.SettingsControls
             {
                 LSC1UserSettings.Instance.DatabasePasswort = value;
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            TryConnectToDatabase();
         }
     }
 }

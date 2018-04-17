@@ -9,6 +9,8 @@ using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.CommonMySql;
 using LSC1DatabaseLibrary.DatabaseModel;
+using LSC1Library;
+using MySql.Data.MySqlClient;
 using NLog;
 using System;
 using System.Collections;
@@ -119,7 +121,7 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public bool NameFilterPossible
         {
-            get  { return SelectedTable.HasNameColumn; }
+            get  { return SelectedTable != null && SelectedTable.HasNameColumn; }
         }
 
         List<object> selectedItems = new List<object>();
@@ -132,32 +134,13 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public MainWindowViewModel()
         {
-            Jobs = new ObservableCollection<DbJobNameRow>(LSC1DatabaseFacade.GetJobs());
-
-            Tables = new ObservableCollection<LSC1TablePropertiesViewModelBase>
-            {
-                new FrameTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new JobDataTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new JobNameTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new MoveParamTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new PosTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new ProcLaserTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new ProcPlcTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new ProcPulseTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new ProcRobotTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new ProcTurnTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new TableTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new ToolTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new TWTTableViewModel(LSC1UserSettings.Instance.DBSettings)
-            };
-
             //Bearbeiten Commands
-            CopyToEndCommand = new RelayCommand<DataGrid>(CopyToEnd, (d) => 
+            CopyToEndCommand = new RelayCommand<DataGrid>(CopyToEnd, (d) =>
                                         SelectedTable.Table == TablesEnum.tjobdata && JobFilterEnabled && selectedItems.Count > 0
                                         || NameFilterEnabled && NameFilterPossible && selectedItems.Count > 0);
 
-            CopyToNextRowCommand = new RelayCommand<DataGrid>(CopyToNextRow, (d) => 
-                                        SelectedTable.Table == TablesEnum.tjobdata && JobFilterEnabled && selectedItems.Count > 0 
+            CopyToNextRowCommand = new RelayCommand<DataGrid>(CopyToNextRow, (d) =>
+                                        SelectedTable.Table == TablesEnum.tjobdata && JobFilterEnabled && selectedItems.Count > 0
                                         || NameFilterEnabled && NameFilterPossible && selectedItems.Count > 0);
 
             CheckMessages = new RelayCommand(CheckAllMessages);
@@ -169,15 +152,72 @@ namespace LSC1DatabaseEditor.ViewModel
                 CopyToEndCommand.RaiseCanExecuteChanged();
                 CopyToNextRowCommand.RaiseCanExecuteChanged();
             });
-            
-            if (Jobs.Count > 0)
-                SelectedJob = Jobs[0];
 
-            SelectedTable = Tables.First((t) => t.Table == TablesEnum.tframe);
 
             Messages = new ObservableCollection<string>();
-            CheckAllMessages();
-              
+
+            LoadData();          
+        }         
+
+        private void LoadData()
+        {
+            if (TryConnectToDatabase())
+            {
+                OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings);
+                Jobs = new ObservableCollection<DbJobNameRow>(LSC1DatabaseFacade.GetJobs());
+
+                Tables = new ObservableCollection<LSC1TablePropertiesViewModelBase>
+                {
+                    new FrameTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                    new JobDataTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                    new JobNameTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                    new MoveParamTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                    new PosTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                    new ProcLaserTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                    new ProcPlcTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                    new ProcPulseTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                    new ProcRobotTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                    new ProcTurnTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                    new TableTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                    new ToolTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                    new TWTTableViewModel(LSC1UserSettings.Instance.DBSettings)
+                };
+
+                if (Jobs.Count > 0)
+                    SelectedJob = Jobs[0];
+
+                SelectedTable = Tables.First((t) => t.Table == TablesEnum.tframe);
+
+                CheckAllMessages();
+            }
+        }
+
+        private bool TryConnectToDatabase()
+        {
+            try
+            {
+                var connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString);
+                connection.Open();
+                return true;
+            }
+            catch (MySqlException e)
+            {
+                switch (e.ErrorCode)
+                {
+                    case 0:
+                        MessageBox.Show("Keine Verbindung zur Datenbank möglich");
+                        break;
+                    case 1045:
+                        MessageBox.Show("Ungeültiger Nutzername/Passwort");
+                        break;
+                    default:
+                        MessageBox.Show("Unbekannter Fehler beim Verbinden mit der Datenbank.");
+                        break;
+                }
+
+                logger.Error(e, "Faild to connect to database");
+                return false;
+            }
         }
 
         #region Messenger
