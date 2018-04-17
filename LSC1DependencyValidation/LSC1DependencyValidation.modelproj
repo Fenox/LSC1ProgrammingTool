@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{c40e74b1-0619-4672-b7fb-add265178f2a}</ProjectGuid>
+    <ArchitectureToolsVersion>2.0.0.0</ArchitectureToolsVersion>
+    <Name>LSC1DependencyValidation</Name>
+    <RootNamespace>LSC1DependencyValidation</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Validate Include="Level1.layerdiagram">
+      <SubType>Content</SubType>
+    </Validate>
+    <Validate Include="Level1.layerdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Level1.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="Level1.layerdiagram.suppressions">
+      <SubType>Content</SubType>
+      <DependentUpon>Level1.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="Level2_DBEditor.layerdiagram">
+      <SubType>Content</SubType>
+    </Validate>
+    <Validate Include="Level2_DBEditor.layerdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Level2_DBEditor.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="Level2_DBEditor.layerdiagram.suppressions">
+      <SubType>Content</SubType>
+      <DependentUpon>Level2_DBEditor.layerdiagram</DependentUpon>
+    </Validate>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ISOToLSC1CompilerEditor\ISOToLSC1CompilerEditor.csproj">
+      <Name>ISOToLSC1CompilerEditor</Name>
+      <Project>{e0d5eb64-5073-4876-8344-da4b98c636e5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ISOToLSC1CompilerLibrary\ISOToLSC1CompilerLibrary.csproj">
+      <Name>ISOToLSC1CompilerLibrary</Name>
+      <Project>{03042023-4ab7-42db-b1e6-f3fd995bbdb8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LSC1DatabaseEditor\LSC1DatabaseEditor.csproj">
+      <Name>LSC1DatabaseEditor</Name>
+      <Project>{7815558b-0d46-4f70-84ad-ee66455c465e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LSC1DatabaseLibrary\LSC1Library.csproj">
+      <Name>LSC1Library</Name>
+      <Project>{eef02e9e-900d-49ad-995f-52a1b7851577}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LSC1ISOStepKonfigurator\LSC1ISOStepKonfigurator.csproj">
+      <Name>LSC1ISOStepKonfigurator</Name>
+      <Project>{d23602d5-8b36-4d02-9765-41a4124b3366}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>
