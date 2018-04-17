@@ -452,12 +452,11 @@
             <ContentControl x:Name="contentDataGridControl" Grid.Column="1" Margin="10,55,10,10" Content="{StaticResource frameDataGrid}" />
         </Grid>
 
-        <StatusBar Grid.Row="2" Background="#FF007ACC">
+        <StatusBar Grid.Row="2" Background="{Binding ElementName=statusTextBlock, Path=Text, Converter={StaticResource taskExecutionStatusToColorConverter}}">
             
             <StatusBarItem>
                 <Grid>
-                    <ProgressBar Background="{x:Null}" BorderBrush="Black"  Value="50" IsIndeterminate="True" />
-                    <TextBlock Text="{Binding CurrentTaskText}" Foreground="White" MinWidth="200" />
+                    <TextBlock x:Name="statusTextBlock" Text="{Binding CurrentTaskText}" Foreground="White" />
                 </Grid>
             </StatusBarItem>
         </StatusBar>

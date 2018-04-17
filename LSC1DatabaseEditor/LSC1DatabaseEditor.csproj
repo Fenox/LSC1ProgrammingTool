@@ -144,6 +144,8 @@
     <Compile Include="Common\Messages\Model3DLoadedMessage.cs" />
     <Compile Include="Common\Messages\StartedTaskMessage.cs" />
     <Compile Include="Common\Messages\UpdateViewport3DMessage.cs" />
+    <Compile Include="LSC1DatabaseEditor\Controller\LSC1AsyncTaskExecuter.cs" />
+    <Compile Include="LSC1DatabaseEditor\Converter\TaskExecutionStatusToColorConverter.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\DbRowFactory.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbFrameRow.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbJobDataRow.cs" />

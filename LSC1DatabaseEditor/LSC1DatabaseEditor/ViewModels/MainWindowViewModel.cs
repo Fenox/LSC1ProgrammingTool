@@ -5,8 +5,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.Common.Messages;
+using LSC1DatabaseEditor.Controller;
 using LSC1DatabaseEditor.DatabaseEditor.ViewModels;
-using LSC1DatabaseEditor.LSC1DatabaseEditor.ViewModels;
 using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.CommonMySql;
@@ -63,7 +63,16 @@ namespace LSC1DatabaseEditor.ViewModel
             }
         }
 
-        public ObservableCollection<DbJobNameRow> Jobs { get; set; }
+        private ObservableCollection<DbJobNameRow> jobs;
+        public ObservableCollection<DbJobNameRow> Jobs
+        {
+            get { return jobs; }
+            set
+            {
+                jobs = value;
+                RaisePropertyChanged("Jobs");
+            }
+        }
 
         public ObservableCollection<string> Messages { get; set; }
 
@@ -182,9 +191,9 @@ namespace LSC1DatabaseEditor.ViewModel
             if (await taskExecuter.DoTaskAsync("Versuche Verbindungsaufbau", TryConnectToDatabase))
             {
                 await taskExecuter.DoTaskAsync("Aktualisiere Datenbank", () => OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings));
-                await taskExecuter.DoTaskAsync("Aktualisiere Jobs", () =>
+                Jobs = await taskExecuter.DoTaskAsync("Aktualisiere Jobs", () =>
                 {
-                    Jobs = new ObservableCollection<DbJobNameRow>(LSC1DatabaseFacade.GetJobs());
+                    return new ObservableCollection<DbJobNameRow>(LSC1DatabaseFacade.GetJobs());
                 });
 
                 Tables = new ObservableCollection<LSC1TablePropertiesViewModelBase>
@@ -211,7 +220,6 @@ namespace LSC1DatabaseEditor.ViewModel
 
                 CheckAllMessages();
             }
-
         }
 
         private bool TryConnectToDatabase()
@@ -480,13 +488,11 @@ namespace LSC1DatabaseEditor.ViewModel
         }
         #endregion Commands
 
-
         void SelectedJobChanged()
         {
             if (SelectedTable == null || SelectedJob == null)
                 return;
-
-
+            
             logger.Info("Changed Selected Job to: {0}", SelectedJob.JobNr);
             ReloadGridViewData();
             UpdateNameFilter();
@@ -504,17 +510,17 @@ namespace LSC1DatabaseEditor.ViewModel
             logger.Info("Changed table to {0} (Job {1}", SelectedTable.DataGridName, selectedJob.Name);
         }
 
-        void ReloadGridViewData()
+        async void ReloadGridViewData()
         {
             //Updaten des GridView
-
             string query = SQLStringGenerator.GetData(JobFilterEnabled ? SelectedJob.JobNr : null, SelectedTable.Table, NameFilterEnabled ? SelectedNameFilter : null);
 
             if (query != string.Empty)
             {
                 try
                 {
-                    var data = LSC1DatabaseFacade.GetTable(query);
+                    var data = await new LSC1AsyncTaskExecuter()
+                                    .DoTaskAsync("Lade Tabelle: " + SelectedTable.DataGridName, () => LSC1DatabaseFacade.GetTable(query));
                     SelectedTable.DataTable = data;
                     RaisePropertyChanged("SelectedTable");
                 }

@@ -1,6 +1,7 @@
 ﻿using ExtensionsAndCodeSnippets.RandomTools;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using LSC1DatabaseEditor.Controller;
 using LSC1DatabaseEditor.DatabaseEditor.Views;
 using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseEditor.ViewModel;
@@ -219,7 +220,7 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
             window.Show();
         }
 
-        public void SaveVersion()
+        public async void SaveVersion()
         {
             SaveFileDialog dialog = new SaveFileDialog()
             {
@@ -228,23 +229,26 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
 
             if (dialog.ShowDialog() == true)
             {
-                using (MySqlConnection connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString))
-                using (MySqlCommand cmd = new MySqlCommand())
-                using (MySqlBackup mb = new MySqlBackup(cmd))
+                await new LSC1AsyncTaskExecuter().DoTaskAsync("Exportiere Datenbank", () =>
                 {
-                    cmd.Connection = connection;
-                    connection.Open();
-                    mb.ExportToFile(dialog.FileName);
-                    connection.Close();
-                    MessageBox.Show("Datenbank erfolgreich gespeichert.");
-                }
+                    using (MySqlConnection connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString))
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    using (MySqlBackup mb = new MySqlBackup(cmd))
+                    {
+                        cmd.Connection = connection;
+                        connection.Open();
+                        mb.ExportToFile(dialog.FileName);
+                        connection.Close();
+                    }
+                });
 
 
+                MessageBox.Show("Datenbank erfolgreich gespeichert.");
                 logger.Info("Saved database to", dialog.FileName);
             }
         }
 
-        public void LoadVersion()
+        public async void LoadVersion()
         {
             OpenFileDialog dialog = new OpenFileDialog()
             {
@@ -253,17 +257,20 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
 
             if(dialog.ShowDialog() == true)
             {
-                using (MySqlConnection connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString))
-                using (MySqlCommand cmd = new MySqlCommand())
-                using (MySqlBackup mb = new MySqlBackup(cmd))
+                await new LSC1AsyncTaskExecuter().DoTaskAsync("Importiere Datenbank", () =>
                 {
-                    cmd.Connection = connection;
-                    connection.Open();
-                    mb.ImportFromFile(dialog.FileName);
-                    connection.Close();
-                    MessageBox.Show("Datebank erfolgreich importiert.");
-                }
+                    using (MySqlConnection connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString))
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    using (MySqlBackup mb = new MySqlBackup(cmd))
+                    {
+                        cmd.Connection = connection;
+                        connection.Open();
+                        mb.ImportFromFile(dialog.FileName);
+                        connection.Close();
+                    }
+                });
 
+                MessageBox.Show("Datebank erfolgreich importiert.");
                 logger.Info("Loaded database from", dialog.FileName);
             }
         }

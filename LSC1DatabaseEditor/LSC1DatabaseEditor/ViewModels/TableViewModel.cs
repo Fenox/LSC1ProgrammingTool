@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
+using LSC1DatabaseEditor.Controller;
 using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.DatabaseModel;
@@ -180,11 +181,12 @@ namespace LSC1DatabaseEditor.ViewModel
 
         }
 
-        public override void UpdateNameFilter(string jobId)
+        public override async void UpdateNameFilter(string jobId)
         {
-            var procLaserOfJob = OfflineDatabase.AllJobProcNameMappings
-                                    .Find(mapping => mapping.JobNr.Equals(jobId))
-                                    .ProcLaserNames;
+            var procLaserOfJob = await new LSC1AsyncTaskExecuter()
+                                    .DoTaskAsync("Aktualisiere Names Filter" ,() => OfflineDatabase.AllJobProcNameMappings
+                                        .Find(mapping => mapping.JobNr.Equals(jobId))
+                                        .ProcLaserNames);
 
             if (procLaserOfJob == null)
                 return;
@@ -208,11 +210,12 @@ namespace LSC1DatabaseEditor.ViewModel
 
         }
 
-        public override void UpdateNameFilter(string jobId)
+        public override async void UpdateNameFilter(string jobId)
         {
-            var procPulseOfJob = OfflineDatabase.AllJobProcNameMappings
+            var procPulseOfJob = await new LSC1AsyncTaskExecuter()
+                                    .DoTaskAsync("Aktualisiere Names Filter", () => OfflineDatabase.AllJobProcNameMappings
                                            .Find(mapping => mapping.JobNr.Equals(jobId))
-                                           .ProcPulseNames;
+                                           .ProcPulseNames);
 
             if (procPulseOfJob == null)
                 return;
@@ -235,11 +238,12 @@ namespace LSC1DatabaseEditor.ViewModel
 
         }
 
-        public override void UpdateNameFilter(string jobId)
+        public override async void UpdateNameFilter(string jobId)
         {
-            var procRobotOfJob = OfflineDatabase.AllJobProcNameMappings
+            var procRobotOfJob = await new LSC1AsyncTaskExecuter()
+                                    .DoTaskAsync("Aktualisiere Names Filter", () => OfflineDatabase.AllJobProcNameMappings
                                        .Find(mapping => mapping.JobNr.Equals(jobId))
-                                       .ProcRobotNames;
+                                       .ProcRobotNames);
 
             if (procRobotOfJob == null)
                 return;
@@ -262,11 +266,12 @@ namespace LSC1DatabaseEditor.ViewModel
 
         }
 
-        public override void UpdateNameFilter(string jobId)
+        public override async void UpdateNameFilter(string jobId)
         {
-            var procPLCOfJob = OfflineDatabase.AllJobProcNameMappings
+            var procPLCOfJob = await new LSC1AsyncTaskExecuter()
+                                    .DoTaskAsync("Aktualisiere Names Filter", () => OfflineDatabase.AllJobProcNameMappings
                                     .Find(mapping => mapping.JobNr.Equals(jobId))
-                                    .ProcPLCNames;
+                                    .ProcPLCNames);
 
             if (procPLCOfJob == null)
                 return;
@@ -289,11 +294,12 @@ namespace LSC1DatabaseEditor.ViewModel
         public override bool UsesNameFilter { get { return true; } }
         public override string DataGridName { get { return "procTurnDataGrid"; } }
 
-        public override void UpdateNameFilter(string jobId)
+        public override async void UpdateNameFilter(string jobId)
         {
-            var procTurnOfJob = OfflineDatabase.AllJobProcNameMappings
+            var procTurnOfJob = await new LSC1AsyncTaskExecuter()
+                                    .DoTaskAsync("Aktualisiere Names Filter", () => OfflineDatabase.AllJobProcNameMappings
                                         .Find(mapping => mapping.JobNr.Equals(jobId))
-                                        .ProcTurnNames;
+                                        .ProcTurnNames);
 
             if (procTurnOfJob == null)
                 return;

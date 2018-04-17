@@ -5,6 +5,7 @@
                     >
     <conv:BoolToDataGridSelectionUnitConverter x:Key="rowConverter"/>
     <conv:SelectedTableToNameFilterEnabledConverter x:Key="selectedTableToNameFilterEnabled"/>
+    <conv:TaskExecutionStatusToColorConverter x:Key="taskExecutionStatusToColorConverter"/>
     <conv2:IsNumericToBackgroundConverter x:Key="isNumToBackground"/>
 
     <!-- tableToJobFilterCheckedConverter -->
