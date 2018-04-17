@@ -47,7 +47,7 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
 
                 Point3D centerPoint = node.Points.CalculateCenter();
 
-                if (centerPoint.X == double.NaN)//TODO Fehler wegen nicht impelementerier Befehle wodurch keine Instruction erstellt wird.
+                if (Double.IsNaN(centerPoint.X))//TODO Fehler wegen nicht impelementerier Befehle wodurch keine Instruction erstellt wird.
                     return;
 
                 ContainerUIElement3D container = new ContainerUIElement3D();

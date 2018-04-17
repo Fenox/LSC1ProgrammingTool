@@ -5,6 +5,7 @@ using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement;
 using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement.DatabaseModel.TypedDataTables;
 using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement.DatabaseModel.UpdatedRows;
 using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement.DatabaseModel.UpdatingRows;
+using LSC1Library;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,11 +15,29 @@ using System.Text;
 
 namespace LSC1DatabaseEditor.ViewModel
 {
-    public abstract class TableViewModelBase : ViewModelBase
+    /// <summary>
+    /// Viewmodel representing a table (e.g. tpos), that defines common methods
+    /// but does not contain the type of the data stored, to be more of an abstraction.
+    /// </summary>
+    public abstract class LSC1TablePropertiesViewModelBase : ViewModelBase
     {
+        /// <summary>
+        /// Specifies the kind of data that is stored in this table e.g. tpos
+        /// </summary>
         public abstract TablesEnum Table { get; }
+        /// <summary>
+        /// Specifies whether this table needs a step column indicating that the data
+        /// in this table is has an order.
+        /// </summary>
         public abstract bool HasStep { get; }
+        /// <summary>
+        /// Specifies whether this table has a name column, this column is a reference
+        /// to another item that has a name e.g. a laser proc.
+        /// </summary>
         public abstract bool HasNameColumn { get; }
+        /// <summary>
+        /// specifies whether the data in this table can be filtered by name.
+        /// </summary>
         public abstract bool UsesNameFilter { get; }
         public abstract string DataGridName { get; }
         public abstract DataTable DataTable { get; set; }
@@ -26,10 +45,10 @@ namespace LSC1DatabaseEditor.ViewModel
         public virtual void UpdateNameFilter(string jobId) { }
     }
 
-    public abstract class TableViewModel<T> : TableViewModelBase where T : MyUpdatedDbRow, new()
+    public abstract class LSC1TablePropertiesViewModel<T> : LSC1TablePropertiesViewModelBase where T : LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement.DatabaseModel.TypedDataTables.UpdatedDbRowViewModel, new()
     {
-        private UpdatedDataTable<T> tableData;
-        public UpdatedDataTable<T> TableData
+        private UpdatedDataTableViewModel<T> tableData;
+        public UpdatedDataTableViewModel<T> TableData
         {
             get { return tableData; }
             set
@@ -59,13 +78,13 @@ namespace LSC1DatabaseEditor.ViewModel
             }
         }
 
-        public TableViewModel(LSC1DatabaseConnectionSettings conSettings, TablesEnum tableName)
+        public LSC1TablePropertiesViewModel(LSC1DatabaseConnectionSettings conSettings, TablesEnum tableName)
         {
-            TableData = new UpdatedDataTable<T>(conSettings, tableName);
+            TableData = new UpdatedDataTableViewModel<T>(conSettings, tableName);
         }
     }
     
-    public class FrameTableViewModel : TableViewModel<UpdatingFrameRow>
+    public class FrameTableViewModel : LSC1TablePropertiesViewModel<UpdatingFrameRow>
     {
         public override bool HasStep { get { return false; } }
         public override bool HasNameColumn { get { return true; } }
@@ -78,7 +97,7 @@ namespace LSC1DatabaseEditor.ViewModel
         }
     }
 
-    public class JobDataTableViewModel : TableViewModel<UpdatingJobDataRow>
+    public class JobDataTableViewModel : LSC1TablePropertiesViewModel<UpdatingJobDataRow>
     {
         public override bool HasStep { get { return true; } }
         public override bool HasNameColumn { get { return false; } }
@@ -91,7 +110,7 @@ namespace LSC1DatabaseEditor.ViewModel
         }
     }
 
-    public class JobNameTableViewModel : TableViewModel<UpdatingJobNameRow>
+    public class JobNameTableViewModel : LSC1TablePropertiesViewModel<UpdatingJobNameRow>
     {
         public override bool HasStep { get { return false; } }
         public override bool HasNameColumn { get { return false; } }
@@ -104,7 +123,7 @@ namespace LSC1DatabaseEditor.ViewModel
         }
     }
 
-    public class MoveParamTableViewModel : TableViewModel<UpdatingMoveParamRow>
+    public class MoveParamTableViewModel : LSC1TablePropertiesViewModel<UpdatingMoveParamRow>
     {
         public override bool HasStep { get { return false; } }
         public override bool HasNameColumn { get { return true; } }
@@ -117,7 +136,7 @@ namespace LSC1DatabaseEditor.ViewModel
         }
     }
 
-    public class PosTableViewModel : TableViewModel<UpdatingPosRow>
+    public class PosTableViewModel : LSC1TablePropertiesViewModel<UpdatingPosRow>
     {
         public override bool HasStep { get { return false; } }
         public override bool HasNameColumn { get { return true; } }
@@ -130,7 +149,7 @@ namespace LSC1DatabaseEditor.ViewModel
         }
     }
 
-    public class ProcLaserTableViewModel : TableViewModel<UpdatingProcLaserRow>
+    public class ProcLaserTableViewModel : LSC1TablePropertiesViewModel<UpdatingProcLaserRow>
     {
         public override bool HasStep { get { return true; } }
         public override bool HasNameColumn { get { return true; } }
@@ -144,12 +163,12 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public override void UpdateNameFilter(string jobId)
         {
-            string getProcOfJob = "SELECT DISTINCT (Name) FROM `" + Table + "`" +
-                          " WHERE Name IN (SELECT DISTINCT Name FROM tjobdata WHERE JobNr = " + jobId + ")";
-            
-            LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
+            var procLaserOfJob = OfflineDatabase.AllJobProcNameMappings
+                                    .Find(mapping => mapping.JobNr.Equals(jobId))
+                                    .ProcLaserNames;
 
-            var procLaserOfJob = db.ReadSingleColumnQuery(getProcOfJob);
+            if (procLaserOfJob == null)
+                return;
 
             NameFilterItems.Clear();
             foreach (var item in procLaserOfJob)
@@ -158,7 +177,7 @@ namespace LSC1DatabaseEditor.ViewModel
         }
     }
 
-    public class ProcPulseTableViewModel : TableViewModel<UpdatingProcPulseRow>
+    public class ProcPulseTableViewModel : LSC1TablePropertiesViewModel<UpdatingProcPulseRow>
     {
         public override bool HasStep { get { return true; } }
         public override bool HasNameColumn { get { return true; } }
@@ -172,20 +191,20 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public override void UpdateNameFilter(string jobId)
         {
-            string getProcOfJob = "SELECT DISTINCT (Name) FROM `" + Table + "`" +
-                          " WHERE Name IN (SELECT DISTINCT Name FROM tjobdata WHERE JobNr = " + jobId + ")";
+            var procPulseOfJob = OfflineDatabase.AllJobProcNameMappings
+                                           .Find(mapping => mapping.JobNr.Equals(jobId))
+                                           .ProcPulseNames;
 
-            LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
-
-            var procsOfJob = db.ReadSingleColumnQuery(getProcOfJob);
+            if (procPulseOfJob == null)
+                return;
 
             NameFilterItems.Clear();
-            foreach (var item in procsOfJob)
+            foreach (var item in procPulseOfJob)
                 NameFilterItems.Add(item);
         }
     }
 
-    public class ProcRobotTableViewModel : TableViewModel<UpdatingProcRobotRow>
+    public class ProcRobotTableViewModel : LSC1TablePropertiesViewModel<UpdatingProcRobotRow>
     {
         public override bool HasStep { get { return true; } }
         public override bool HasNameColumn { get { return true; } }
@@ -199,20 +218,20 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public override void UpdateNameFilter(string jobId)
         {
-            string getProcOfJob = "SELECT DISTINCT (Name) FROM `" + Table + "`" +
-                          " WHERE Name IN (SELECT DISTINCT Name FROM tjobdata WHERE JobNr = " + jobId + ")";
-            
-            LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
+            var procRobotOfJob = OfflineDatabase.AllJobProcNameMappings
+                                       .Find(mapping => mapping.JobNr.Equals(jobId))
+                                       .ProcRobotNames;
 
-            var procLaserOfJob = db.ReadSingleColumnQuery(getProcOfJob);
+            if (procRobotOfJob == null)
+                return;
 
             NameFilterItems.Clear();
-            foreach (var item in procLaserOfJob)
+            foreach (var item in procRobotOfJob)
                 NameFilterItems.Add(item);            
         }
     }
 
-    public class ProcPlcTableViewModel : TableViewModel<UpdatingProcPlcRow>
+    public class ProcPlcTableViewModel : LSC1TablePropertiesViewModel<UpdatingProcPlcRow>
     {
         public override bool HasStep { get { return true; } }
         public override bool HasNameColumn { get { return true; } }
@@ -226,21 +245,21 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public override void UpdateNameFilter(string jobId)
         {
-            string getProcOfJob = "SELECT DISTINCT (Name) FROM `" + Table + "`" +
-                          " WHERE Name IN (SELECT DISTINCT Name FROM tjobdata WHERE JobNr = " + jobId + ")";
-                       
-            LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
+            var procPLCOfJob = OfflineDatabase.AllJobProcNameMappings
+                                    .Find(mapping => mapping.JobNr.Equals(jobId))
+                                    .ProcPLCNames;
 
-            var procLaserOfJob = db.ReadSingleColumnQuery(getProcOfJob);
+            if (procPLCOfJob == null)
+                return;
 
             NameFilterItems.Clear();
-            foreach (var item in procLaserOfJob)
+            foreach (var item in procPLCOfJob)
                 NameFilterItems.Add(item);
 
         }
     }
 
-    public class ProcTurnTableViewModel : TableViewModel<UpdatingProcTurnRow>
+    public class ProcTurnTableViewModel : LSC1TablePropertiesViewModel<UpdatingProcTurnRow>
     {
         public ProcTurnTableViewModel(LSC1DatabaseConnectionSettings conSettings) : base(conSettings, TablesEnum.tprocturn)
         {
@@ -253,20 +272,20 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public override void UpdateNameFilter(string jobId)
         {
-            string getProcOfJob = "SELECT DISTINCT (Name) FROM `" + Table + "`" +
-                          " WHERE Name IN (SELECT DISTINCT Name FROM tjobdata WHERE JobNr = " + jobId + ")";
+            var procTurnOfJob = OfflineDatabase.AllJobProcNameMappings
+                                        .Find(mapping => mapping.JobNr.Equals(jobId))
+                                        .ProcTurnNames;
 
-            LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
-
-            var procsOfJob = db.ReadSingleColumnQuery(getProcOfJob);
+            if (procTurnOfJob == null)
+                return;
 
             NameFilterItems.Clear();
-            foreach (var item in procsOfJob)
+            foreach (var item in procTurnOfJob)
                 NameFilterItems.Add(item);
         }
     }
 
-    public class TableTableViewModel : TableViewModel<UpdatingTableRow>
+    public class TableTableViewModel : LSC1TablePropertiesViewModel<UpdatingTableRow>
     {
         public TableTableViewModel(LSC1DatabaseConnectionSettings conSettings) : base(conSettings, TablesEnum.ttable)
         {
@@ -279,7 +298,7 @@ namespace LSC1DatabaseEditor.ViewModel
         public override string DataGridName { get { return "tableDataGrid"; } }
     }
 
-    public class ToolTableViewModel : TableViewModel<UpdatingToolRow>
+    public class ToolTableViewModel : LSC1TablePropertiesViewModel<UpdatingToolRow>
     {
         public ToolTableViewModel(LSC1DatabaseConnectionSettings conSettings) : base(conSettings, TablesEnum.ttool)
         {
@@ -291,7 +310,7 @@ namespace LSC1DatabaseEditor.ViewModel
         public override string DataGridName { get { return "toolDataGrid"; } }
     }
 
-    public class TWTTableViewModel : TableViewModel<UpdatingWTRow>
+    public class TWTTableViewModel : LSC1TablePropertiesViewModel<UpdatingWTRow>
     {
         public TWTTableViewModel(LSC1DatabaseConnectionSettings conSettings) : base(conSettings, TablesEnum.twt)
         {

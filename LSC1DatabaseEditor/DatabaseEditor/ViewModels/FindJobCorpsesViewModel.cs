@@ -33,22 +33,19 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public FindJobCorpsesViewModel()
         {
-            JobCorpses = new ObservableCollection<string>(LSC1DatabaseFunctions.FindJobCorpses(LSC1UserSettings.Instance.DBSettings));
+            JobCorpses = new ObservableCollection<string>(LSC1DatabaseFacade.FindJobCorpses());
 
             AssignNameCommand = new RelayCommand(AssignName);
         }
 
         public void AssignName()
         {
-            //Eintrag in JobName erstellen
-            LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
-            string insertQuery = "INSERT INTO `tjobname` VALUES('" + SelectedJobNr + "', '" + NewName + "')";
-            db.ExecuteQuery(insertQuery);
+            LSC1DatabaseFacade.AssignNameToJob(SelectedJobNr, NewName);
 
             //TODO Neu Laden der Job-Leichen
             JobCorpses.Clear();
 
-            foreach (var item in LSC1DatabaseFunctions.FindJobCorpses(LSC1UserSettings.Instance.DBSettings))
+            foreach (var item in LSC1DatabaseFacade.FindJobCorpses())
                 JobCorpses.Add(item);
 
             NewName = "";

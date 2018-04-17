@@ -17,11 +17,13 @@ namespace LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement
         {
             get
             {
-                MySqlConnectionStringBuilder connStringBuilder = new MySqlConnectionStringBuilder();
-                connStringBuilder.Server = Server; //"29.47.82.13"
-                connStringBuilder.Database = Database; //"lsc1"
-                connStringBuilder.UserID = Uid; //"root"
-                connStringBuilder.Password = Password; //"sql"
+                MySqlConnectionStringBuilder connStringBuilder = new MySqlConnectionStringBuilder
+                {
+                    Server = Server, //"29.47.82.13"
+                    Database = Database, //"lsc1"
+                    UserID = Uid, //"root"
+                    Password = Password //"sql"
+                };
 
                 return connStringBuilder.ConnectionString;
             }

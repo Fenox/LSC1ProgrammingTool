@@ -1,11 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using LSC1DatabaseEditor.LSC1Database.Queries;
 using LSC1DatabaseLibrary;
-using System;
-using System.Collections.Generic;
+using LSC1DatabaseLibrary.CommonMySql;
+using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
+using LSC1DatabaseLibrary.DatabaseModel;
+using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
 
 namespace LSC1DatabaseEditor.ViewModel
@@ -18,8 +19,7 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public FindProcCorpsesViewModel()
         {
-            ProcCorpsesList = new ObservableCollection<string>(LSC1DatabaseFunctions.FindProcCorpses(LSC1UserSettings.Instance.DBSettings));
-
+            ProcCorpsesList = new ObservableCollection<string>(LSC1DatabaseFacade.FindProcCorpses());
             DeleteCommand = new RelayCommand<object>(DeleteProcCorpses);
         }
 
@@ -27,20 +27,18 @@ namespace LSC1DatabaseEditor.ViewModel
         {
             var selectedItemsList = ((System.Collections.IList)selectedItems);
 
-            LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
-
             foreach (var item in selectedItemsList)
             {
                 string deleteProcLaserQuery = "DELETE FROM `tproclaserdata` WHERE Name = '" + item + "'";
                 string deleteProcRobotQuery = "DELETE FROM `tprocrobot` WHERE Name = '" + item + "'";
 
-                db.ExecuteQuery(deleteProcLaserQuery);
-                db.ExecuteQuery(deleteProcRobotQuery);
+                LSC1DatabaseFacade.SimpleQuery(deleteProcLaserQuery);
+                LSC1DatabaseFacade.SimpleQuery(deleteProcRobotQuery);
             }
 
             ProcCorpsesList.Clear();
 
-            foreach (var item in LSC1DatabaseFunctions.FindProcCorpses(LSC1UserSettings.Instance.DBSettings))
+            foreach (var item in LSC1DatabaseFacade.FindProcCorpses())
                 ProcCorpsesList.Add(item);
         }
     }

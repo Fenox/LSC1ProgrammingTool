@@ -16,7 +16,7 @@ namespace LSC1DatabaseEditor.Views.Converter
             if (value == null)
                 return false;
 
-            TablesEnum selectedTable = ((TableViewModelBase)value).Table;
+            TablesEnum selectedTable = ((LSC1TablePropertiesViewModelBase)value).Table;
 
             return selectedTable == TablesEnum.tframe
                     || selectedTable == TablesEnum.tjobdata

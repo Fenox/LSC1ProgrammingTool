@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LSC1DatabaseEditor</RootNamespace>
     <AssemblyName>LSC1DatabaseEditor</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -44,6 +44,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -53,6 +55,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>0EE806BB30DF9BDE232B1D4C92398796ABFCE531</ManifestCertificateThumbprint>
@@ -68,41 +71,49 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonServiceLocator.2.0.3\lib\net40\CommonServiceLocator.dll</HintPath>
+      <HintPath>..\packages\CommonServiceLocator.2.0.3\lib\net45\CommonServiceLocator.dll</HintPath>
     </Reference>
     <Reference Include="ExtensionsAndCodeSnippets">
       <HintPath>C:\Users\Julian\Documents\Visual Studio 2015\Projects\ExtensionsAndCodeSnippets\ExtensionsAndCodeSnippets\bin\Debug\ExtensionsAndCodeSnippets.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19038, Culture=neutral, PublicKeyToken=0e453835af4ee6ce, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net40\GalaSoft.MvvmLight.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=f46ff315b1088208, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net40\GalaSoft.MvvmLight.Extras.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
     <Reference Include="HelixToolkit, Version=2015.1.715.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
       <HintPath>..\packages\HelixToolkit.2015.1.715\lib\portable-net4+sl4+wp71+win8\HelixToolkit.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="HelixToolkit.Wpf, Version=2015.1.715.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
-      <HintPath>..\packages\HelixToolkit.Wpf.2015.1.715\lib\net40\HelixToolkit.Wpf.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\HelixToolkit.Wpf.2015.1.715\lib\net45\HelixToolkit.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.11.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.6.9.11\lib\net40\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data, Version=6.10.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.10.6\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySqlBackup, Version=2.0.12.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySqlBackup.NET.2.0.12\lib\net40\MySqlBackup.dll</HintPath>
+      <HintPath>..\packages\MySqlBackup.NET.2.0.12\lib\net461\MySqlBackup.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCoreExtensions">
       <HintPath>C:\Users\Julian\Documents\Visual Studio 2015\Projects\ExtensionsAndCodeSnippets\HelixExtensions\bin\Debug\PresentationCoreExtensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
@@ -124,6 +135,36 @@
     </ApplicationDefinition>
     <Compile Include="Common\Messages\Model3DLoadedMessage.cs" />
     <Compile Include="Common\Messages\UpdateViewport3DMessage.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\DbRowFactory.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbFrameRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbJobDataRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbJobNameRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbMoveParamRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbPosRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcLaserDataRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcPlcRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcPulseRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcRobotRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcTurnRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\UpdatedDbRowViewModel.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbTableRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbToolRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbTwtRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\TypedDataTables\UpdatedDataTable.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingFrameRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingJobDataRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingJobNameRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingMoveParamRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingPosRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcLaserRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcPlcRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcPulseRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcRobotRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcTurnRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingTableRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingToolRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingWorkdataRow.cs" />
+    <Compile Include="DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingWTRow.cs" />
     <Compile Include="DatabaseEditor\ViewModels\LSC1EditorMenuVM.cs" />
     <Compile Include="DatabaseEditor\ViewModels\SettingsVM.cs" />
     <Compile Include="DatabaseEditor\Views\LSC1SettingsWindow.xaml.cs">
@@ -140,6 +181,12 @@
       <DependentUpon>LSC1LoadJobWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="LSC1CommonTool\Messages\DataGridCellValueChangedMessage.cs" />
+    <Compile Include="LSC1Database\LSC1DatabaseFacade.cs" />
+    <Compile Include="LSC1Database\OfflineDatabase.cs" />
+    <Compile Include="LSC1Database\Queries\FindCorpsesQuery.cs" />
+    <Compile Include="LSC1JobDataRepresentation\JobDataConverter\JobDataToJobSturctureConverter.cs" />
+    <Compile Include="LSC1JobDataRepresentation\LSC1JobData.cs" />
+    <Compile Include="LSC1JobDataRepresentation\LSC1StructuredJob.cs" />
     <Compile Include="LSC1ProgramSimulator\Messages\MoveMachineHeadMessage.cs" />
     <Compile Include="LSC1ProgramSimulator\Messages\VisualObjectChangedMessage.cs" />
     <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1StepDataGridViewModel.cs" />
@@ -188,6 +235,8 @@
     <Compile Include="Common\Views\MyTextMessageBox.xaml.cs">
       <DependentUpon>MyTextMessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="DatabaseEditor\Views\CopyJobWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -268,7 +317,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LSC1Simulation\LSC1LaserParams.cs" />
+    <Compile Include="LSC1Simulation\LSC1MachineSimulator.cs" />
+    <Compile Include="LSC1Simulation\LSC1MachineStatus.cs" />
+    <Compile Include="LSC1Simulation\LSC1Orientation.cs" />
     <Compile Include="LSC1UserSettings.cs" />
+    <Compile Include="LSC1Visualisation\LSC1MachinePathGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -294,7 +348,9 @@
       <Link>Level2_DBEditor.layerdiagram</Link>
       <Visible>False</Visible>
     </AdditionalFiles>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="LSC1DatabaseEditor_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -319,6 +375,39 @@
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
     <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlTransaction.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlParameterCollection.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlParameter.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlHelper.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlException.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlDataReader.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlDataAdapter.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlConnectionStringBuilder.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlConnection.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlCommandBuilder.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="docs\MySqlCommand.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -30,7 +30,7 @@ namespace LSC1DatabaseEditor.LSC1CommonTool.LoadJob
 
         public LSC1LoadJobVM()
         {
-            JobsCollection = LSC1DatabaseFunctions.GetJobs(LSC1UserSettings.Instance.DBSettings);
+            JobsCollection = LSC1DatabaseFacade.GetJobs();
 
             LoadJobButtonCommand = new RelayCommand<Window>(OnLoadJobClick, (wnd) => SelectedJob != null);
         }

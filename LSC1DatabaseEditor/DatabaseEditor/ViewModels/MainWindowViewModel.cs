@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.DatabaseEditor.ViewModels;
 using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
+using LSC1DatabaseLibrary.CommonMySql;
 using LSC1DatabaseLibrary.DatabaseModel;
 using System;
 using System.Collections;
@@ -23,8 +24,8 @@ namespace LSC1DatabaseEditor.ViewModel
     {
         public LSC1EditorMenuVM MenuVM { get; set; } = new LSC1EditorMenuVM();
 
-        ObservableCollection<TableViewModelBase> tables;
-        public ObservableCollection<TableViewModelBase> Tables
+        ObservableCollection<LSC1TablePropertiesViewModelBase> tables;
+        public ObservableCollection<LSC1TablePropertiesViewModelBase> Tables
         {
             get
             {
@@ -37,8 +38,8 @@ namespace LSC1DatabaseEditor.ViewModel
             }
         }
 
-        private TableViewModelBase selectedTable;
-        public TableViewModelBase SelectedTable
+        private LSC1TablePropertiesViewModelBase selectedTable;
+        public LSC1TablePropertiesViewModelBase SelectedTable
         {
             get { return selectedTable; }
             set
@@ -129,23 +130,25 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public MainWindowViewModel()
         {
-            Jobs = new ObservableCollection<DbJobNameRow>(LSC1DatabaseFunctions.GetJobs(LSC1UserSettings.Instance.DBSettings));
+            Jobs = new ObservableCollection<DbJobNameRow>(LSC1DatabaseFacade.GetJobs());
 
-            Tables = new ObservableCollection<TableViewModelBase>();
-            Tables.Add(new FrameTableViewModel(LSC1UserSettings.Instance.DBSettings));
-            Tables.Add(new JobDataTableViewModel(LSC1UserSettings.Instance.DBSettings));
-            Tables.Add(new JobNameTableViewModel(LSC1UserSettings.Instance.DBSettings));
-            Tables.Add(new MoveParamTableViewModel(LSC1UserSettings.Instance.DBSettings));
-            Tables.Add(new PosTableViewModel(LSC1UserSettings.Instance.DBSettings));
-            Tables.Add(new ProcLaserTableViewModel(LSC1UserSettings.Instance.DBSettings));
-            Tables.Add(new ProcPlcTableViewModel(LSC1UserSettings.Instance.DBSettings));
-            Tables.Add(new ProcPulseTableViewModel(LSC1UserSettings.Instance.DBSettings));
-            Tables.Add(new ProcRobotTableViewModel(LSC1UserSettings.Instance.DBSettings));
-            Tables.Add(new ProcTurnTableViewModel(LSC1UserSettings.Instance.DBSettings));
-            Tables.Add(new TableTableViewModel(LSC1UserSettings.Instance.DBSettings));
-            Tables.Add(new ToolTableViewModel(LSC1UserSettings.Instance.DBSettings));
-            Tables.Add(new TWTTableViewModel(LSC1UserSettings.Instance.DBSettings));
-            
+            Tables = new ObservableCollection<LSC1TablePropertiesViewModelBase>
+            {
+                new FrameTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                new JobDataTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                new JobNameTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                new MoveParamTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                new PosTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                new ProcLaserTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                new ProcPlcTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                new ProcPulseTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                new ProcRobotTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                new ProcTurnTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                new TableTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                new ToolTableViewModel(LSC1UserSettings.Instance.DBSettings),
+                new TWTTableViewModel(LSC1UserSettings.Instance.DBSettings)
+            };
+
             //Bearbeiten Commands
             CopyToEndCommand = new RelayCommand<DataGrid>(CopyToEnd, (d) => 
                                         SelectedTable.Table == TablesEnum.tjobdata && JobFilterEnabled && selectedItems.Count > 0
@@ -155,7 +158,7 @@ namespace LSC1DatabaseEditor.ViewModel
                                         SelectedTable.Table == TablesEnum.tjobdata && JobFilterEnabled && selectedItems.Count > 0 
                                         || NameFilterEnabled && NameFilterPossible && selectedItems.Count > 0);
 
-            CheckMessages = new RelayCommand(() => CheckAllMessages());
+            CheckMessages = new RelayCommand(CheckAllMessages);
 
             Messenger.Default.Register<JobsChangedMessage>(this, JobsChanged);
             Messenger.Default.Register<SelectionChangedMessage>(this, (list) =>
@@ -180,7 +183,7 @@ namespace LSC1DatabaseEditor.ViewModel
         {
             Jobs.Clear();
 
-            foreach (var item in LSC1DatabaseFunctions.GetJobs(LSC1UserSettings.Instance.DBSettings))
+            foreach (var item in LSC1DatabaseFacade.GetJobs())
                 Jobs.Add(item);
 
             if (msg.AddedJob != null)
@@ -196,20 +199,20 @@ namespace LSC1DatabaseEditor.ViewModel
         void CheckAllMessages()
         {
             Messages.Clear();
-            var jobCorpses = LSC1DatabaseFunctions.FindJobCorpses(LSC1UserSettings.Instance.DBSettings);
-            var posCorpses = LSC1DatabaseFunctions.FindPosCorpses(LSC1UserSettings.Instance.DBSettings).ToList();
-            var procCorpses = LSC1DatabaseFunctions.FindProcCorpses(LSC1UserSettings.Instance.DBSettings);
+            var jobCorpses = LSC1DatabaseFacade.FindJobCorpses();
+            var posCorpses = LSC1DatabaseFacade.FindPosCorpses().ToList();
+            var procCorpses = LSC1DatabaseFacade.FindProcCorpses();
 
-            if (jobCorpses.Count > 0)
+            if (jobCorpses.Count() > 0)
                 Messages.Add("Job Leichen entdeckt! Bitte beseitigen!");
 
-            if (posCorpses.Count > 0)
+            if (posCorpses.Count() > 0)
                 Messages.Add("pos Leichen entdeckt! Bitte beseitigen!");
 
-            if (procCorpses.Count > 0)
+            if (procCorpses.Count() > 0)
                 Messages.Add("proc Leichen entdeckt! Bitte beseitigen!");
 
-            if (jobCorpses.Count == 0 && posCorpses.Count == 0 && procCorpses.Count == 0)
+            if (jobCorpses.Count() == 0 && posCorpses.Count == 0 && procCorpses.Count() == 0)
                 Messages.Add("No Messages");
         }
 
@@ -244,17 +247,17 @@ namespace LSC1DatabaseEditor.ViewModel
                 newRowsCopy.ChangeRowElementAddIndex(1, highestStepInSelection + 1, "");
 
                 //Update all items with higher step  
-                LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
                 string getHigherStepsQuery = "SELECT Step FROM `tjobdata` WHERE Step > '" + highestStepInSelection + "' AND JobNr = '" + SelectedJob.JobNr + "'";
-                var higherSteps = db.ReadSingleIntColumnQuery(getHigherStepsQuery);
+                var higherSteps = LSC1DatabaseFacade.Read<DbJobDataRow>(LSC1UserSettings.Instance.DBSettings, getHigherStepsQuery)
+                    .Select(item => int.Parse(item.Step)).ToList();
                 
                 higherSteps.Sort();
                 higherSteps.Reverse();
 
                 foreach (var item in higherSteps)
                 {
-                    string setStepHigherQuery = "UPDATE `tjobdata` SET Step = Step + " + numSelectedItems + " WHERE Step = '" + item + "' AND JobNr = '" + SelectedJob.JobNr +"'";
-                    db.ExecuteQuery(setStepHigherQuery);
+                    string setStepHigherQuery = "UPDATE `tjobdata` SET Step = Step + " + numSelectedItems + " WHERE Step = '" + item + "' AND JobNr = '" + SelectedJob.JobNr +"'";                    
+                    LSC1DatabaseFacade.SimpleQuery(setStepHigherQuery);
                 }
             }
 
@@ -267,16 +270,17 @@ namespace LSC1DatabaseEditor.ViewModel
                 newRowsCopy.ChangeRowElementAddIndex(1, highestStepInSelection + 1, "");
 
                 //Update all items with higher step  
-                LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
                 string getHigherStepsQuery = "SELECT Step FROM `" + SelectedTable.Table + "` WHERE Step > '" + highestStepInSelection + "' AND Name = '" + SelectedNameFilter + "'";
-                var higherSteps = db.ReadSingleIntColumnQuery(getHigherStepsQuery);
+                var higherSteps = LSC1DatabaseFacade.Read<DbJobDataRow>(LSC1UserSettings.Instance.DBSettings, getHigherStepsQuery)
+                    .Select(item => int.Parse(item.Step)).ToList();
+
                 higherSteps.Sort();
                 higherSteps.Reverse();
 
                 foreach (var item in higherSteps)
                 {
                     string setStepHigherQuery = "UPDATE `" + SelectedTable.Table + "` SET Step = Step + '" + numSelectedItems + "' WHERE Step = '" + item + "' AND Name = '" + SelectedNameFilter + "'";
-                    db.ExecuteQuery(setStepHigherQuery);
+                    LSC1DatabaseFacade.SimpleQuery(setStepHigherQuery);
                 }
             }
 
@@ -293,10 +297,9 @@ namespace LSC1DatabaseEditor.ViewModel
             //Schreiben der veränderten Werte in die Datenbank!!
             try
             {
-                LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
                 foreach (var item in newRowsCopy)
                 {
-                    db.Insert(item, SelectedTable.Table.ToString());
+                    LSC1DatabaseFacade.Insert(LSC1UserSettings.Instance.DBSettings, item, SelectedTable.Table.ToString());
                     //TODO SelectedTable.DataTable.Rows.Add(item);
                 }
             }
@@ -304,7 +307,6 @@ namespace LSC1DatabaseEditor.ViewModel
             {
                 MessageBox.Show("Fehler, womöglich wurde ein Primärschlüssel doppelt eingefügt. Einfach nochmal probieren...");
             }
-
 
             ReloadGridViewData();
         }
@@ -331,9 +333,12 @@ namespace LSC1DatabaseEditor.ViewModel
             if (SelectedTable.Table == TablesEnum.tjobdata)
             {
                 //Höchste Step Nummer herausfinden
-                LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
                 string highestStepQuery = "SELECT MAX(CAST(Step AS SIGNED)) FROM `tjobdata` WHERE JobNr = '" + SelectedJob.JobNr + "'";
-                int highestStep = int.Parse(db.ReadSingleColumnQuery(highestStepQuery)[0]);
+
+                
+                int highestStep = LSC1DatabaseFacade.Read<DbRow>(LSC1UserSettings.Instance.DBSettings, highestStepQuery)
+                    .Select(val => int.Parse(val.Values[0]))
+                    .First();
 
                 coll.ChangeRowElementAddIndex(1, highestStep + 1, "");
             }
@@ -357,9 +362,10 @@ namespace LSC1DatabaseEditor.ViewModel
                 || SelectedTable.Table == TablesEnum.tprocturn
                 || SelectedTable.Table == TablesEnum.tproclaserdata)
             {
-                LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
                 string highestStepQuery = SQLStringGenerator.HighestStep(SelectedTable.Table, SelectedNameFilter);
-                int highestStep = int.Parse(db.ReadSingleColumnQuery(highestStepQuery)[0]);
+                int highestStep = LSC1DatabaseFacade.Read<DbRow>(LSC1UserSettings.Instance.DBSettings, highestStepQuery)
+                  .Select(val => int.Parse(val.Values[0]))
+                  .First();
 
                 coll.ChangeRowElementAddIndex(1, highestStep + 1, "");
             }
@@ -371,9 +377,10 @@ namespace LSC1DatabaseEditor.ViewModel
             //Bei Auswahl von twt
             if (SelectedTable.Table == TablesEnum.twt)
             {
-                LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
                 string highestNumQuery = "SELECT MAX(CAST(WtId AS SIGNED)) FROM `twt`";
-                int highestId = int.Parse(db.ReadSingleColumnQuery(highestNumQuery)[0]);
+                int highestId = LSC1DatabaseFacade.Read<DbRow>(LSC1UserSettings.Instance.DBSettings, highestNumQuery)
+                  .Select(val => int.Parse(val.Values[0]))
+                  .First();
 
                 coll.ChangeRowElementAddIndex(1, highestId + 1, "");
             }
@@ -385,10 +392,10 @@ namespace LSC1DatabaseEditor.ViewModel
             //Schreiben der veränderten Werte in die Datenbank!!
             try
             {
-                LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
+                //TODO: insertMulti funktion
                 foreach (var item in coll)
                 {
-                    db.Insert(item, SelectedTable.Table.ToString());
+                    LSC1DatabaseFacade.Insert(LSC1UserSettings.Instance.DBSettings, item, SelectedTable.Table.ToString());
                 }
             }
             catch (Exception)
@@ -421,7 +428,6 @@ namespace LSC1DatabaseEditor.ViewModel
         void ReloadGridViewData()
         {
             //Updaten des GridView
-            LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
 
             string query = SQLStringGenerator.GetData(JobFilterEnabled ? SelectedJob.JobNr : null, SelectedTable.Table, NameFilterEnabled ? SelectedNameFilter : null);
 
@@ -429,7 +435,7 @@ namespace LSC1DatabaseEditor.ViewModel
             {
                 try
                 {
-                    var data = db.GetTable(query);
+                    var data = LSC1DatabaseFacade.GetTable(query);
                     SelectedTable.DataTable = data;
                     RaisePropertyChanged("SelectedTable");
                 }

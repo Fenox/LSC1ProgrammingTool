@@ -15,9 +15,9 @@ namespace LSC1DatabaseEditor.LSC1CommonTool.Messages
         public string OldValue { get; set; }
         public string ColumnName { get; set; }
         public DataRowView Row { get; set; }
-        public TableViewModelBase TableVM { get; set; }
+        public LSC1TablePropertiesViewModelBase TableVM { get; set; }
 
-        public DataGridCellValueChangedMessage(string newValue, string oldValue, string columnName, DataRowView row, TableViewModelBase table)
+        public DataGridCellValueChangedMessage(string newValue, string oldValue, string columnName, DataRowView row, LSC1TablePropertiesViewModelBase table)
         {
             TableVM = table;
             NewValue = newValue;

@@ -1,4 +1,6 @@
 ﻿using LSC1Library;
+using System;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace LSC1DatabaseEditor
@@ -10,8 +12,9 @@ namespace LSC1DatabaseEditor
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            //Task t = new Task(() => OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings));
             OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings);
         }
-        
+            
     }
 }

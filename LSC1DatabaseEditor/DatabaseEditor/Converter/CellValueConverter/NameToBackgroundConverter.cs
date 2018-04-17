@@ -20,6 +20,7 @@ namespace LSC1DatabaseEditor.Views.Converter.CellValueConverter
                 || OfflineDatabase.AllProcNames.Contains(name)
                 || OfflineDatabase.AllProcPLCNames.Contains(name)
                 || OfflineDatabase.AllProcPulseNames.Contains(name)
+                || OfflineDatabase.AllProcTurnNames.Contains(name)
                 || name == "?")
                 return null;
             else

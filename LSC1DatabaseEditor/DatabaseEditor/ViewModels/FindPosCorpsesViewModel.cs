@@ -17,27 +17,26 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public FindPosCorpsesViewModel()
         {
-            ProcCorpsesList = new ObservableCollection<string>(LSC1DatabaseFunctions.FindPosCorpses(LSC1UserSettings.Instance.DBSettings));
+            ProcCorpsesList = new ObservableCollection<string>(LSC1DatabaseFacade.FindPosCorpses());
 
             DeleteCommand = new RelayCommand<object>(DeletePosCorpses);
         }
 
+        //TODO test
         void DeletePosCorpses(object selectedItems)
         {
             var selectedItemsList = ((System.Collections.IList)selectedItems);
-
-            LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
-
+            
             foreach (var item in selectedItemsList)
             {
+                //TODO: make to one simple query with IN keyword.
                 string deletePosQuery = "DELETE FROM `tpos` WHERE Name = '" + item + "'";
-
-                db.ExecuteQuery(deletePosQuery);
+                LSC1DatabaseFacade.SimpleQuery(deletePosQuery);
             }
 
             ProcCorpsesList.Clear();
 
-            foreach (var item in LSC1DatabaseFunctions.FindPosCorpses(LSC1UserSettings.Instance.DBSettings))
+            foreach (var item in LSC1DatabaseFacade.FindPosCorpses())
                 ProcCorpsesList.Add(item);
         }
     }

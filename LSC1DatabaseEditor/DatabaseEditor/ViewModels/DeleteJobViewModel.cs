@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseEditor.ViewModel.DataStructures;
 using LSC1DatabaseLibrary;
+using LSC1DatabaseLibrary.CommonMySql;
 using LSC1DatabaseLibrary.DatabaseModel;
 using LSC1Library;
 using System.Collections.Generic;
@@ -35,25 +36,28 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public DeleteJobViewModel()
         {
-            Jobs = LSC1DatabaseFunctions.GetJobs(LSC1UserSettings.Instance.DBSettings);
+            Jobs = LSC1DatabaseFacade.GetJobs();
             DeleteCommand = new RelayCommand<Window>(DeleteJob, (wnd) => SelectedJob != null);
         }
 
         void JobChanged()
         {
             TreeItems.Clear();
-
-            LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
-
+                        
             //Laden der Frames
             string baseFrameQuery = "SELECT FrameT1 FROM `twt` WHERE `WtId` = '" + SelectedJob.JobNr + "'";
-            string baseFrame = db.ReadSingleColumnQuery(baseFrameQuery)[0];
-            var item0 = new TreeViewItem();
-            item0.Text = "base frame";
+            string baseFrame = LSC1DatabaseFacade.Read<DbRow>(LSC1UserSettings.Instance.DBSettings, baseFrameQuery)
+                .Select(val => val.Values[0])
+                .First();
+
+            var item0 = new TreeViewItem
+            {
+                Text = "base frame"
+            };
 
             //Berechnen der Vorkommen des Frames
             string numOfBaseFrameOccurencesQuery = "SELECT * FROM `twt` WHERE FrameT1 ='" + baseFrame + "'";
-            var baseFrameOccurences = db.ReadRows<DbTwtRow>(numOfBaseFrameOccurencesQuery);
+            var baseFrameOccurences = LSC1DatabaseFacade.Read<DbTwtRow>(LSC1UserSettings.Instance.DBSettings, numOfBaseFrameOccurencesQuery);
 
             List<TextItem> occurenceIds = new List<TextItem>();
             foreach (var item in baseFrameOccurences)
@@ -67,20 +71,23 @@ namespace LSC1DatabaseEditor.ViewModel
             item0.SubItems.Add(new CheckableItemWithSub()
             {
                 Text = baseFrame,
-                Checked = baseFrameOccurences.Count == 0,
+                Checked = baseFrameOccurences.Count() == 0,
                 SubItems = new ObservableCollection<TextItem>(occurenceIds)               
             });
             TreeItems.Add(item0);
 
             //Laden von tprocdata
             string tprocdataQuery = "SELECT * FROM `tjobdata` WHERE `JobNr` = '" + SelectedJob.JobNr + "' AND `What` = 'proc' GROUP BY `Name`";
-            var procDataList = db.ReadRows<DbJobDataRow>(tprocdataQuery);
-            var item1 = new TreeViewItem();
-            item1.Text = "tproc";
+            var procDataList = LSC1DatabaseFacade.Read<DbJobDataRow>(LSC1UserSettings.Instance.DBSettings, tprocdataQuery);
+
+            var item1 = new TreeViewItem
+            {
+                Text = "tproc"
+            };
             foreach (var item in procDataList)
             {
                 var subSubItems = new ObservableCollection<TextItem>();
-                var jobsWithProc = LSC1DatabaseFunctions.FindJobsWithName(LSC1UserSettings.Instance.DBSettings, item.Name);
+                var jobsWithProc = LSC1DatabaseFacade.FindJobsThatUseName(item.Name);
 
                 foreach (var job in jobsWithProc)
                 {
@@ -101,13 +108,15 @@ namespace LSC1DatabaseEditor.ViewModel
 
             //Laden aller tpos
             string tposQuery = "SELECT * FROM `tjobdata` WHERE `JobNr` = '" + SelectedJob.JobNr + "' AND `What` = 'pos' GROUP BY `Name`";
-            var posDataList = db.ReadRows<DbJobDataRow>(tposQuery);
-            var item2 = new TreeViewItem();
-            item2.Text = "tpos";
+            var posDataList = LSC1DatabaseFacade.Read<DbJobDataRow>(LSC1UserSettings.Instance.DBSettings, tposQuery);
+            var item2 = new TreeViewItem
+            {
+                Text = "tpos"
+            };
             foreach (var item in posDataList)
             {
                 var subSubItems = new ObservableCollection<TextItem>();
-                var jobsWithPos = LSC1DatabaseFunctions.FindJobsWithName(LSC1UserSettings.Instance.DBSettings, item.Name);
+                var jobsWithPos = LSC1DatabaseFacade.FindJobsThatUseName(item.Name);
 
                 foreach (var job in jobsWithPos)
                 {
@@ -128,13 +137,15 @@ namespace LSC1DatabaseEditor.ViewModel
 
             //Laden aller frames
             string framesQuery = "SELECT * FROM `tjobdata` WHERE `JobNr` = '" + SelectedJob.JobNr + "' GROUP BY `Frame`";
-            var frameList = db.ReadRows<DbJobDataRow>(framesQuery);
-            var item3 = new TreeViewItem();
-            item3.Text = "tframe";
+            var frameList = LSC1DatabaseFacade.Read<DbJobDataRow>(LSC1UserSettings.Instance.DBSettings, framesQuery);
+            var item3 = new TreeViewItem
+            {
+                Text = "tframe"
+            };
             foreach (var item in frameList)
             {
                 var subSubItems = new ObservableCollection<TextItem>();
-                var jobsWithFrame = LSC1DatabaseFunctions.FindJobsWithFrame(LSC1UserSettings.Instance.DBSettings, item.Frame);
+                var jobsWithFrame = LSC1DatabaseFacade.FindJobsWithFrame(item.Frame);
 
                 foreach (var job in jobsWithFrame)
                 {
@@ -174,9 +185,9 @@ namespace LSC1DatabaseEditor.ViewModel
                     selectedFrames.Add(item.Text);
 
             if(TreeItems.Count > 0)
-                LSC1DatabaseFunctions.DeleteJob(LSC1UserSettings.Instance.DBSettings, SelectedJob, selectedProc, selectedPos, selectedFrames, TreeItems[0].SubItems[0].Checked);
+                LSC1DatabaseFacade.DeleteJob(SelectedJob, selectedProc, selectedPos, selectedFrames, TreeItems[0].SubItems[0].Checked);
             else
-                LSC1DatabaseFunctions.DeleteJob(LSC1UserSettings.Instance.DBSettings, SelectedJob, selectedProc, selectedPos, selectedFrames, false);
+                LSC1DatabaseFacade.DeleteJob(SelectedJob, selectedProc, selectedPos, selectedFrames, false);
 
 
             Messenger.Default.Send(new JobsChangedMessage());

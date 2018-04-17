@@ -92,14 +92,13 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
 
         void FindAndNameJobCorpses()
         {
-            var jobCorpsIds = LSC1DatabaseFunctions.FindJobCorpses(LSC1UserSettings.Instance.DBSettings);
+            var jobCorpsIds = LSC1DatabaseFacade.FindJobCorpses();
 
             foreach (var jobCorpsId in jobCorpsIds)
             {
                 //Eintrag in JobName erstellen
-                LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
                 string insertQuery = "INSERT INTO `tjobname` VALUES('" + jobCorpsId + "', 'Job" + jobCorpsId + RandomSnippets.RandomString(1) + "')";
-                db.ExecuteQuery(insertQuery);
+                LSC1DatabaseFacade.SimpleQuery(insertQuery);
             }
 
 
@@ -129,8 +128,7 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
             bool? result = form.ShowDialog();
             if (result.HasValue && result.Value && dataContext.TextBoxText.Length > 0)
             {
-                LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
-                db.Insert(new DbFrameRow() { Name = dataContext.TextBoxText });
+                LSC1DatabaseFacade.Insert(LSC1UserSettings.Instance.DBSettings, new DbFrameRow() { Name = dataContext.TextBoxText });
                 OfflineDatabase.UpdateAllFrameNames(LSC1UserSettings.Instance.DBSettings);
             }
         }
@@ -145,8 +143,7 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
             bool? result = form.ShowDialog();
             if (result.HasValue && result.Value && dataContext.TextBoxText.Length > 0)
             {
-                LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
-                db.Insert(new DbPosRow() { Name = dataContext.TextBoxText });
+                LSC1DatabaseFacade.Insert(LSC1UserSettings.Instance.DBSettings, new DbPosRow() { Name = dataContext.TextBoxText });
                 OfflineDatabase.UpdateAllPosNames(LSC1UserSettings.Instance.DBSettings);
             }
         }
@@ -161,9 +158,8 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
             bool? result = form.ShowDialog();
             if (result.HasValue && result.Value && dataContext.TextBoxText.Length > 0)
             {
-                LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
-                db.Insert(new DbProcRobotRow() { Name = dataContext.TextBoxText });
-                db.Insert(new DbProcLaserDataRow() { Name = dataContext.TextBoxText });
+                LSC1DatabaseFacade.Insert(LSC1UserSettings.Instance.DBSettings, new DbProcRobotRow() { Name = dataContext.TextBoxText });
+                LSC1DatabaseFacade.Insert(LSC1UserSettings.Instance.DBSettings, new DbProcLaserDataRow() { Name = dataContext.TextBoxText });
                 OfflineDatabase.UpdateAllProcNames(LSC1UserSettings.Instance.DBSettings);
             }
         }
@@ -178,8 +174,7 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
             bool? result = form.ShowDialog();
             if (result.HasValue && result.Value && dataContext.TextBoxText.Length > 0)
             {
-                LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
-                db.Insert(new DbProcPlcRow() { Name = dataContext.TextBoxText });
+                LSC1DatabaseFacade.Insert(LSC1UserSettings.Instance.DBSettings, new DbProcPlcRow() { Name = dataContext.TextBoxText });
                 OfflineDatabase.UpdateAllProcPLCNames(LSC1UserSettings.Instance.DBSettings);
             }
         }
@@ -194,8 +189,7 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
             bool? result = form.ShowDialog();
             if (result.HasValue && result.Value && dataContext.TextBoxText.Length > 0)
             {
-                LSC1DatabaseConnector db = new LSC1DatabaseConnector(LSC1UserSettings.Instance.DBSettings);
-                db.Insert(new DbMoveParamRow() { Name = dataContext.TextBoxText });
+                LSC1DatabaseFacade.Insert(LSC1UserSettings.Instance.DBSettings, new DbMoveParamRow() { Name = dataContext.TextBoxText });
                 OfflineDatabase.UpdateAllMoveParamNames(LSC1UserSettings.Instance.DBSettings);
             }
         }

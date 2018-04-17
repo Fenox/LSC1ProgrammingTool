@@ -9,9 +9,9 @@ namespace LSC1DatabaseEditor.Messages
 {
     public class TableSelectionChangedMessage
     {
-        public TableViewModelBase SelectedTable { get; set; }
+        public LSC1TablePropertiesViewModelBase SelectedTable { get; set; }
 
-        public TableSelectionChangedMessage(TableViewModelBase selectedTable)
+        public TableSelectionChangedMessage(LSC1TablePropertiesViewModelBase selectedTable)
         {
             SelectedTable = selectedTable;
         }
