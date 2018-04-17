@@ -174,7 +174,6 @@
     <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingToolRow.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingWorkdataRow.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingWTRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\LSC1AsyncTaskExecuter.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\LSC1EditorMenuVM.cs" />
     <Compile Include="LSC1DatabaseEditor\ViewModels\SettingsVM.cs" />
     <Compile Include="LSC1DatabaseEditor\Views\LSC1SettingsWindow.xaml.cs">
