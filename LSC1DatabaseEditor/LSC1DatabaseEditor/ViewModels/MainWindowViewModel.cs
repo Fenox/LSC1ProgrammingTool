@@ -202,7 +202,7 @@ namespace LSC1DatabaseEditor.ViewModel
         {
             Messages.Clear();
             var jobCorpses = LSC1DatabaseFacade.FindJobCorpses();
-            var posCorpses = LSC1DatabaseFacade.FindPosCorpses().ToList();
+            var posCorpses = LSC1DatabaseFacade.FindPosCorpses();
             var procCorpses = LSC1DatabaseFacade.FindProcCorpses();
 
             if (jobCorpses.Count() > 0)
