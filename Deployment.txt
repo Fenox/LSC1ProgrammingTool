@@ -1,0 +1,6 @@
+Beschreibung des Deployment Vorgangs
+1. Verbindungseinstellungen (Sollte automatisiert werden)
+	1.1 Einstellen der IP-Adresse = 29.47.82.13
+	1.2 Einstellen des Nutzernamens = root
+	1.3 Einstellen des Passwortes = sql
+	1.4 Einstellen des Datenbank-Namens = lsc1

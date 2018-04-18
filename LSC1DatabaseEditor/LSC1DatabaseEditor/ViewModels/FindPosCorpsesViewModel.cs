@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using LSC1DatabaseEditor.LSC1Database;
 using LSC1DatabaseLibrary;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,19 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public FindPosCorpsesViewModel()
         {
-            ProcCorpsesList = new ObservableCollection<string>(LSC1DatabaseFacade.FindPosCorpses());
+            Initialize();
+        }
+
+        async void Initialize()
+        {
+            var finder = new LSC1InconsistencyHandler(LSC1UserSettings.Instance.DBSettings.ConnectionString);
+            ProcCorpsesList = new ObservableCollection<string>(await finder.FindPosOrphansAsync());
 
             DeleteCommand = new RelayCommand<object>(DeletePosCorpses);
         }
 
         //TODO test
-        void DeletePosCorpses(object selectedItems)
+        async void DeletePosCorpses(object selectedItems)
         {
             var selectedItemsList = ((System.Collections.IList)selectedItems);
             
@@ -36,7 +43,7 @@ namespace LSC1DatabaseEditor.ViewModel
 
             ProcCorpsesList.Clear();
 
-            foreach (var item in LSC1DatabaseFacade.FindPosCorpses())
+            foreach (var item in await new LSC1InconsistencyHandler(LSC1UserSettings.Instance.DBSettings.ConnectionString).FindPosOrphansAsync())
                 ProcCorpsesList.Add(item);
         }
     }

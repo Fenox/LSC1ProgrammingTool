@@ -14,13 +14,7 @@ namespace LSC1DatabaseEditor
 
         private LSC1UserSettings() { }
 
-        public static LSC1UserSettings Instance
-        {
-            get
-            {
-                return instance;
-            }
-        }
+        public static LSC1UserSettings Instance => instance;
 
         [UserScopedSetting()]
         [DefaultSettingValue("lsc1")] //lsc1

@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.Controller;
 using LSC1DatabaseEditor.DatabaseEditor.Views;
+using LSC1DatabaseEditor.LSC1Database;
 using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseEditor.ViewModel;
 using LSC1DatabaseEditor.Views;
@@ -94,9 +95,10 @@ namespace LSC1DatabaseEditor.DatabaseEditor.ViewModels
             windows.Show();
         }
 
-        void FindAndNameJobCorpses()
+        async void FindAndNameJobCorpses()
         {
-            var jobCorpsIds = LSC1DatabaseFacade.FindJobCorpses();
+            var jobCorpsIds = await new LSC1InconsistencyHandler(LSC1UserSettings.Instance.DBSettings.ConnectionString)
+                .FindJobOrphansAsync();
 
             foreach (var jobCorpsId in jobCorpsIds)
             {

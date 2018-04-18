@@ -1,6 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using LSC1DatabaseEditor.LSC1Database.Queries;
+using LSC1DatabaseEditor.LSC1Database;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.CommonMySql;
 using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
@@ -11,19 +11,27 @@ using System.Windows.Input;
 
 namespace LSC1DatabaseEditor.ViewModel
 {
+    //TODO: handle proc robot and proc laser
     public class FindProcCorpsesViewModel : ViewModelBase
     {
+        private static LSC1InconsistencyHandler inconsistencies = 
+            new LSC1InconsistencyHandler(LSC1UserSettings.Instance.DBSettings.ConnectionString);
         public ObservableCollection<string> ProcCorpsesList { get; set; }
 
         public ICommand DeleteCommand { get; set; }
 
         public FindProcCorpsesViewModel()
         {
-            ProcCorpsesList = new ObservableCollection<string>(LSC1DatabaseFacade.FindProcCorpses());
+            Initialize();
             DeleteCommand = new RelayCommand<object>(DeleteProcCorpses);
         }
+        async void Initialize()
+        {
+            ProcCorpsesList = new ObservableCollection<string>(
+                 await inconsistencies.FindProcLaserOrphansAsync());
+        }
 
-        void DeleteProcCorpses(object selectedItems)
+        async void DeleteProcCorpses(object selectedItems)
         {
             var selectedItemsList = ((System.Collections.IList)selectedItems);
 
@@ -38,7 +46,7 @@ namespace LSC1DatabaseEditor.ViewModel
 
             ProcCorpsesList.Clear();
 
-            foreach (var item in LSC1DatabaseFacade.FindProcCorpses())
+            foreach (var item in await inconsistencies.FindProcLaserOrphansAsync())
                 ProcCorpsesList.Add(item);
         }
     }

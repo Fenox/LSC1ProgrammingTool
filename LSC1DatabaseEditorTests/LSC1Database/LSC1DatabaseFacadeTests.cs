@@ -6,12 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using LSC1DatabaseEditor.LSC1Database;
 
 namespace LSC1DatabaseLibrary.Tests
 {
     [TestClass()]
     public class LSC1DatabaseFacadeTests
     {
+        private static LSC1InconsistencyHandler inconsistencyFinder = new LSC1InconsistencyHandler(new MySqlConnectionStringBuilder
+            {
+                Server = "127.0.0.1",
+                Database = "lsc1test",
+                UserID = "root",
+                Password = ""
+            }.ConnectionString); 
+
         [TestInitialize]
         public void Initialize()
         {
@@ -43,23 +52,23 @@ namespace LSC1DatabaseLibrary.Tests
         }
 
         [TestMethod()]
-        public void FindProcCorpsesTest()
+        public async void FindProcCorpsesTest()
         {
-            var result = LSC1DatabaseFacade.FindProcCorpses();
+            var result = await inconsistencyFinder.FindProcLaserOrphansAsync();
             Assert.AreEqual(0, result.Count());
         }
 
         [TestMethod()]
-        public void FindPosCorpsesTest()
+        public async void FindPosCorpsesTest()
         {
-            var result = LSC1DatabaseFacade.FindPosCorpses();
+            var result = await inconsistencyFinder.FindPosOrphansAsync();
             Assert.AreEqual(0, result.Count());
         }
 
         [TestMethod()]
-        public void FindJobCorpsesTest()
+        public async void FindJobCorpsesTest()
         {
-            var result = LSC1DatabaseFacade.FindJobCorpses();
+            var result = await inconsistencyFinder.FindJobOrphansAsync();
             Assert.AreEqual(0, result.Count());
         }
 

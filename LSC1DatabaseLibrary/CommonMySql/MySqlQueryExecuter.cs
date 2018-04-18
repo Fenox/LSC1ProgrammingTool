@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LSC1DatabaseLibrary.CommonMySql
 {
@@ -29,6 +30,21 @@ namespace LSC1DatabaseLibrary.CommonMySql
             {
                 OpenConnection();
                 var result = query.Execute(connection);
+                CloseConnection();
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<TReturn> ExecuteAsync<TReturn>(IMySqlQuery<TReturn> query)
+        {
+            try
+            {
+                OpenConnection();
+                var result = await Task.Run(() => query.Execute(connection));
                 CloseConnection();
                 return result;
             }

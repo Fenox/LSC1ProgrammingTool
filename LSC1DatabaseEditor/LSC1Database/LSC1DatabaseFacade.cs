@@ -1,5 +1,4 @@
 ﻿using LSC1DatabaseEditor;
-using LSC1DatabaseEditor.LSC1Database.Queries;
 using LSC1DatabaseLibrary.CommonMySql;
 using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
 using LSC1DatabaseLibrary.DatabaseModel;
@@ -10,56 +9,35 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LSC1DatabaseLibrary
 {
     public static class LSC1DatabaseFacade
     {
-        public static string ConnectionString = LSC1UserSettings.Instance.DBSettings.ConnectionString;
+        public static LSC1MySqlQueryExecuter executer = new LSC1MySqlQueryExecuter(LSC1UserSettings.Instance.DBSettings.ConnectionString);
 
         public static List<DbJobNameRow> GetJobs()
         {
             string query = "SELECT * FROM `tjobname`";
-            return new LSC1MySqlQueryExecuter(ConnectionString)
-                .Execute(new ReadRowsQuery<DbJobNameRow>(query));            
+            return executer.Execute(new ReadRowsQuery<DbJobNameRow>(query));            
         }
 
-        public static IEnumerable<string> FindProcCorpses()
+        internal static object FindProcCorpses()
         {
-            return new LSC1MySqlQueryExecuter(ConnectionString)
-                .Execute(new FindCorpsesQuery());
+            throw new NotImplementedException();
         }
 
         public static void SimpleQuery(string query)
         {
-            new LSC1MySqlQueryExecuter(ConnectionString)
-                .Execute(new NonReturnSimpleQuery(query));
+            executer.Execute(new NonReturnSimpleQuery(query));
         }
-
-        public static IEnumerable<string> FindPosCorpses()
-        {
-            //Corpses in pos
-            string posCorpsesQuery = "SELECT * FROM `tpos` WHERE Name NOT IN (SELECT Name FROM `tjobdata`) GROUP BY `Name`";
-
-            return new LSC1MySqlQueryExecuter(ConnectionString)
-                .Execute(new ReadRowsQuery<DbPosRow>(posCorpsesQuery))
-                .Select(item => item.Name);
-        }
-
-        public static IEnumerable<string> FindJobCorpses()
-        {
-            string jobCorpsesQuery = "SELECT DISTINCT (JobNr) FROM `tjobdata` WHERE JobNr NOT IN (SELECT JobNr FROM `tjobname`)";
-           
-            return new LSC1MySqlQueryExecuter(ConnectionString)
-                .Execute(new ReadRowsQuery<DbJobDataRow>(jobCorpsesQuery))
-                .Select(item => item.Name);
-        }
-
+        
         internal static void AssignNameToJob(string jobNr, string name)
         {
             string insertQuery = "INSERT INTO `tjobname` VALUES('" + jobNr + "', '" + name + "')";
-            new LSC1MySqlQueryExecuter(ConnectionString).Execute(new NonReturnSimpleQuery(insertQuery));
+            executer.Execute(new NonReturnSimpleQuery(insertQuery));
         }
 
         public static string GetFreeJobNumber()
@@ -81,8 +59,6 @@ namespace LSC1DatabaseLibrary
 
         public static void DeleteJob(DbJobNameRow job, List<string> procs, List<string> positions, List<string> frames, bool deleteBaseFrame)
         {
-            var executer = new LSC1MySqlQueryExecuter(ConnectionString);
-
             string deleteFromJobnameQuery = "DELETE FROM `tjobname` WHERE JobNr = '" + job.JobNr + "'";
             string deleteFromJobDataQuery = "DELETE FROM `tjobdata` WHERE JobNr = '" + job.JobNr + "'";
 
@@ -95,9 +71,11 @@ namespace LSC1DatabaseLibrary
                 string getWtEntryQuery = "SELECT * FROM `twt` WHERE WtId = '" + job.JobNr + "'";
                 var wtEntry = executer.Execute(new ReadRowsQuery<DbTwtRow>(getWtEntryQuery));
 
-
-                string deleteBaseFrameQuery = "DELETE FROM `tframe` WHERE Name = '" + wtEntry[0].FrameT1 + "'";
-                executer.Execute(new NonReturnSimpleQuery(deleteBaseFrameQuery));
+                if(wtEntry.Count > 0)
+                {
+                    string deleteBaseFrameQuery = "DELETE FROM `tframe` WHERE Name = '" + wtEntry[0].FrameT1 + "'";
+                    executer.Execute(new NonReturnSimpleQuery(deleteBaseFrameQuery));
+                }
             }
 
             foreach (var proc in procs)
@@ -127,26 +105,27 @@ namespace LSC1DatabaseLibrary
             string jobNrsWithProcNameQuery = "SELECT (JobNr) FROM `tjobdata` WHERE Name = '" + name + "' GROUP BY `JobNr`";
             string selectJobNameQuery = "SELECT * FROM `tjobname` WHERE JobNr IN (" + jobNrsWithProcNameQuery + ")";
 
-            return new LSC1MySqlQueryExecuter(ConnectionString)
-                .Execute(new ReadRowsQuery<DbJobNameRow>(selectJobNameQuery));
+            return executer.Execute(new ReadRowsQuery<DbJobNameRow>(selectJobNameQuery));
         }
 
         public static void Insert(LSC1DatabaseConnectionSettings dBSettings, DbRow dbRow)
         {
-            new LSC1MySqlQueryExecuter(ConnectionString)
-                .Execute(new InsertQuery(dbRow));
+            executer.Execute(new InsertQuery(dbRow));
         }
 
         public static void Insert(LSC1DatabaseConnectionSettings dBSettings, string tableName, List<string> columnNames, List<string> values)
         {
-            new LSC1MySqlQueryExecuter(ConnectionString)
-                .Execute(new InsertQuery(tableName, columnNames, values));
+            executer.Execute(new InsertQuery(tableName, columnNames, values));
         }
 
         internal static List<T> Read<T>(LSC1DatabaseConnectionSettings dbSettings, string query) where T : DbRow, new()
         {
-            return new LSC1MySqlQueryExecuter(ConnectionString)
-                .Execute(new ReadRowsQuery<T>(query));
+            return executer.Execute(new ReadRowsQuery<T>(query));
+        }
+
+        internal async static Task<List<T>> ReadAsync<T>(LSC1DatabaseConnectionSettings dbSettings, string query) where T : DbRow, new()
+        {
+            return await Task.Run(() => executer.Execute(new ReadRowsQuery<T>(query)));
         }
 
         /// <summary>
@@ -171,8 +150,7 @@ namespace LSC1DatabaseLibrary
 
             try
             {
-                new LSC1MySqlQueryExecuter(ConnectionString)
-                    .Execute(new InsertQuery(tableName, columnsList, values));                
+                executer.Execute(new InsertQuery(tableName, columnsList, values));                
             }
             catch (Exception)
             {
@@ -185,15 +163,12 @@ namespace LSC1DatabaseLibrary
             string jobNrsWithProcNameQuery = "SELECT (JobNr) FROM `tjobdata` WHERE Frame = '" + frame + "' GROUP BY `JobNr`";
             string selectJobNameQuery = "SELECT * FROM `tjobname` WHERE JobNr IN (" + jobNrsWithProcNameQuery + ")";
 
-            return new LSC1MySqlQueryExecuter(ConnectionString)
-                .Execute(new ReadRowsQuery<DbJobNameRow>(selectJobNameQuery));
+            return executer.Execute(new ReadRowsQuery<DbJobNameRow>(selectJobNameQuery));
         }
 
         //TODO: test
         public static void CopyJob(string newJobName, string oldJobName, Dictionary<string, bool> keepOldPos, Dictionary<string, bool> keepOldProc, Dictionary<string, bool> keepOldFrame, bool keepBaseFrame)
         {
-            var executer = new LSC1MySqlQueryExecuter(ConnectionString);
-
             //TODO: add limit to only read one row
             //zu kopierenden Job holen
             var oldJob = executer
@@ -357,8 +332,7 @@ namespace LSC1DatabaseLibrary
 
             deleteQuery = deleteQuery.Remove(deleteQuery.Length - 5);
 
-            new LSC1MySqlQueryExecuter(ConnectionString)
-                .Execute(new NonReturnSimpleQuery(deleteQuery));
+            executer.Execute(new NonReturnSimpleQuery(deleteQuery));
         }
 
 
@@ -373,7 +347,7 @@ namespace LSC1DatabaseLibrary
             DataTable dt = new DataTable();
 
 
-            MySqlConnection connection = new MySqlConnection(ConnectionString);
+            MySqlConnection connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString);
             connection.Open();
             MySqlDataAdapter adapter = new MySqlDataAdapter(query, connection);
             MySqlCommandBuilder builder = new MySqlCommandBuilder(adapter);

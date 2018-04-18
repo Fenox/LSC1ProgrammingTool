@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.Common.Messages;
 using LSC1DatabaseEditor.Controller;
 using LSC1DatabaseEditor.DatabaseEditor.ViewModels;
+using LSC1DatabaseEditor.LSC1Database;
 using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.CommonMySql;
@@ -271,11 +272,13 @@ namespace LSC1DatabaseEditor.ViewModel
         async void CheckAllMessages()
         {
             var asyncExecuter = new LSC1AsyncTaskExecuter();
+            var finder = new LSC1InconsistencyHandler(LSC1UserSettings.Instance.DBSettings.ConnectionString);
 
             Messages.Clear();
-            var jobCorpses = await asyncExecuter.DoTaskAsync("Find Job Leichen", LSC1DatabaseFacade.FindJobCorpses);
-            var posCorpses = await asyncExecuter.DoTaskAsync("Find Pos Leichen", LSC1DatabaseFacade.FindPosCorpses);
-            var procCorpses = await asyncExecuter.DoTaskAsync("Find Proc Leichen", LSC1DatabaseFacade.FindProcCorpses);
+            //TODO: find all orphans
+            var jobCorpses = await asyncExecuter.DoTaskAsync("Find Job Leichen", finder.FindJobOrphansAsync());
+            var posCorpses = await asyncExecuter.DoTaskAsync("Find Pos Leichen", finder.FindPosOrphansAsync());
+            var procCorpses = await asyncExecuter.DoTaskAsync("Find Proc Leichen", finder.FindProcLaserOrphansAsync());
 
             if (jobCorpses.Count() > 0)
                 Messages.Add("Job Leichen entdeckt! Bitte beseitigen!");
@@ -381,10 +384,10 @@ namespace LSC1DatabaseEditor.ViewModel
                     //TODO SelectedTable.DataTable.Rows.Add(item);
                 }
             }
-            catch (Exception)
+            catch (MySqlException e)
             {
                 MessageBox.Show("Fehler, womöglich wurde ein Primärschlüssel doppelt eingefügt. Einfach nochmal probieren...");
-                logger.Error("Error in Copy to end");
+                logger.Error(e, "Error in Copy to end");
             }
 
             logger.Info("Used: Copy and Insert at");

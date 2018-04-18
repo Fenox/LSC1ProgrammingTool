@@ -326,13 +326,13 @@
 
             </MenuItem>
             <MenuItem Header="_Fehlersuche">
-                <MenuItem Header="_Suche Job Leichen" 
+                <MenuItem Header="_Suche Job Waisen" 
                           Command="{Binding FindJobCorpsesCommand}" />
-                <MenuItem Header="_Suche Job Leichen und erstelle Namen" 
+                <MenuItem Header="_Suche Job Waisen und erstelle Namen" 
                           Command="{Binding FindAndNameJobCorpsesCommand}" />
-                <MenuItem Header="_Suche Proc Leichen" 
+                <MenuItem Header="_Suche Proc Waisen" 
                           Command="{Binding FindProcCorpsesCommand}" />
-                <MenuItem Header="_Suche Pos Leichen" 
+                <MenuItem Header="_Suche Pos Waisen" 
                           Command="{Binding FindPosCorpsesCommand}" />
             </MenuItem>
 
@@ -350,9 +350,9 @@
             </MenuItem>
 
             <MenuItem Header="Job" >
-                <MenuItem Header="_Copy Job" 
+                <MenuItem Header="_Copy Job (experimentell)" 
                           Command="{Binding CopyJobCommand}"/>
-                <MenuItem Header="_Delete Job" 
+                <MenuItem Header="_Delete Job (experimentell)" 
                           Command="{Binding DeleteJobCommand}"/>
             </MenuItem>
 

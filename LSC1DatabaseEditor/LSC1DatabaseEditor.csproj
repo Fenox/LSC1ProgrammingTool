@@ -193,8 +193,8 @@
     </Compile>
     <Compile Include="LSC1CommonTool\Messages\DataGridCellValueChangedMessage.cs" />
     <Compile Include="LSC1Database\LSC1DatabaseFacade.cs" />
+    <Compile Include="LSC1Database\LSC1InconsistencyHandler.cs" />
     <Compile Include="LSC1Database\OfflineDatabase.cs" />
-    <Compile Include="LSC1Database\Queries\FindCorpsesQuery.cs" />
     <Compile Include="LSC1JobDataRepresentation\JobDataConverter\JobDataToJobSturctureConverter.cs" />
     <Compile Include="LSC1JobDataRepresentation\LSC1JobData.cs" />
     <Compile Include="LSC1JobDataRepresentation\LSC1StructuredJob.cs" />
@@ -425,6 +425,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="docs\MySqlCommand.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LSC1Database\Queries\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

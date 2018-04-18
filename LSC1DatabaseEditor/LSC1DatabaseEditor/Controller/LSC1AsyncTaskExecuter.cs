@@ -18,6 +18,14 @@ namespace LSC1DatabaseEditor.Controller
             return result;
         }
 
+        public async Task<T> DoTaskAsync<T>(string taskName, Task<T> task)
+        {
+            Messenger.Default.Send(new StartedTaskMessage(taskName));
+            var result = await task;
+            Messenger.Default.Send(new EndedTaskMessage(taskName));
+            return result;
+        }
+
         public async Task DoTaskAsync(string taskName, Action task)
         {
             Messenger.Default.Send(new StartedTaskMessage(taskName));
