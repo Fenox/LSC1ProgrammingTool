@@ -12,6 +12,7 @@ using PresentationCoreExtensions;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using LSC1DatabaseEditor.LSC1CommonTool.Messages;
 
 namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
 {
@@ -24,7 +25,7 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
                    
         }
 
-        void CreateJobObjects(LSC1JobChangedMessage msg)
+        private void CreateJobObjects(LSC1JobChangedMessage msg)
         {
             Messenger.Default.Send(new UpdateViewport3DMessage(null, ViewportUpdateOperation.Clear), LSC1SimulatorViewModel.MessageToken);
 
@@ -84,7 +85,7 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
 
         }
 
-        void ShowManipulatorOnObject(SelectedTreeViewItemChanged msg)
+        private void ShowManipulatorOnObject(SelectedTreeViewItemChanged msg)
         {
             if (msg.SelectedItem.GetType() == typeof(LSC1TreeViewPointLeaveItem))
             {
@@ -101,9 +102,9 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
 
     public class PointLineWithManipulator : ModelVisual3D
     {
-        LinesVisual3D line = new LinesVisual3D();
-        PointsVisual3D points = new PointsVisual3D();
-        TranslateManipulator mani = new TranslateManipulator();
+        private LinesVisual3D line = new LinesVisual3D();
+        private PointsVisual3D points = new PointsVisual3D();
+        private TranslateManipulator mani = new TranslateManipulator();
 
         public PointLineWithManipulator()
         {

@@ -25,7 +25,7 @@
 
         ' Start a local transaction
         myTrans = myConnection.BeginTransaction()
-        ' Must assign both transaction object and connection
+        ' Must assign both transaction object and connectionStringnection
         ' to Command object for a pending local transaction
         myCommand.Connection = myConnection
         myCommand.Transaction = myTrans
@@ -66,7 +66,7 @@
 
         // Start a local transaction
         myTrans = myConnection.BeginTransaction();
-        // Must assign both transaction object and connection
+        // Must assign both transaction object and connectionStringnection
         // to Command object for a pending local transaction
         myCommand.Connection = myConnection;
         myCommand.Transaction = myTrans;
@@ -136,7 +136,7 @@
         ' Start a local transaction
         myTrans = myConnection.BeginTransaction()
 
-        ' Must assign both transaction object and connection
+        ' Must assign both transaction object and connectionStringnection
         ' to Command object for a pending local transaction
         myCommand.Connection = myConnection
         myCommand.Transaction = myTrans
@@ -177,7 +177,7 @@
 
         // Start a local transaction
         myTrans = myConnection.BeginTransaction();
-        // Must assign both transaction object and connection
+        // Must assign both transaction object and connectionStringnection
         // to Command object for a pending local transaction
         myCommand.Connection = myConnection;
         myCommand.Transaction = myTrans;
@@ -243,7 +243,7 @@
         ' Start a local transaction
         myTrans = myConnection.BeginTransaction()
 
-        ' Must assign both transaction object and connection
+        ' Must assign both transaction object and connectionStringnection
         ' to Command object for a pending local transaction
         myCommand.Connection = myConnection
         myCommand.Transaction = myTrans
@@ -284,7 +284,7 @@
 
         // Start a local transaction
         myTrans = myConnection.BeginTransaction();
-        // Must assign both transaction object and connection
+        // Must assign both transaction object and connectionStringnection
         // to Command object for a pending local transaction
         myCommand.Connection = myConnection;
         myCommand.Transaction = myTrans;

@@ -6,31 +6,38 @@ using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseEditor.Messages.Common;
 using LSC1DatabaseEditor.ViewModel;
 using LSC1DatabaseLibrary;
-using LSC1DatabaseLibrary.DatabaseModel;
-using LSC1Library;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using LSC1DatabaseEditor.LSC1Database;
+using LSC1DatabaseEditor.LSC1DbEditor.Controller;
+using LSC1DatabaseEditor.LSC1DbEditor.ViewModels;
+using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
+using LSC1DatabaseLibrary.CommonMySql;
+using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
+using MySql.Data.MySqlClient;
 
 namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
 {
     public class LSC1StepDataGridViewModel : ViewModelBase
     {
-        public LSC1TablePropertiesViewModelBase items1Table = new ProcRobotTableViewModel(LSC1UserSettings.Instance.DBSettings);
+        private static readonly LSC1AsyncDBTaskExecuter AsyncDbExecuter = new LSC1AsyncDBTaskExecuter();
+        public LSC1TablePropertiesViewModelBase items1Table = new ProcRobotTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString);
+        private static readonly MySqlConnection Connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString);
         public LSC1TablePropertiesViewModelBase Items1
         {
-            get { return items1Table; }
+            get => items1Table;
             set
             {
                 items1Table = value;
                 RaisePropertyChanged("Items1");
             }
         }
-        public LSC1TablePropertiesViewModelBase items2Table = new ProcLaserTableViewModel(LSC1UserSettings.Instance.DBSettings);
+        public LSC1TablePropertiesViewModelBase items2Table = new ProcLaserTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString);
         public LSC1TablePropertiesViewModelBase Items2
         {
-            get { return items2Table; }
+            get => items2Table;
             set
             {
                 items2Table = value;
@@ -41,13 +48,10 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
         public DbJobNameRow Job { get; set; }
 
 
-        ObservableCollection<LSC1TablePropertiesViewModelBase> tables;
+        private ObservableCollection<LSC1TablePropertiesViewModelBase> tables;
         public ObservableCollection<LSC1TablePropertiesViewModelBase> Tables
         {
-            get
-            {
-                return tables;
-            }
+            get => tables;
             set
             {
                 tables = value;
@@ -59,19 +63,19 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
         {
             Tables = new ObservableCollection<LSC1TablePropertiesViewModelBase>
             {
-                new FrameTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new JobDataTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new JobNameTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new MoveParamTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new PosTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new ProcLaserTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new ProcPlcTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new ProcPulseTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new ProcRobotTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new ProcTurnTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new TableTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new ToolTableViewModel(LSC1UserSettings.Instance.DBSettings),
-                new TWTTableViewModel(LSC1UserSettings.Instance.DBSettings)
+                new FrameTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString),
+                new JobDataTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString),
+                new JobNameTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString),
+                new MoveParamTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString),
+                new PosTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString),
+                new ProcLaserTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString),
+                new ProcPlcTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString),
+                new ProcPulseTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString),
+                new ProcRobotTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString),
+                new ProcTurnTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString),
+                new TableTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString),
+                new ToolTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString),
+                new TWTTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString)
             };
 
             Messenger.Default.Register<LSC1JobChangedMessage>(this, LSC1SimulatorViewModel.MessageToken, (msg) => Job = msg.NewJob);
@@ -79,10 +83,10 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
             Messenger.Default.Register<DataGridCellValueChangedMessage>(this, LSC1SimulatorViewModel.MessageToken, OnCellValueChanged);
         }
 
-        void OnCellValueChanged(DataGridCellValueChangedMessage msg)
+        private void OnCellValueChanged(DataGridCellValueChangedMessage msg)
         {
             //Create String that Updates a row 
-            string QueryString = "UPDATE " + msg.TableVM.Table +
+            string queryString = "UPDATE " + msg.TableVM.Table +
                        " SET `" + msg.ColumnName + "` = '" + msg.NewValue +
                        "' WHERE ";
 
@@ -94,20 +98,20 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
                 {
                     //Falls die letzte Spalte geändert wurde muss das AND wieder weg
                     if (i == msg.TableVM.DataTable.Columns.Count - 1)
-                        QueryString = QueryString.Remove(QueryString.Length - 4);
+                        queryString = queryString.Remove(queryString.Length - 4);
 
                     continue;
                 }
 
-                QueryString += "`" + columnNamei + "` = '" + msg.Row.Row[i] + "'";
+                queryString += "`" + columnNamei + "` = '" + msg.Row.Row[i] + "'";
 
                 if (i != msg.TableVM.DataTable.Columns.Count - 1)
-                    QueryString += " AND ";
+                    queryString += " AND ";
             }
 
             try
             {
-                LSC1DatabaseFacade.SimpleQuery(QueryString);            
+                new NonReturnSimpleQuery(queryString).Execute(Connection);            
             }
             catch (Exception ex)
             {
@@ -116,53 +120,53 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
 
 
             //Updaten der OfflineDatenbank, falls wichtiges geändert wurde
-            if (msg.ColumnName.ToString() == "Name")
+            if (msg.ColumnName == "Name")
             {
-                OfflineDatabase.UpdateTable(LSC1UserSettings.Instance.DBSettings, msg.TableVM.Table);
+                OfflineDatabase.UpdateTable(LSC1UserSettings.Instance.DBSettings.ConnectionString, msg.TableVM.Table);
             }
             
             Messenger.Default.Send(new LSC1JobChangedMessage(Job), LSC1SimulatorViewModel.MessageToken);
         }
 
-        void PopulateGridItems(SelectedTreeViewItemChanged msg)
+        private async void PopulateGridItems(SelectedTreeViewItemChanged msg)
         {
             if (msg.SelectedItem.GetType() == typeof(LSC1TreeViewPointLeaveItem))
             {
                 var item = (LSC1TreeViewPointLeaveItem)msg.SelectedItem;
 
-                foreach (var instruction in item.InstructionStepData.Instructions)
+                foreach (DbRow instruction in item.InstructionStepData.Instructions)
                 {
                     if (instruction.GetType() == typeof(DbPosRow))
                     {
                         var posRow = (DbPosRow)instruction;
                         //Wird an die View gesendet, um dort das Tabellen-Layout zu ändern.
-                        Messenger.Default.Send(new TableSelectionChangedMessage(new PosTableViewModel(LSC1UserSettings.Instance.DBSettings)), LSC1SimulatorViewModel.MessageToken);
-                        var itemQuery = SQLStringGenerator.GetStepItemQuery(Job.JobNr, TablesEnum.tpos, posRow.Name, 0);
+                        Messenger.Default.Send(new TableSelectionChangedMessage(new PosTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString)), LSC1SimulatorViewModel.MessageToken);
+                        string itemQuery = SQLStringGenerator.GetStepItemQuery(Job.JobNr, TablesEnum.tpos, posRow.Name, 0);
 
                         Items1 = Tables.First(t => t.Table == TablesEnum.tpos);  
-                        Items1.DataTable = LSC1DatabaseFacade.GetTable(itemQuery);
+                        Items1.DataTable = await AsyncDbExecuter.DoTaskAsync("Lade pos steps.", () => new GetTableQuery(itemQuery).Execute(Connection));
                         RaisePropertyChanged("Items1");
                     }
                     else if(instruction.GetType() == typeof(DbProcRobotRow))
                     {
                         var procRobotRow = (DbProcRobotRow)instruction;
                         //Wird an die View gesendet, um dort das Tabellen-Layout zu ändern.
-                        Messenger.Default.Send(new TableSelectionChangedMessage(new ProcRobotTableViewModel(LSC1UserSettings.Instance.DBSettings)), LSC1SimulatorViewModel.MessageToken);
+                        Messenger.Default.Send(new TableSelectionChangedMessage(new ProcRobotTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString)), LSC1SimulatorViewModel.MessageToken);
                         var itemQuery = SQLStringGenerator.GetStepItemQuery(Job.JobNr, TablesEnum.tprocrobot, procRobotRow.Name, int.Parse(procRobotRow.Step));
 
                         Items1 = Tables.First(t => t.Table == TablesEnum.tprocrobot);
-                        Items1.DataTable = LSC1DatabaseFacade.GetTable(itemQuery);
+                        Items1.DataTable = await AsyncDbExecuter.DoTaskAsync("Lade proc robot steps.", () => new GetTableQuery(itemQuery).Execute(Connection));
                         RaisePropertyChanged("Items1");
                     }
                     else if(instruction.GetType() == typeof(DbProcLaserDataRow))
                     {
                         var procLaserRow = (DbProcLaserDataRow)instruction;
                         //Wird an die View gesendet, um dort das Tabellen-Layout zu ändern.
-                        Messenger.Default.Send(new TableSelectionChangedMessage(new ProcLaserTableViewModel(LSC1UserSettings.Instance.DBSettings)), LSC1SimulatorViewModel.MessageToken);
+                        Messenger.Default.Send(new TableSelectionChangedMessage(new ProcLaserTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString)), LSC1SimulatorViewModel.MessageToken);
                         var itemQuery = SQLStringGenerator.GetStepItemQuery(Job.JobNr, TablesEnum.tproclaserdata, procLaserRow.Name, int.Parse(procLaserRow.Step));
 
                         Items2 = Tables.First(t => t.Table == TablesEnum.tproclaserdata);
-                        Items2.DataTable = LSC1DatabaseFacade.GetTable(itemQuery);
+                        Items2.DataTable = await AsyncDbExecuter.DoTaskAsync("Lade proc laser steps.", () => new GetTableQuery(itemQuery).Execute(Connection));
                         RaisePropertyChanged("Items2");
                     }
                 }
@@ -171,12 +175,12 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
             {
                 var item = (LSC1TreeViewJobStepNode)msg.SelectedItem;
                 
-                Messenger.Default.Send(new TableSelectionChangedMessage(new JobDataTableViewModel(LSC1UserSettings.Instance.DBSettings)), LSC1SimulatorViewModel.MessageToken);
+                Messenger.Default.Send(new TableSelectionChangedMessage(new JobDataTableViewModel(LSC1UserSettings.Instance.DBSettings.ConnectionString)), LSC1SimulatorViewModel.MessageToken);
 
                 var itemQuery = SQLStringGenerator.GetStepItemQuery(Job.JobNr, TablesEnum.tjobdata, null, int.Parse(item.JobStepData.JobDataStepRow.Step));
 
                 Items1 = Tables.First(t => t.Table == TablesEnum.tjobdata);
-                Items1.DataTable = LSC1DatabaseFacade.GetTable(itemQuery);                
+                Items1.DataTable = await AsyncDbExecuter.DoTaskAsync("Lade jobdata steps.", () => new GetTableQuery(itemQuery).Execute(Connection));                
             }
         }
     }

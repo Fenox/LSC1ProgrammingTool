@@ -1,10 +1,10 @@
 ﻿using LSC1DatabaseLibrary.CommonMySql;
-using LSC1DatabaseLibrary.DatabaseModel;
 using LSC1DatabaseLibrary.LSC1Simulation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
 
 namespace LSC1DatabaseLibrary.LSC1JobRepresentation
 {

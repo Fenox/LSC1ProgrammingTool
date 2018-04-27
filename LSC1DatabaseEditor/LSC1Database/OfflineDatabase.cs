@@ -1,15 +1,18 @@
-﻿using LSC1DatabaseLibrary;
-using LSC1DatabaseLibrary.CommonMySql;
-using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using LSC1DatabaseLibrary;
+using LSC1DatabaseLibrary.CommonMySql;
+using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
+using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement;
+using MySql.Data.MySqlClient;
 
-namespace LSC1Library
+namespace LSC1DatabaseEditor.LSC1Database
 {
     public static class OfflineDatabase
     {
+        private static readonly MySqlConnection Connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString);
+
         public static List<string> AllPosNames { get; set; } = new List<string>();
         public static List<string> AllProcNames { get; set; } = new List<string>();
         public static List<string> AllProcPLCNames { get; set; } = new List<string>();
@@ -31,73 +34,73 @@ namespace LSC1Library
         public static List<string> AllPossibleTypValues { get; set; } = new List<string> { "Job", "WT", "0" };
         public static List<JobAndProcNames> AllJobProcNameMappings { get; set; } = new List<JobAndProcNames>();
 
-        public static void UpdateAllPosNames(LSC1DatabaseConnectionSettings con)
+        public static void UpdateAllPosNames(string con)
         {
             AllPosNames = GetDistinctColumnFromTable(con, "tpos", "Name");
         }
 
-        public static void UpdateAllProcNames(LSC1DatabaseConnectionSettings con)
+        public static void UpdateAllProcNames(string con)
         {
             AllProcNames = GetDistinctColumnFromTable(con, "tprocRobot", "Name");
         }
 
-        public static void UpdateAllProcPLCNames(LSC1DatabaseConnectionSettings con)
+        public static void UpdateAllProcPLCNames(string con)
         {
             AllProcPLCNames = GetDistinctColumnFromTable(con, "tprocplc", "Name");
         }
 
-        public static void UpdateAllProcPulseNames(LSC1DatabaseConnectionSettings con)
+        public static void UpdateAllProcPulseNames(string con)
         {
             AllProcPulseNames = GetDistinctColumnFromTable(con, "tprocpulse", "Name");
         }
 
-        public static void UpdateAllProcTurnNames(LSC1DatabaseConnectionSettings con)
+        public static void UpdateAllProcTurnNames(string con)
         {
             AllProcTurnNames = GetDistinctColumnFromTable(con, "tprocturn", "Name");
         }
 
-        public static void UpdateAllMoveParamNames(LSC1DatabaseConnectionSettings con)
+        public static void UpdateAllMoveParamNames(string con)
         {
             AllMoveParamNames = GetDistinctColumnFromTable(con, "tmoveparam", "Name");
         }
 
-        public static void UpdateAllFrameNames(LSC1DatabaseConnectionSettings con)
+        public static void UpdateAllFrameNames(string con)
         {
             AllFrameNames = GetDistinctColumnFromTable(con, "tframe", "Name");
         }
 
-        public static void UpdateAllToolNames(LSC1DatabaseConnectionSettings con)
+        public static void UpdateAllToolNames(string con)
         {
             AllToolNames = GetDistinctColumnFromTable(con, "ttool", "Name");
         }
 
-        public static void UpdateAllJobNames(LSC1DatabaseConnectionSettings con)
+        public static void UpdateAllJobNames(string con)
         {
             AllJobNames = GetDistinctColumnFromTable(con, "tjobname", "Name");
         }
 
-        public static List<string> GetDistinctColumnFromTable(LSC1DatabaseConnectionSettings con, string tableName, string columnName)
+        public static List<string> GetDistinctColumnFromTable(string con, string tableName, string columnName)
         {
             //TODO put in facade
             string possibleNamesQuery = "SELECT DISTINCT " + columnName + " FROM `" + tableName + "`";
-            List<string> possibleNames = new List<string>();
 
-            return LSC1DatabaseFacade.Read<DbRow>(con, possibleNamesQuery)
-                 .Select(val => val.Values[0])
-                 .ToList();
+            return new ReadRowsQuery<DbRow>(possibleNamesQuery)
+                .Execute(Connection)
+                .Select(val => val.Values[0])
+                .ToList();
         }
 
-        public static void UpdateJobsAndProcs(LSC1DatabaseConnectionSettings con)
+        public static void UpdateJobsAndProcs(string con)
         {
             //TODO put in Facade
-            List<string> dbNames = new List<string> { "tprocrobot", "tprocplc", "tprocpulse", "tproclaserdata", "tprocturn" };
+            var dbNames = new List<string> { "tprocrobot", "tprocplc", "tprocpulse", "tproclaserdata", "tprocturn" };
 
             var nameJobNrTableResults = new List<List<Tuple<string, string>>>();
             foreach (var item in dbNames)
             {
                 string possibleNamesQuery = "SELECT DISTINCT Name, JobNr FROM `tjobdata` WHERE Name IN (SELECT DISTINCT (Name) FROM `" + item + "`)";
 
-                var nameJobNrMapping = LSC1DatabaseFacade.Read<DbRow>(con, possibleNamesQuery)
+                var nameJobNrMapping = new ReadRowsQuery<DbRow>(possibleNamesQuery).Execute(Connection)
                      .Select(val => new Tuple<string, string>(val.Values[0], val.Values[1]))
                      .ToList();
 
@@ -127,7 +130,7 @@ namespace LSC1Library
             public List<string> ProcTurnNames { get; internal set; }
         }
 
-        public static void UpdateAll(LSC1DatabaseConnectionSettings con)
+        public static void UpdateAll(string con)
         {
             foreach (TablesEnum item in Enum.GetValues(typeof(TablesEnum)))
                 UpdateTable(con, item);
@@ -135,42 +138,40 @@ namespace LSC1Library
             UpdateJobsAndProcs(con);
         }
 
-        public static void UpdateTable(LSC1DatabaseConnectionSettings con, TablesEnum table)
+        public static void UpdateTable(string connectionString, TablesEnum table)
         {
             //Updaten der OfflineDatenbank
             switch (table)
             {
                 case TablesEnum.tframe:
-                    OfflineDatabase.UpdateAllFrameNames(con);
+                    OfflineDatabase.UpdateAllFrameNames(connectionString);
                     break;
                 case TablesEnum.tmoveparam:
-                    OfflineDatabase.UpdateAllMoveParamNames(con);
+                    OfflineDatabase.UpdateAllMoveParamNames(connectionString);
                     break;
                 case TablesEnum.tpos:
-                    OfflineDatabase.UpdateAllPosNames(con);
+                    OfflineDatabase.UpdateAllPosNames(connectionString);
                     break;
                 case TablesEnum.tproclaserdata:
-                    OfflineDatabase.UpdateAllProcNames(con);
+                    OfflineDatabase.UpdateAllProcNames(connectionString);
                     break;
                 case TablesEnum.tprocplc:
-                    OfflineDatabase.UpdateAllProcPLCNames(con);
+                    OfflineDatabase.UpdateAllProcPLCNames(connectionString);
                     break;
                 case TablesEnum.tprocpulse:
-                    OfflineDatabase.UpdateAllProcPulseNames(con);
+                    OfflineDatabase.UpdateAllProcPulseNames(connectionString);
                     break;
                 case TablesEnum.tprocrobot:
-                    OfflineDatabase.UpdateAllProcNames(con);
+                    OfflineDatabase.UpdateAllProcNames(connectionString);
                     break;
                 case TablesEnum.tprocturn:
-                    OfflineDatabase.UpdateAllProcTurnNames(con);
+                    OfflineDatabase.UpdateAllProcTurnNames(connectionString);
                     break;
                 case TablesEnum.ttool:
-                    OfflineDatabase.UpdateAllToolNames(con);
+                    OfflineDatabase.UpdateAllToolNames(connectionString);
                     break;
                 case TablesEnum.tjobname:
-                    OfflineDatabase.UpdateAllJobNames(con);
-                    break;
-                default:
+                    OfflineDatabase.UpdateAllJobNames(connectionString);
                     break;
             }
         }

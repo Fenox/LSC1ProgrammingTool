@@ -11,7 +11,6 @@ using System.Data;
 using LSC1DatabaseEditor.LSC1CommonTool.Messages;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels;
-using LSC1DatabaseEditor.ViewModel.DataStructures;
 using LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels.DataStructures;
 
 namespace LSC1DatabaseEditor.Views
@@ -95,7 +94,7 @@ namespace LSC1DatabaseEditor.Views
             }
         }
 
-        void UpdateLines(UpdateViewport3DMessage msg)
+        private void UpdateLines(UpdateViewport3DMessage msg)
         {
             if (msg.Op == ViewportUpdateOperation.Add)
             {
@@ -111,13 +110,13 @@ namespace LSC1DatabaseEditor.Views
             }
         }
 
-        void Zoom(CameraZoomMessage msg)
+        private void Zoom(CameraZoomMessage msg)
         {
             viewPort3D.Camera.LookAt(msg.Center, 100);
             viewPort3D.ZoomExtents(msg.Bounds, 100);            
         }
 
-        void MoveMachineHead(MoveMachineHeadMessage msg)
+        private void MoveMachineHead(MoveMachineHeadMessage msg)
         {
             
             Transform3DGroup col = new Transform3DGroup();

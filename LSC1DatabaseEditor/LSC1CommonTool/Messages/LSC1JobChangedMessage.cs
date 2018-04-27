@@ -1,10 +1,6 @@
-﻿using LSC1DatabaseLibrary.DatabaseModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
 
-namespace LSC1DatabaseEditor.Messages
+namespace LSC1DatabaseEditor.LSC1CommonTool.Messages
 {
     public class LSC1JobChangedMessage
     {

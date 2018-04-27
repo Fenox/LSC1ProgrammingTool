@@ -1,5 +1,4 @@
-﻿using LSC1Library;
-using NLog;
+﻿using NLog;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -7,12 +6,13 @@ using System.Windows;
 
 namespace LSC1DatabaseEditor
 {
+    /// <inheritdoc />
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
-        private static Logger logger = LogManager.GetLogger("Usage");
+        private static readonly Logger Logger = LogManager.GetLogger("Usage");
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             //if(Debugger.IsAttached)
@@ -22,9 +22,9 @@ namespace LSC1DatabaseEditor
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
-        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            logger.Fatal(e.ExceptionObject as Exception, "Fatal crash from {0}");
+            Logger.Fatal(e.ExceptionObject as Exception, "Fatal crash from {0}");
         }
     }
 }

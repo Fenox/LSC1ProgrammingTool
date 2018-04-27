@@ -1,11 +1,5 @@
-﻿using LSC1DatabaseEditor.ViewModel;
-using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement.DatabaseModel.UpdatingRows;
-using System;
-using System.Collections.Generic;
+﻿using LSC1DatabaseEditor.LSC1DbEditor.ViewModels;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Controls;
 
 namespace LSC1DatabaseEditor.LSC1CommonTool.Messages
 {

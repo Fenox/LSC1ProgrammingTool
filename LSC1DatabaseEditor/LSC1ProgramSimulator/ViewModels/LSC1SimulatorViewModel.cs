@@ -5,10 +5,10 @@ using LSC1DatabaseEditor.LSC1ProgramSimulator.Messages;
 using LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels.DataStructures;
 using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseEditor.Messages.Common;
-using LSC1DatabaseLibrary.DatabaseModel;
 using PresentationCoreExtensions;
 using System;
 using System.Windows.Media.Media3D;
+using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
 
 namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
 {
@@ -24,7 +24,7 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
         private DbJobNameRow selectedJob;
         public DbJobNameRow SelectedJob
         {
-            get { return selectedJob; }
+            get => selectedJob;
             set
             {
                 selectedJob = value;
@@ -34,10 +34,10 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
                                 
         public LSC1SimulatorViewModel()
         {                        
-            Messenger.Default.Register<SelectedTreeViewItemChanged>(this, MessageToken, (msg) => ZoomOnSelectedObject(msg));
+            Messenger.Default.Register<SelectedTreeViewItemChanged>(this, MessageToken, ZoomOnSelectedObject);
         }
 
-        void ZoomOnSelectedObject(SelectedTreeViewItemChanged msg)
+        private void ZoomOnSelectedObject(SelectedTreeViewItemChanged msg)
         {
             if(msg.SelectedItem.GetType() == typeof(LSC1TreeViewJobStepNode))
             {
@@ -47,7 +47,7 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
 
                 Point3D centerPoint = node.Points.CalculateCenter();
 
-                if (Double.IsNaN(centerPoint.X))//TODO Fehler wegen nicht impelementerier Befehle wodurch keine Instruction erstellt wird.
+                if (double.IsNaN(centerPoint.X))//TODO Fehler wegen nicht impelementerier Befehle wodurch keine Instruction erstellt wird.
                     return;
 
                 ContainerUIElement3D container = new ContainerUIElement3D();
@@ -67,7 +67,7 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
             }
         }
 
-        void CreatePointModelData()
+        private void CreatePointModelData()
         {
             //var points = new List<PointsVisual3D>();
             //var lines = new List<LinesVisual3D>();

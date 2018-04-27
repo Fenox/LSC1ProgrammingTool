@@ -1,7 +1,7 @@
 <docs>
   <Server>
     <summary>
-      Gets or sets the name or address of the MySQL instance to connect to.
+      Gets or sets the what or address of the MySQL instance to connect to.
     </summary>
     <remarks>
       If this property is not set, then the provider will attempt to
@@ -14,7 +14,7 @@
 
   <Database>
     <summary>
-      Gets or sets the name of the database that should be selected
+      Gets or sets the what of the database that should be selected
       when the connection is first opened.
     </summary>
     <remarks>
@@ -40,7 +40,7 @@
 
   <PipeName>
     <summary>
-      Gets or sets the name of the named pipe object that the provider
+      Gets or sets the what of the whatd pipe object that the provider
       should use.
     </summary>
     <remarks>

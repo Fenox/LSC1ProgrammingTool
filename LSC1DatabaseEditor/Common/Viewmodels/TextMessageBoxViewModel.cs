@@ -24,7 +24,7 @@ namespace LSC1DatabaseEditor.ViewModel
             CloseSuccesfully = new RelayCommand<Window>(CloseWindowSuccessfully);
         }
 
-        void CloseWindowSuccessfully(Window wnd)
+        private void CloseWindowSuccessfully(Window wnd)
         {
             wnd.DialogResult = true;
             wnd.Close();

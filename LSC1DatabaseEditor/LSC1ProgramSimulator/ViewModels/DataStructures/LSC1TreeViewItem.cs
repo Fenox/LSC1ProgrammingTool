@@ -7,13 +7,7 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels.DataStructures
 {
     public class LSC1TreeViewJobStepNode
     {
-        public string Text
-        {
-            get
-            {
-                return JobStepData.JobDataStepRow.Who + " " + JobStepData.JobDataStepRow.What + " " + JobStepData.JobDataStepRow.Name;
-            }
-        }
+        public string Text => JobStepData.JobDataStepRow.Who + " " + JobStepData.JobDataStepRow.What + " " + JobStepData.JobDataStepRow.Name;
 
         public Color BackgroundColor { get; set; }
 
@@ -49,13 +43,7 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels.DataStructures
             }
         }
 
-        public Point3D Position
-        {
-            get
-            {
-                return InstructionStepData.MachineStatusAfterInstructions.TCPOrientation.Position;
-            }
-        }
+        public Point3D Position => InstructionStepData.MachineStatusAfterInstructions.TCPOrientation.Position;
 
         public InstructionStepAndMachineState InstructionStepData { get; set; }
     }

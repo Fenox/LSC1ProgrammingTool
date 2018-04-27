@@ -6,33 +6,40 @@ using System.Text;
 
 namespace LSC1DatabaseLibrary.CommonMySql.MySqlQueries
 {
-    public class NonReturnSimpleQuery : IMySqlQuery<object>
+    public class NonReturnSimpleQuery : MySqlQuery<object>
     {
-        public NonReturnSimpleQuery(string query)
+        public NonReturnSimpleQuery(string query, params MySqlParameter[] parameters)
         {
-            Query = query;
+            this.Query = query;
+            this.parameters = parameters;
         }
 
-        public string Query { get; set; }
+        private readonly MySqlParameter[] parameters;
+        public string Query;
 
-
-        public object Execute(MySqlConnection connection)
+        private MySqlCommand Create()
         {
-            MySqlCommand cmd = new MySqlCommand(Query, connection);
+            var cmd = new MySqlCommand(Query);
+            foreach (MySqlParameter param in parameters)
+                cmd.Parameters.Add(param);
+
+            return cmd;
+        }
+
+        protected override object ProtectedExecution(MySqlConnection connection)
+        {
+            MySqlCommand cmd = Create();
+            cmd.Connection = connection;
             try
             {
                 cmd.ExecuteNonQuery();
-            }
-            catch (MySqlException ex)
-            {
-                throw ex;
             }
             finally
             {
                 cmd.Dispose();
             }
 
-            return null;
+            return new object();
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using LSC1DatabaseLibrary.CommonMySql;
-using LSC1DatabaseLibrary.DatabaseModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
 
 namespace LSC1DatabaseLibrary.LSC1JobRepresentation.JobDataConverter
 {
@@ -11,8 +11,8 @@ namespace LSC1DatabaseLibrary.LSC1JobRepresentation.JobDataConverter
     {
         public LSC1JobData Job { get; set; }
 
-        int JobDataStep { get; set; }
-        int ProcStep { get; set; } = 1;
+        private int JobDataStep { get; set; }
+        private int ProcStep { get; set; } = 1;
 
         public DbJobDataRow CurrentJobData
         {
@@ -25,29 +25,11 @@ namespace LSC1DatabaseLibrary.LSC1JobRepresentation.JobDataConverter
             }
         }
 
-        public DbProcLaserDataRow CurrentLaserData
-        {
-            get
-            {
-                return Job.FilterLaserDataBy(CurrentJobData.Name, ProcStep);
-            }
-        }
+        public DbProcLaserDataRow CurrentLaserData => Job.FilterLaserDataBy(CurrentJobData.Name, ProcStep);
 
-        public DbProcPlcRow CurrentPLCData
-        {
-            get
-            {
-                return Job.FilterPlcDataBy(CurrentJobData.Name, ProcStep);
-            }
-        }
+        public DbProcPlcRow CurrentPLCData => Job.FilterPlcDataBy(CurrentJobData.Name, ProcStep);
 
-        public DbProcPulseRow CurrentPulseData
-        {
-            get
-            {
-                return Job.FilterPulseDataBy(CurrentJobData.Name, ProcStep);
-            }
-        }
+        public DbProcPulseRow CurrentPulseData => Job.FilterPulseDataBy(CurrentJobData.Name, ProcStep);
 
         public DbProcRobotRow CurrentRobotData
         {
@@ -60,13 +42,7 @@ namespace LSC1DatabaseLibrary.LSC1JobRepresentation.JobDataConverter
             }
         }
 
-        public DbProcTurnRow CurrentTurnData
-        {
-            get
-            {
-                return Job.FilterTurnDataBy(CurrentJobData.Name, ProcStep);
-            }
-        }
+        public DbProcTurnRow CurrentTurnData => Job.FilterTurnDataBy(CurrentJobData.Name, ProcStep);
 
         public DbPosRow CurrentPosData
         {
@@ -113,14 +89,9 @@ namespace LSC1DatabaseLibrary.LSC1JobRepresentation.JobDataConverter
         }
 
 
-        public bool IsPosData
-        {
-            get { return CurrentPosData != null; }
-        }
-        public bool IsProcData
-        {
-            get { return CurrentRobotData != null; }
-        }
+        public bool IsPosData => CurrentPosData != null;
+
+        public bool IsProcData => CurrentRobotData != null;
 
         public int MaxProcRobotStep
         {
@@ -147,13 +118,7 @@ namespace LSC1DatabaseLibrary.LSC1JobRepresentation.JobDataConverter
             }
         }
 
-        public bool SimulationOver
-        {
-            get
-            {
-                return JobDataStep >= Job.JobData.Count;
-            }
-        }
+        public bool SimulationOver => JobDataStep >= Job.JobData.Count;
 
 
         public JobDataToJobSturctureConverter(LSC1JobData job)

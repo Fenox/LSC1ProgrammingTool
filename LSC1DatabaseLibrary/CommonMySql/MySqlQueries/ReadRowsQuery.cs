@@ -7,44 +7,62 @@ using MySql.Data.MySqlClient;
 
 namespace LSC1DatabaseLibrary.CommonMySql.MySqlQueries
 {
-    public class ReadRowsQuery<TItem> : IMySqlQuery<List<TItem>> 
+    public class ReadRowsQuery<TItem> : MySqlQuery<IEnumerable<TItem>> 
         where TItem: DbRow, new()
     {
-        public string Query { get; set; }
+        private readonly string query;
 
-        public ReadRowsQuery(string query)
+        private readonly MySqlParameter[] parameters;
+
+        public ReadRowsQuery(string query, params MySqlParameter[] parameters)
         {
-            Query = query;
+            this.query = query;
+            this.parameters = parameters;
         }
 
-        public List<TItem> Execute(MySqlConnection connection)
+        private MySqlCommand Create()
         {
-            List<TItem> items = new List<TItem>();
-            MySqlCommand cmd = new MySqlCommand(Query, connection);
+            MySqlCommand cmd = new MySqlCommand(query);
+            foreach (MySqlParameter param in parameters)
+                cmd.Parameters.Add(param);
+
+            return cmd;
+        }
+
+        /// <returns></returns>
+        protected override IEnumerable<TItem> ProtectedExecution(MySqlConnection connection)
+        {
+            List<TItem> queryResults = new List<TItem>();
+            MySqlCommand cmd = Create();
+
+            cmd.Connection = connection;
             try
             {
-                var reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
                     if (reader.IsDBNull(0))
                         continue;
 
-                    var newItem = new TItem();
-                    if (newItem.Values.Count < reader.FieldCount)
-                        newItem.Values = new ObservableCollection<string>(new string[reader.FieldCount].ToList());
+                    var resultItem = new TItem();
+                    if (resultItem.Values.Count < reader.FieldCount)
+                        resultItem.Values = new ObservableCollection<string>(new string[reader.FieldCount].ToList()); //TODO should not be observable collection (thats View)
                     for (int i = 0; i < reader.FieldCount; i++)
-                        newItem.Values[i] = reader.GetString(i);
+                        resultItem.Values[i] = reader.GetString(i);
 
-                    items.Add(newItem);
+                    queryResults.Add(resultItem);
                 }
             }
-            catch (MySqlException ex)
+            finally
             {
-                throw ex;
+                cmd.Dispose();
             }
 
-            return items;
+            return queryResults;
         }
     }
+
+
+  
 }

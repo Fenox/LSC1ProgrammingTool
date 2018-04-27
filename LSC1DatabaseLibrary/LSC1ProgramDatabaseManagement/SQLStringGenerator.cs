@@ -82,7 +82,7 @@ namespace LSC1DatabaseLibrary
                         return "SELECT * FROM tproclaserdata WHERE Name = '" + procFilter + "'";
                     else if (procFilter == null)
                         return "SELECT * FROM tproclaserdata" +
-                            " WHERE Name IN (SELECT DISTINCT Name FROM tjobdata WHERE JobNr = " + jobId + ")";
+                            " WHERE Name IN (SELECT DISTINCT Name FROM tjobdata WHERE JobNr = " + jobId + ") ORDER BY Step";
                     else
                         return "SELECT * FROM tproclaserdata" +
                             " WHERE Name = '" + procFilter + "' AND Name IN (SELECT DISTINCT Name FROM tjobdata WHERE JobNr = " + jobId + ") ORDER BY `Step`";

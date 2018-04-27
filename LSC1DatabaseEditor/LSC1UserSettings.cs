@@ -20,28 +20,16 @@ namespace LSC1DatabaseEditor
         [DefaultSettingValue("lsc1")] //lsc1
         public string DatabaseName
         {
-            get
-            {
-                return (string)this["DatabaseName"];
-            }
-            set
-            {
-                this["DatabaseName"] = value;
-            }
+            get => (string)this["DatabaseName"];
+            set => this["DatabaseName"] = value;
         }
 
         [UserScopedSetting()]
         [DefaultSettingValue("")] //sql
         public string DatabasePasswort
         {
-            get
-            {
-                return (string)this["DatabasePasswort"];
-            }
-            set
-            {
-                this["DatabasePasswort"] = value;
-            }
+            get => (string)this["DatabasePasswort"];
+            set => this["DatabasePasswort"] = value;
         }
 
 
@@ -49,28 +37,16 @@ namespace LSC1DatabaseEditor
         [DefaultSettingValue("root")] //root
         public string DatabaseUID
         {
-            get
-            {
-                return (string)this["DatabaseUID"];
-            }
-            set
-            {
-                this["DatabaseUID"] = value;
-            }
+            get => (string)this["DatabaseUID"];
+            set => this["DatabaseUID"] = value;
         }
 
         [UserScopedSetting()]
         [DefaultSettingValue("127.0.0.1")] //29.47.82.13
         public string DatabaseServer
         {
-            get
-            {
-                return (string)this["DatabaseServer"];
-            }
-            set
-            {
-                this["DatabaseServer"] = value;
-            }
+            get => (string)this["DatabaseServer"];
+            set => this["DatabaseServer"] = value;
         }
 
         [UserScopedSetting()]
@@ -94,39 +70,24 @@ namespace LSC1DatabaseEditor
 
                 return (List<Color>)this["VisualisationColors"];
             }
-            set
-            {
-                this["VisualisationColors"] = value;
-            }
+            set => this["VisualisationColors"] = value;
         }
 
         [UserScopedSetting()]
         [DefaultSettingValue("4")]
         public int PointSize
         {
-            get
-            {
-                return (int)this["PointSize"];
-            }
-            set
-            {
-                this["PointSize"] = value;
-            }
+            get => (int)this["PointSize"];
+            set => this["PointSize"] = value;
         }
 
 
-        public LSC1DatabaseConnectionSettings DBSettings
+        public LSC1DatabaseConnectionSettings DBSettings => new LSC1DatabaseConnectionSettings()
         {
-            get
-            {
-                return new LSC1DatabaseConnectionSettings()
-                {
-                    Database = DatabaseName,
-                    Password = DatabasePasswort,
-                    Server = DatabaseServer,
-                    Uid = DatabaseUID
-                };
-            }
-        }
+            Database = DatabaseName,
+            Password = DatabasePasswort,
+            Server = DatabaseServer,
+            Uid = DatabaseUID
+        };
     }
 }

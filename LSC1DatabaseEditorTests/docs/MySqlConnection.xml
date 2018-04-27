@@ -111,17 +111,17 @@
 
   <Open>
     <summary>Opens a database connection with the property settings specified by the ConnectionString.</summary>
-    <exception cref="InvalidOperationException">Cannot open a connection without specifying a data source or server.</exception>
-    <exception cref="MySqlException">A connection-level error occurred while opening the connection.</exception>
+    <exception cref="InvalidOperationException">Cannot open a connectionStringnection without specifying a data source or server.</exception>
+    <exception cref="MySqlException">A connectionStringnection-level error occurred while opening the connectionStringnection.</exception>
     <remarks>
       <para>
-        The <see cref="MySqlConnection"/> draws an open connection from the connection pool if one is available.
-        Otherwise, it establishes a new connection to an instance of MySQL.
+        The <see cref="MySqlConnection"/> draws an open connectionStringnection from the connectionStringnection pool if one is available.
+        Otherwise, it establishes a new connectionStringnection to an instance of MySQL.
       </para>
     </remarks>
     <example>
       The following example creates a <see cref="MySqlConnection"/>, opens it,
-      displays some of its properties, then closes the connection.
+      displays some of its properties, then closes the connectionStringnection.
 
       <code lang="vbnet">
         Public Sub CreateMySqlConnection(myConnString As String)
@@ -146,8 +146,8 @@
   </Open>
 
   <Database>
-    <summary>Gets the name of the current database or the database to be used after a connection is opened.</summary>
-    <returns>The name of the current database or the name of the database to be used after a connection is opened. The default value is an empty string.</returns>
+    <summary>Gets the name of the current database or the database to be used after a connectionStringnection is opened.</summary>
+    <returns>The name of the current database or the name of the database to be used after a connectionStringnection is opened. The default value is an empty string.</returns>
     <remarks>
       <para>
         The <B>Database</B> property does not update dynamically.
@@ -194,7 +194,7 @@
   </Database>
 
   <State>
-    <summary>Gets the current state of the connection.</summary>
+    <summary>Gets the current state of the connectionStringnection.</summary>
     <returns>
       A bitwise combination of the <see cref="System.Data.ConnectionState"/> values. The default is <B>Closed</B>.
     </returns>
@@ -202,16 +202,16 @@
       The allowed state changes are:
       <list type="bullet">
         <item>
-          From <B>Closed</B> to <B>Open</B>, using the <B>Open</B> method of the connection object.
+          From <B>Closed</B> to <B>Open</B>, using the <B>Open</B> method of the connectionStringnection object.
         </item>
         <item>
-          From <B>Open</B> to <B>Closed</B>, using either the <B>Close</B> method or the <B>Dispose</B> method of the connection object.
+          From <B>Open</B> to <B>Closed</B>, using either the <B>Close</B> method or the <B>Dispose</B> method of the connectionStringnection object.
         </item>
       </list>
     </remarks>
     <example>
       The following example creates a <see cref="MySqlConnection"/>, opens it,
-      displays some of its properties, then closes the connection.
+      displays some of its properties, then closes the connectionStringnection.
 
       <code lang="vbnet">
         Public Sub CreateMySqlConnection(myConnString As String)
@@ -236,12 +236,12 @@
   </State>
 
   <ServerVersion>
-    <summary>Gets a string containing the version of the MySQL server to which the client is connected.</summary>
+    <summary>Gets a string connectionStringtaining the version of the MySQL server to which the client is connectionStringnected.</summary>
     <returns>The version of the instance of MySQL.</returns>
-    <exception cref="InvalidOperationException">The connection is closed.</exception>
+    <exception cref="InvalidOperationException">The connectionStringnection is closed.</exception>
     <example>
       The following example creates a <see cref="MySqlConnection"/>, opens it,
-      displays some of its properties, then closes the connection.
+      displays some of its properties, then closes the connectionStringnection.
 
       <code lang="vbnet">
         Public Sub CreateMySqlConnection(myConnString As String)
@@ -266,11 +266,11 @@
   </ServerVersion>
 
   <Close>
-    <summary>Closes the connection to the database. This is the preferred method of closing any open connection.</summary>
+    <summary>Closes the connectionStringnection to the database. This is the preferred method of closing any open connectionStringnection.</summary>
     <remarks>
       <para>
         The <B>Close</B> method rolls back any pending transactions. It then releases
-        the connection to the connection pool, or closes the connection if connection
+        the connectionStringnection to the connectionStringnection pool, or closes the connectionStringnection if connectionStringnection
         pooling is disabled.
       </para>
       <para>
@@ -280,7 +280,7 @@
     </remarks>
     <example>
       The following example creates a <see cref="MySqlConnection"/>, opens it,
-      displays some of its properties, then closes the connection.
+      displays some of its properties, then closes the connectionStringnection.
 
       <code lang="vbnet">
         Public Sub CreateMySqlConnection(myConnString As String)
@@ -344,7 +344,7 @@
 
         ' Start a local transaction
         myTrans = myConnection.BeginTransaction()
-        ' Must assign both transaction object and connection
+        ' Must assign both transaction object and connectionStringnection
         ' to Command object for a pending local transaction
         myCommand.Connection = myConnection
         myCommand.Transaction = myTrans
@@ -385,7 +385,7 @@
 
         // Start a local transaction
         myTrans = myConnection.BeginTransaction();
-        // Must assign both transaction object and connection
+        // Must assign both transaction object and connectionStringnection
         // to Command object for a pending local transaction
         myCommand.Connection = myConnection;
         myCommand.Transaction = myTrans;
@@ -459,7 +459,7 @@
 
         ' Start a local transaction
         myTrans = myConnection.BeginTransaction()
-        ' Must assign both transaction object and connection
+        ' Must assign both transaction object and connectionStringnection
         ' to Command object for a pending local transaction
         myCommand.Connection = myConnection
         myCommand.Transaction = myTrans
@@ -500,7 +500,7 @@
 
         // Start a local transaction
         myTrans = myConnection.BeginTransaction();
-        // Must assign both transaction object and connection
+        // Must assign both transaction object and connectionStringnection
         // to Command object for a pending local transaction
         myCommand.Connection = myConnection;
         myCommand.Transaction = myTrans;
@@ -548,19 +548,19 @@
     <remarks>
       <para>
         The value supplied in the <I>database</I> parameter must be a valid database
-        name. The <I>database</I> parameter cannot contain a null value, an empty
+        name. The <I>database</I> parameter cannot connectionStringtain a null value, an empty
         string, or a string with only blank characters.
       </para>
 
       <para>
-        When you are using connection pooling against MySQL, and you close
-        the connection, it is returned to the connection pool. The next time the
-        connection is retrieved from the pool, the reset connection request
+        When you are using connectionStringnection pooling against MySQL, and you close
+        the connectionStringnection, it is returned to the connectionStringnection pool. The next time the
+        connectionStringnection is retrieved from the pool, the reset connectionStringnection request
         executes before the user performs any operations.
       </para>
     </remarks>
     <exception cref="ArgumentException">The database name is not valid.</exception>
-    <exception cref="InvalidOperationException">The connection is not open.</exception>
+    <exception cref="InvalidOperationException">The connectionStringnection is not open.</exception>
     <exception cref="MySqlException">Cannot change the database.</exception>
     <example>
       The following example creates a <see cref="MySqlConnection"/> and displays
@@ -600,7 +600,7 @@
   </ChangeDatabase>
 
   <StateChange>
-    <summary>Occurs when the state of the connection changes.</summary>
+    <summary>Occurs when the state of the connectionStringnection changes.</summary>
     <remarks>
       <para>
         The <B>StateChange</B> event fires whenever the <see cref="State"/> changes from
@@ -624,7 +624,7 @@
       <data>
         <para>
           The event handler receives an argument of type <see cref="System.Data.StateChangeEventArgs"/>
-          containing data related to this event. The following <B>StateChangeEventArgs</B>
+          connectionStringtaining data related to this event. The following <B>StateChangeEventArgs</B>
           properties provide information specific to this event.
         </para>
         <list type="table">
@@ -637,7 +637,7 @@
               <see cref="System.Data.StateChangeEventArgs.CurrentState"/>
             </term>
             <description>
-              Gets the new state of the connection. The connection object will
+              Gets the new state of the connectionStringnection. The connectionStringnection object will
               be in the new state already when the event is fired.
             </description>
           </item>
@@ -645,7 +645,7 @@
             <term>
               <see cref="System.Data.StateChangeEventArgs.OriginalState"/>
             </term>
-            <description>Gets the original state of the connection.</description>
+            <description>Gets the original state of the connectionStringnection.</description>
           </item>
         </list>
       </data>
@@ -660,19 +660,19 @@
 
   <ClassSummary>
     <summary>
-      Represents an open connection to a MySQL Server database. This class cannot be inherited.
+      Represents an open connectionStringnection to a MySQL Server database. This class cannot be inherited.
     </summary>
     <remarks>
       <para>
         A <b>MySqlConnection</b> object represents a session to a MySQL Server
         data source.  When you create an instance of <B>MySqlConnection</B>, all
         properties are set to their initial values. For a list of these values, see the
-        <B>MySqlConnection</B> constructor.
+        <B>MySqlConnection</B> connectionStringstructor.
       </para>
 
       <para>
         If the <B>MySqlConnection</B> goes out of scope, it is not closed. Therefore,
-        you must explicitly close the connection by calling <see cref="MySqlConnection.Close"/>
+        you must explicitly close the connectionStringnection by calling <see cref="MySqlConnection.Close"/>
         or <see cref="MySqlConnection.Dispose()"/>.
       </para>
     </remarks>
@@ -681,13 +681,13 @@
       The following example creates a <see cref="MySqlCommand"/> and
       a <B>MySqlConnection</B>. The <B>MySqlConnection</B> is opened and set as the
       <see cref="MySqlCommand.Connection"/> for the <B>MySqlCommand</B>. The example then calls
-      <see cref="MySqlCommand.ExecuteNonQuery"/>, and closes the connection. To accomplish this, the <B>ExecuteNonQuery</B> is
-      passed a connection string and a query string that is a SQL INSERT
+      <see cref="MySqlCommand.ExecuteNonQuery"/>, and closes the connectionStringnection. To accomplish this, the <B>ExecuteNonQuery</B> is
+      passed a connectionStringnection string and a query string that is a SQL INSERT
       statement.
       <code lang="vbnet">
         <c>
           Public Sub InsertRow(myConnectionString As String)
-          ' If the connection string is null, use a default.
+          ' If the connectionStringnection string is null, use a default.
           If myConnectionString = "" Then
           myConnectionString = "Database=Test;Data Source=localhost;User Id=username;Password=pass"
           End If
@@ -705,7 +705,7 @@
         <c>
           public void InsertRow(string myConnectionString)
           {
-          // If the connection string is null, use a default.
+          // If the connectionStringnection string is null, use a default.
           if(myConnectionString == "")
           {
           myConnectionString = "Database=Test;Data Source=localhost;User Id=username;Password=pass";
@@ -725,17 +725,17 @@
 
   <ConnectionTimeout>
     <summary>
-      Gets the time to wait while trying to establish a connection before terminating the attempt and generating an error.
+      Gets the time to wait while trying to establish a connectionStringnection before terminating the attempt and generating an error.
     </summary>
     <exception cref="System.ArgumentException">The value set is less than 0.</exception>
     <remarks>
       A value of 0 indicates no limit, and should be avoided in a
-      <see cref="MySqlConnection.ConnectionString"/> because an attempt to connect
+      <see cref="MySqlConnection.ConnectionString"/> because an attempt to connectionStringnect
       will wait indefinitely.
     </remarks>
     <example>
       The following example creates a MySqlConnection
-      and sets some of its properties in the connection string.
+      and sets some of its properties in the connectionStringnection string.
       <code lang="vbnet">
         Public Sub CreateSqlConnection()
         Dim myConnection As New MySqlConnection()
@@ -757,7 +757,7 @@
 
   <ConnectionString>
     <summary>
-      Gets or sets the string used to connect to a MySQL Server database.
+      Gets or sets the string used to connectionStringnect to a MySQL Server database.
     </summary>
     <remarks>
       <para>
@@ -766,44 +766,44 @@
         will not be included unless the Persist Security Info value is set to true.
       </para>
       <para>
-        You can use the <B>ConnectionString</B> property to connect to a database.
-        The following example illustrates a typical connection string.
+        You can use the <B>ConnectionString</B> property to connectionStringnect to a database.
+        The following example illustrates a typical connectionStringnection string.
       </para>
       <c>"Persist Security Info=False;database=MyDB;server=MySqlServer;user id=myUser;Password=myPass"</c>
       <para>
-        The <B>ConnectionString</B> property can be set only when the connection is
-        closed. Many of the connection string values have corresponding read-only
-        properties. When the connection string is set, all of these properties are
+        The <B>ConnectionString</B> property can be set only when the connectionStringnection is
+        closed. Many of the connectionStringnection string values have corresponding read-only
+        properties. When the connectionStringnection string is set, all of these properties are
         updated, except when an error is detected. In this case, none of the properties
-        are updated. <see cref="MySqlConnection"/> properties return only those settings contained in the
+        are updated. <see cref="MySqlConnection"/> properties return only those settings connectionStringtained in the
         <B>ConnectionString</B>.
       </para>
       <para>
-        To connect to a local machine, specify "localhost" for the server. If you do not
+        To connectionStringnect to a local machine, specify "localhost" for the server. If you do not
         specify a server, localhost is assumed.
       </para>
       <para>
-        Resetting the <B>ConnectionString</B> on a closed connection resets all
-        connection string values (and related properties) including the password. For
-        example, if you set a connection string that includes "Database= MyDb", and
-        then reset the connection string to "Data Source=myserver;User Id=myUser;Password=myPass",
+        Resetting the <B>ConnectionString</B> on a closed connectionStringnection resets all
+        connectionStringnection string values (and related properties) including the password. For
+        example, if you set a connectionStringnection string that includes "Database= MyDb", and
+        then reset the connectionStringnection string to "Data Source=myserver;User Id=myUser;Password=myPass",
         the <see cref="MySqlConnection.Database"/> property is no longer set to MyDb.
       </para>
       <para>
-        The connection string is parsed immediately after being set. If errors in
+        The connectionStringnection string is parsed immediately after being set. If errors in
         syntax are found when parsing, a runtime exception, such as <see cref="ArgumentException"/>,
         is generated. Other errors can be found only when an attempt is made to open the
-        connection.
+        connectionStringnection.
       </para>
       <para>
-        The basic format of a connection string consists of a series of keyword/value
-        pairs separated by semicolons. The equal sign (=) connects each keyword and its
-        value. To include values that contain a semicolon, single-quote character, or
+        The basic format of a connectionStringnection string connectionStringsists of a series of keyword/value
+        pairs separated by semicolons. The equal sign (=) connectionStringnects each keyword and its
+        value. To include values that connectionStringtain a semicolon, single-quote character, or
         double-quote character, the value must be enclosed in double quotes. If the
-        value contains both a semicolon and a double-quote character, the value can be
+        value connectionStringtains both a semicolon and a double-quote character, the value can be
         enclosed in single quotes. The single quote is also useful if the value begins
         with a double-quote character. Conversely, the double quote can be used if the
-        value begins with a single quote. If the value contains both single-quote and
+        value begins with a single quote. If the value connectionStringtains both single-quote and
         double-quote characters, the quote character used to enclose the value must be
         doubled each time it occurs within the value.
       </para>
@@ -813,20 +813,20 @@
         spaces around integer, Boolean, or enumerated values are ignored, even if
         enclosed in quotes. However, spaces within a string literal keyword or value are
         preserved. Using .NET Framework version 1.1, single or double quotes may be used
-        within a connection string without using delimiters (for example, Data Source=
+        within a connectionStringnection string without using delimiters (for example, Data Source=
         my'Server or Data Source= my"Server), unless a quote character is the first or
         last character in the value.
       </para>
       <para>
         To include an equal sign (=) in a keyword or value, it must be preceded by
-        another equal sign. For example, in the hypothetical connection string
+        another equal sign. For example, in the hypothetical connectionStringnection string
       </para>
       <c>"key==word=value"</c>
       <para></para>
       <para>the keyword is "key=word" and the value is "value".</para>
       <para>
         If a specific keyword in a keyword= value pair occurs multiple times in a
-        connection string, the last occurrence listed is used in the value set.
+        connectionStringnection string, the last occurrence listed is used in the value set.
       </para>
       <para>Keywords are not case sensitive.</para>
       <para>
@@ -847,7 +847,7 @@
             </td>
             <td>15</td>
             <td>
-              The length of time (in seconds) to wait for a connection to the server before
+              The length of time (in seconnectionStringds) to wait for a connectionStringnection to the server before
               terminating the attempt and generating an error.
             </td>
           </tr>
@@ -860,13 +860,13 @@
             <td>localhost</td>
             <td>
               <para>
-                The name or network address of the instance of MySQL to which to connect.  Multiple hosts can be
-                specified separated by &amp;.  This can be useful where multiple MySQL servers are configured for replication
-                and you are not concerned about the precise server you are connecting to.  No attempt is made by the provider to
+                The name or network address of the instance of MySQL to which to connectionStringnect.  Multiple hosts can be
+                specified separated by &amp;.  This can be useful where multiple MySQL servers are connectionStringfigured for replication
+                and you are not connectionStringcerned about the precise server you are connectionStringnecting to.  No attempt is made by the provider to
                 synchronize writes to the database so care should be taken when using this option.
               </para>
               <para>
-                In Unix environment with Mono, this can be a fully qualified path to MySQL socket filename. With this configuration, the Unix socket will be used instead of TCP/IP socket.
+                In Unix environment with Mono, this can be a fully qualified path to MySQL socket filename. With this connectionStringfiguration, the Unix socket will be used instead of TCP/IP socket.
                 Currently only a single socket name can be given so accessing MySQL in a replicated environment using Unix sockets is not currently supported.
               </para>
             </td>
@@ -875,7 +875,7 @@
             <td>Port</td>
             <td>3306</td>
             <td>
-              The port MySQL is using to listen for connections.  This value is ignored if the connection protocol 
+              The port MySQL is using to listen for connectionStringnections.  This value is ignored if the connectionStringnection protocol 
               is anything but socket.
             </td>
           </tr>
@@ -883,10 +883,10 @@
             <td>Protocol</td>
             <td>socket</td>
             <td>
-              Specifies the type of connection to make to the server.<para>Values can be:</para>
-              socket or tcp for a socket connection<br/>
-              pipe for a named pipe connection<br/>
-              unix for a Unix socket connection<br/>
+              Specifies the type of connectionStringnection to make to the server.<para>Values can be:</para>
+              socket or tcp for a socket connectionStringnection<br/>
+              pipe for a named pipe connectionStringnection<br/>
+              unix for a Unix socket connectionStringnection<br/>
               memory to use MySQL shared memory
             </td>
           </tr>
@@ -903,7 +903,7 @@
           <tr>
             <td>Logging</td>
             <td>false</td>
-            <td>When true, various pieces of information is output to any configured TraceListeners.</td>
+            <td>When true, various pieces of information is output to any connectionStringfigured TraceListeners.</td>
           </tr>
           <tr>
             <td>Allow Batch</td>
@@ -943,9 +943,9 @@
             <td>false</td>
             <td>
               When set to <B>false</B> or <B>no</B> (strongly recommended), security-sensitive
-              information, such as the password, is not returned as part of the connection if
-              the connection is open or has ever been in an open state. Resetting the
-              connection string resets all connection string values including the password.
+              information, such as the password, is not returned as part of the connectionStringnection if
+              the connectionStringnection is open or has ever been in an open state. Resetting the
+              connectionStringnection string resets all connectionStringnection string values including the password.
               Recognized values are <B>true</B>, <B>false</B>, <B>yes</B>, and <B>no</B>.
             </td>
           </tr>
@@ -959,7 +959,7 @@
           <tr>
             <td>Shared Memory Name</td>
             <td>MYSQL</td>
-            <td>The name of the shared memory object to use for communication if the connection protocol is set to memory.</td>
+            <td>The name of the shared memory object to use for communication if the connectionStringnection protocol is set to memory.</td>
           </tr>
           <tr>
             <td>Allow Zero Datetime</td>
@@ -983,7 +983,7 @@
             </td>
             <td>mysql</td>
             <td>
-              When set to the name of a named pipe, the <B>MySqlConnection</B> will attempt to connect to MySQL
+              When set to the name of a named pipe, the <B>MySqlConnection</B> will attempt to connectionStringnect to MySQL
               on that named pipe.<br/><br/>This settings only applies to the Windows platform.
             </td>
           </tr>
@@ -1031,7 +1031,7 @@
             <td>Auto Enlist</td>
             <td>true</td>
             <td>
-              Indicates whether the connection should automatically enlist in the current transaction,
+              Indicates whether the connectionStringnection should automatically enlist in the current transaction,
               if there is one.
             </td>
           </tr>
@@ -1039,8 +1039,8 @@
             <td>Respect Binary Flags</td>
             <td>true</td>
             <td>
-              Indicates whether the connection should respect all binary flags sent to the client
-              as part of column metadata.  False will cause the connector to behave like
+              Indicates whether the connectionStringnection should respect all binary flags sent to the client
+              as part of column metadata.  False will cause the connectionStringnector to behave like
               Connector/Net 5.0 and earlier.
             </td>
           </tr>
@@ -1076,7 +1076,7 @@
             <td>Interactive -or- Interactive Session</td>
             <td>false</td>
             <td>
-              Should this session be considered interactive?
+              Should this session be connectionStringsidered interactive?
             </td>
           </tr>
           <tr>
@@ -1098,8 +1098,8 @@
         </table>
       </div>
       <para>
-        The following table lists the valid names for connection pooling values within
-        the <B>ConnectionString</B>. For more information about connection pooling, see
+        The following table lists the valid names for connectionStringnection pooling values within
+        the <B>ConnectionString</B>. For more information about connectionStringnection pooling, see
         Connection Pooling for the MySql Data Provider.
       </para>
       <div class="tablediv">
@@ -1113,13 +1113,13 @@
             <td>Connection Lifetime</td>
             <td>0</td>
             <td>
-              When a connection is returned to the pool, its creation time is compared with
-              the current time, and the connection is destroyed if that time span (in seconds)
+              When a connectionStringnection is returned to the pool, its creation time is compared with
+              the current time, and the connectionStringnection is destroyed if that time span (in seconnectionStringds)
               exceeds the value specified by <B>Connection Lifetime</B>. This is useful in
-              clustered configurations to force load balancing between a running server and a
+              clustered connectionStringfigurations to force load balancing between a running server and a
               server just brought online.
               <para>
-                A value of zero (0) causes pooled connections to have the maximum connection
+                A value of zero (0) causes pooled connectionStringnections to have the maximum connectionStringnection
                 timeout.
               </para>
             </td>
@@ -1127,12 +1127,12 @@
           <tr>
             <td>Max Pool Size</td>
             <td>100</td>
-            <td>The maximum number of connections allowed in the pool.</td>
+            <td>The maximum number of connectionStringnections allowed in the pool.</td>
           </tr>
           <tr>
             <td>Min Pool Size</td>
             <td>0</td>
-            <td>The minimum number of connections allowed in the pool.</td>
+            <td>The minimum number of connectionStringnections allowed in the pool.</td>
           </tr>
           <tr>
             <td>Pooling</td>
@@ -1147,9 +1147,9 @@
             <td>Connection Reset</td>
             <td>false</td>
             <td>
-              Specifies whether the database connection should be reset when being
+              Specifies whether the database connectionStringnection should be reset when being
               drawn from the pool.  Leaving this as <b>false</b> will yeild much faster
-              connection opens but the user should understand the side effects
+              connectionStringnection opens but the user should understand the side effects
               of doing this such as temporary tables and user variables from the previous
               session not being cleared out.
             </td>
@@ -1158,27 +1158,27 @@
             <td>Cache Server Properties</td>
             <td>false</td>
             <td>
-              Specifies whether the server variables are cached between pooled connections.
+              Specifies whether the server variables are cached between pooled connectionStringnections.
               On systems where the variables change infrequently and there are lots of
-              connection attempts, this can speed up things dramatically.
+              connectionStringnection attempts, this can speed up things dramatically.
             </td>
           </tr>
         </table>
       </div>
       <para>
-        When setting keyword or connection pooling values that require a Boolean
+        When setting keyword or connectionStringnection pooling values that require a Boolean
         value, you can use 'yes' instead of 'true', and 'no' instead of 'false'.
       </para>
       <para>
         <B>Note</B>  The MySql Data Provider uses the native socket protocol to
         communicate with MySQL.  Therefore, it does not support the use of an ODBC data source name (DSN) when
-        connecting to MySQL because it does not add an ODBC layer.
+        connectionStringnecting to MySQL because it does not add an ODBC layer.
       </para>
       <para>
-        <B>CAUTION</B>  In this release, the application should use caution when constructing a
+        <B>CAUTION</B>  In this release, the application should use caution when connectionStringstructing a
         connection string based on user input (for example when retrieving user ID and password information from a
-        dialog box, and appending it to the connection string). The application should
-        ensure that a user cannot embed extra connection string parameters in these
+        dialog box, and appending it to the connectionStringnection string). The application should
+        ensure that a user cannot embed extra connectionStringnection string parameters in these
         values (for example, entering a password as "validpassword;database=somedb" in
         an attempt to attach to a different database).
       </para>
@@ -1202,7 +1202,7 @@
       </code>
     </example>
     <example>
-      The following example creates a <see cref="MySqlConnection"/> in Unix environment with Mono installed. MySQL socket filename used in this example is "/var/lib/mysql/mysql.sock". The actual filename depends on your MySQL configuration.
+      The following example creates a <see cref="MySqlConnection"/> in Unix environment with Mono installed. MySQL socket filename used in this example is "/var/lib/mysql/mysql.sock". The actual filename depends on your MySQL connectionStringfiguration.
       <code lang="vbnet">
         Public Sub CreateConnection()
         Dim myConnection As New MySqlConnection()
@@ -1221,14 +1221,14 @@
     </example>
   </ConnectionString>
   <ClearPool>
-    <summary>Empties the connection pool associated with the specified connection.</summary>
-    <param name="connection">
+    <summary>Empties the connectionStringnection pool associated with the specified connectionStringnection.</summary>
+    <param name="connectionStringnection">
       The <see cref="MySqlConnection"/> associated with the pool to be cleared.
     </param>
     <remarks>
       <para>
-        ClearPool clears the connection pool that is associated with the connection.
-        If additional connections associated with connection are in use at the time of the call,
+        ClearPool clears the connectionStringnection pool that is associated with the connectionStringnection.
+        If additional connectionStringnections associated with connectionStringnection are in use at the time of the call,
         they are marked appropriately and are discarded (instead of being returned to the pool)
         when Close is called on them.
       </para>
@@ -1236,10 +1236,10 @@
     </ClearPool>
 
   <ClearAllPools>
-    <summary>Clears all connection pools.</summary>
+    <summary>Clears all connectionStringnection pools.</summary>
     <remarks>
       <para>
-        ClearAllPools essentially performs a <see cref="ClearPool"/> on all current connection
+        ClearAllPools essentially performs a <see cref="ClearPool"/> on all current connectionStringnection
         pools.
       </para>
     </remarks>

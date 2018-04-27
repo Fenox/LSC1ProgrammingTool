@@ -1,4 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using LSC1DatabaseEditor.LSC1Database.Queries.Job;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySql.Data.MySqlClient;
 
 namespace LSC1DatabaseLibrary.LSC1JobRepresentation.Tests
@@ -6,24 +9,20 @@ namespace LSC1DatabaseLibrary.LSC1JobRepresentation.Tests
     [TestClass()]
     public class LSC1JobDataTests
     {
-        [TestInitialize]
-        public void Initialize()
+        private static readonly MySqlConnectionStringBuilder ConnStringBuilder = new MySqlConnectionStringBuilder
         {
-            MySqlConnectionStringBuilder connStringBuilder = new MySqlConnectionStringBuilder
-            {
-                Server = "127.0.0.1",
-                Database = "lsc1test",
-                UserID = "root",
-                Password = ""
-            };
+            Server = "127.0.0.1",
+            Database = "lsc1test",
+            UserID = "root",
+            Password = ""
+        };
 
-            LSC1DatabaseFacade.ConnectionString = connStringBuilder.ConnectionString;
-        }
+        private static readonly MySqlConnection Connection = new MySqlConnection(ConnStringBuilder.ConnectionString);
 
-        [TestMethod()]
+        [TestMethod]
         public void LoadJobTest()
         {
-            var jobRow = LSC1DatabaseFacade.GetJobs().Find(job => job.JobNr.Equals("223"));
+            var jobRow = new GetJobsQuery().Execute(Connection).ToList().Find(job => job.JobNr.Equals("223"));
             LSC1JobData jobData = new LSC1JobData(jobRow);
             jobData.LoadJob();
 

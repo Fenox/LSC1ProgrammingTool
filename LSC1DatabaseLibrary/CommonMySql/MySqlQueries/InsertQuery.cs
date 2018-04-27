@@ -1,17 +1,15 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Text;
-using MySql.Data.MySqlClient;
 
 namespace LSC1DatabaseLibrary.CommonMySql.MySqlQueries
 {
-    //TODO: test
-    public class InsertQuery : IMySqlQuery<object>
+    public class InsertQuery : MySqlQuery<object>
     {
-        private string tableName;
-        private IEnumerable<string> columnNames;
-        private IEnumerable<string> values;
+        private readonly string tableName;
+        private readonly IEnumerable<string> columnNames;
+        private readonly IEnumerable<string> values;
 
         public InsertQuery(string tableName, IEnumerable<string> columnNames, IEnumerable<string> values)
         {
@@ -22,36 +20,22 @@ namespace LSC1DatabaseLibrary.CommonMySql.MySqlQueries
 
         public InsertQuery(DbRow row)
         {
-            this.tableName = row.TableName;
-            this.columnNames = row.ColumnNames;
-            this.values = row.Values;
+            tableName = row.TableName;
+            columnNames = row.ColumnNames;
+            values = row.Values;
         }
 
-        public object Execute(MySqlConnection connection)
+        public InsertQuery(DataRow row, string tableName)
         {
-            string insertString = "INSERT INTO " + tableName + " (";
+            this.tableName = tableName;
+            columnNames = row.Table.Columns.Cast<string>();
+            values = (IEnumerable<string>) row.ItemArray.ToList().AsEnumerable();
+        }
 
-            foreach (var item in columnNames)
-            {
-                insertString += "`" + item + "`, ";
-            }
-
-            //Entferne lestzes Leerzeichen und Komma.
-            insertString = insertString.Remove(insertString.Length - 2);
-
-            insertString += ") VALUES (";
-
-            foreach (var item in values)
-            {
-                insertString += "'" + item + "', ";
-            }
-
-            //Entferne lestzes Leerzeichen und Komma.
-            insertString = insertString.Remove(insertString.Length - 2);
-
-            insertString += ")";
-
-            MySqlCommand cmd = new MySqlCommand(insertString, connection);
+        protected override object ProtectedExecution(MySqlConnection connection)
+        {
+            MySqlCommand cmd = Create();
+            cmd.Connection = connection;
             try
             {
                 cmd.ExecuteNonQuery();
@@ -65,6 +49,37 @@ namespace LSC1DatabaseLibrary.CommonMySql.MySqlQueries
             {
                 cmd.Dispose();
             }
+        }
+
+        public MySqlCommand Create()
+        {
+            string insertString = "INSERT INTO " + tableName + " (";
+
+            insertString = columnNames.Aggregate(insertString, (current, item) => current + ("`" + item + "`, "));
+
+            //Remove last space and comma
+            insertString = insertString.Remove(insertString.Length - 2);
+
+            insertString += ") VALUES (";
+
+            var valueCount = 0;
+            foreach (string unused in values)
+            {
+                insertString += "@Value" + valueCount + ", ";
+                valueCount++;
+            }
+
+            //Entferne lestzes Leerzeichen und Komma.
+            insertString = insertString.Remove(insertString.Length - 2);
+
+            insertString += ")";
+
+            var cmd = new MySqlCommand(insertString);
+            
+            for (var i = 0; i < values.Count(); i++)
+                cmd.Parameters.AddWithValue("Value" + i, values.ToList()[i]);
+
+            return cmd;
         }
     }
 }

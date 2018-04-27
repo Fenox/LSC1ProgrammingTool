@@ -7,6 +7,7 @@ using LSC1DatabaseLibrary.LSC1JobRepresentation.JobDataConverter;
 using LSC1DatabaseLibrary.LSC1Simulation;
 using System.Collections.ObjectModel;
 using System.Linq;
+using LSC1DatabaseEditor.LSC1CommonTool.Messages;
 
 namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
 {
@@ -19,7 +20,7 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
             Messenger.Default.Register<LSC1JobChangedMessage>(this, LSC1SimulatorViewModel.MessageToken, LoadNewJob);
         }
 
-        void LoadNewJob(LSC1JobChangedMessage msg)
+        private void LoadNewJob(LSC1JobChangedMessage msg)
         {
             var jobData = new LSC1JobData(msg.NewJob);
             jobData.LoadJob();

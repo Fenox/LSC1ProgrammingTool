@@ -1,16 +1,19 @@
 ﻿using LSC1DatabaseEditor;
 using LSC1DatabaseLibrary;
-using LSC1DatabaseLibrary.DatabaseModel;
 using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
+using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
+using MySql.Data.MySqlClient;
 
 namespace LSC1DatabaseLibrary.LSC1JobRepresentation
 {
     public class LSC1JobData
     {
+        private static readonly MySqlConnection Connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString);
         public DbJobNameRow JobName { get; set; }
 
         public List<DbJobDataRow> JobData { get; set; }
@@ -33,27 +36,27 @@ namespace LSC1DatabaseLibrary.LSC1JobRepresentation
         public void LoadJob()
         {
             string jobDataQuery = SQLStringGenerator.GetData(JobName.JobNr, TablesEnum.tjobdata, null);
-            JobData = LSC1DatabaseFacade.Read<DbJobDataRow>(LSC1UserSettings.Instance.DBSettings, jobDataQuery);
+            JobData = new ReadRowsQuery<DbJobDataRow>(jobDataQuery).Execute(Connection).ToList();
 
             string laserDataQuery = SQLStringGenerator.GetData(JobName.JobNr, TablesEnum.tproclaserdata, null);
-            LaserData = LSC1DatabaseFacade.Read<DbProcLaserDataRow>(LSC1UserSettings.Instance.DBSettings, laserDataQuery);
+            LaserData = new ReadRowsQuery<DbProcLaserDataRow>(laserDataQuery).Execute(Connection).ToList();
             string plcDataQuery = SQLStringGenerator.GetData(JobName.JobNr, TablesEnum.tprocplc, null);
-            PLCData = LSC1DatabaseFacade.Read<DbProcPlcRow>(LSC1UserSettings.Instance.DBSettings, plcDataQuery);
+            PLCData = new ReadRowsQuery<DbProcPlcRow>(plcDataQuery).Execute(Connection).ToList();
             string pulseDataQuery = SQLStringGenerator.GetData(JobName.JobNr, TablesEnum.tprocpulse, null);
-            PulseData = LSC1DatabaseFacade.Read<DbProcPulseRow>(LSC1UserSettings.Instance.DBSettings, pulseDataQuery);
+            PulseData = new ReadRowsQuery<DbProcPulseRow>(pulseDataQuery).Execute(Connection).ToList();
             string robotDataQuery = SQLStringGenerator.GetData(JobName.JobNr, TablesEnum.tprocrobot, null);
-            RobotData = LSC1DatabaseFacade.Read<DbProcRobotRow>(LSC1UserSettings.Instance.DBSettings, robotDataQuery);
+            RobotData = new ReadRowsQuery<DbProcRobotRow>(robotDataQuery).Execute(Connection).ToList();
             string turnDataQuery = SQLStringGenerator.GetData(JobName.JobNr, TablesEnum.tprocturn, null);
-            TurnData = LSC1DatabaseFacade.Read<DbProcTurnRow>(LSC1UserSettings.Instance.DBSettings, turnDataQuery);
+            TurnData = new ReadRowsQuery<DbProcTurnRow>(turnDataQuery).Execute(Connection).ToList();
 
             string framesQuery = SQLStringGenerator.GetData(JobName.JobNr, TablesEnum.tframe, null);
-            Frames = LSC1DatabaseFacade.Read<DbFrameRow>(LSC1UserSettings.Instance.DBSettings, framesQuery);
+            Frames = new ReadRowsQuery<DbFrameRow>(framesQuery).Execute(Connection).ToList();
             string moveParamsQuery = SQLStringGenerator.GetData(JobName.JobNr, TablesEnum.tmoveparam, null);
-            MoveParams = LSC1DatabaseFacade.Read<DbMoveParamRow>(LSC1UserSettings.Instance.DBSettings, moveParamsQuery);
+            MoveParams = new ReadRowsQuery<DbMoveParamRow>(moveParamsQuery).Execute(Connection).ToList();
             string positionsQuery = SQLStringGenerator.GetData(JobName.JobNr, TablesEnum.tpos, null);
-            Positions = LSC1DatabaseFacade.Read<DbPosRow>(LSC1UserSettings.Instance.DBSettings, positionsQuery);
+            Positions = new ReadRowsQuery<DbPosRow>(positionsQuery).Execute(Connection).ToList();
             string toolsQuery = SQLStringGenerator.GetData(JobName.JobNr, TablesEnum.ttool, null);
-            Tools = LSC1DatabaseFacade.Read<DbToolRow>(LSC1UserSettings.Instance.DBSettings, toolsQuery);
+            Tools = new ReadRowsQuery<DbToolRow>(toolsQuery).Execute(Connection).ToList();
         }
 
         public DbProcLaserDataRow FilterLaserDataBy(string name, int step)

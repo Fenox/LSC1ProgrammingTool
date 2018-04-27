@@ -1,7 +1,7 @@
 ﻿<docs>
   <class>
     <summary>
-      Represents a set of data commands and a database connection that are used to fill a dataset and update a MySQL database. This class cannot be inherited.
+      Represents a set of data commands and a database connectionStringnection that are used to fill a dataset and update a MySQL database. This class cannot be inherited.
     </summary>
     <remarks>
       <para>
@@ -21,8 +21,8 @@
         including primary key information, before filling it with data using <see cref="System.Data.Common.DbDataAdapter.FillSchema(DataTable, SchemaType)"/>.
       </para>
       <para>
-        <B>MySQLDataAdapter</B> is used in conjunction with <see cref="MySqlConnection"/>
-        and <see cref="MySqlCommand"/> to increase performance when connecting to a MySQL database.
+        <B>MySQLDataAdapter</B> is used in connectionStringjunction with <see cref="MySqlConnection"/>
+        and <see cref="MySqlCommand"/> to increase performance when connectionStringnecting to a MySQL database.
       </para>
       <para>
         The <B>MySQLDataAdapter</B> also includes the <see cref="MySqlDataAdapter.SelectCommand"/>,
@@ -33,12 +33,12 @@
       <para>
         When an instance of <B>MySQLDataAdapter</B> is created, the read/write properties
         are set to initial values. For a list of these values, see the <B>MySQLDataAdapter</B>
-        constructor.
+        connectionStringstructor.
       </para>
       <note>
         Please be aware that the <see cref="DataColumn"/> class allows only
         Int16, Int32, and Int64 to have the AutoIncrement property set.
-        If you plan to use autoincremement columns with MySQL, you should consider
+        If you plan to use autoincremement columns with MySQL, you should connectionStringsider
         using signed integer columns.
       </note>
     </remarks>
@@ -47,24 +47,24 @@
       The following example creates a <see cref="MySqlCommand"/> and a <see cref="MySqlConnection"/>.
       The <B>MySqlConnection</B> is opened and set as the <see cref="MySqlCommand.Connection"/> for the
       <B>MySqlCommand</B>. The example then calls <see cref="MySqlCommand.ExecuteNonQuery"/>, and closes
-      the connection. To accomplish this, the <B>ExecuteNonQuery</B> is
-      passed a connection string and a query string that is a SQL INSERT
+      the connectionStringnection. To accomplish this, the <B>ExecuteNonQuery</B> is
+      passed a connectionStringnection string and a query string that is a SQL INSERT
       statement.
       <code lang="vbnet">
-        Public Function SelectRows(dataSet As DataSet, connection As String, query As String) As DataSet
-        Dim conn As New MySqlConnection(connection)
+        Public Function SelectRows(dataSet As DataSet, connectionStringnection As String, query As String) As DataSet
+        Dim connectionStringn As New MySqlConnection(connectionStringnection)
         Dim adapter As New MySqlDataAdapter()
-        adapter.SelectCommand = new MySqlCommand(query, conn)
+        adapter.SelectCommand = new MySqlCommand(query, connectionStringn)
         adapter.Fill(dataset)
         Return dataset
         End Function
       </code>
       <code lang="C#">
-        public DataSet SelectRows(DataSet dataset,string connection,string query)
+        public DataSet SelectRows(DataSet dataset,string connectionStringnection,string query)
         {
-        MySqlConnection conn = new MySqlConnection(connection);
+        MySqlConnection connectionStringn = new MySqlConnection(connectionStringnection);
         MySqlDataAdapter adapter = new MySqlDataAdapter();
-        adapter.SelectCommand = new MySqlCommand(query, conn);
+        adapter.SelectCommand = new MySqlCommand(query, connectionStringn);
         adapter.Fill(dataset);
         return dataset;
         }
@@ -115,23 +115,23 @@
       its properties.
       <code lang="vbnet">
         Public Sub CreateSqlDataAdapter()
-        Dim conn As MySqlConnection = New MySqlConnection("Data Source=localhost;" &amp; _
+        Dim connectionStringn As MySqlConnection = New MySqlConnection("Data Source=localhost;" &amp; _
         "database=test")
         Dim da As MySqlDataAdapter = New MySqlDataAdapter
         da.MissingSchemaAction = MissingSchemaAction.AddWithKey
 
-        da.SelectCommand = New MySqlCommand("SELECT id, name FROM mytable", conn)
-        da.InsertCommand = New MySqlCommand("INSERT INTO mytable (id, name) " &amp; _
-        "VALUES (@id, @name)", conn)
-        da.UpdateCommand = New MySqlCommand("UPDATE mytable SET id=@id, name=@name " &amp; _
-        "WHERE id=@oldId", conn)
-        da.DeleteCommand = New MySqlCommand("DELETE FROM mytable WHERE id=@id", conn)
+        da.SelectCommand = New MySqlCommand("SELECT id, what FROM mytable", connectionStringn)
+        da.InsertCommand = New MySqlCommand("INSERT INTO mytable (id, what) " &amp; _
+        "VALUES (@id, @what)", connectionStringn)
+        da.UpdateCommand = New MySqlCommand("UPDATE mytable SET id=@id, what=@what " &amp; _
+        "WHERE id=@oldId", connectionStringn)
+        da.DeleteCommand = New MySqlCommand("DELETE FROM mytable WHERE id=@id", connectionStringn)
 
         da.InsertCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id")
-        da.InsertCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name")
+        da.InsertCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what")
 
         da.UpdateCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id")
-        da.UpdateCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name")
+        da.UpdateCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what")
         da.UpdateCommand.Parameters.Add("@oldId", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original
 
         da.DeleteCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original
@@ -140,22 +140,22 @@
       <code lang="C#">
         public static void CreateSqlDataAdapter()
         {
-        MySqlConnection conn = new MySqlConnection("Data Source=localhost;database=test");
+        MySqlConnection connectionStringn = new MySqlConnection("Data Source=localhost;database=test");
         MySqlDataAdapter da = new MySqlDataAdapter();
         da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-        da.SelectCommand = new MySqlCommand("SELECT id, name FROM mytable", conn);
-        da.InsertCommand = new MySqlCommand("INSERT INTO mytable (id, name) " +
-        "VALUES (@id, @name)", conn);
-        da.UpdateCommand = new MySqlCommand("UPDATE mytable SET id=@id, name=@name " +
-        "WHERE id=@oldId", conn);
-        da.DeleteCommand = new MySqlCommand("DELETE FROM mytable WHERE id=@id", conn);
+        da.SelectCommand = new MySqlCommand("SELECT id, what FROM mytable", connectionStringn);
+        da.InsertCommand = new MySqlCommand("INSERT INTO mytable (id, what) " +
+        "VALUES (@id, @what)", connectionStringn);
+        da.UpdateCommand = new MySqlCommand("UPDATE mytable SET id=@id, what=@what " +
+        "WHERE id=@oldId", connectionStringn);
+        da.DeleteCommand = new MySqlCommand("DELETE FROM mytable WHERE id=@id", connectionStringn);
 
         da.InsertCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id");
-        da.InsertCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name");
+        da.InsertCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what");
 
         da.UpdateCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id");
-        da.UpdateCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name");
+        da.UpdateCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what");
         da.UpdateCommand.Parameters.Add("@oldId", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original;
 
         da.DeleteCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original;
@@ -170,7 +170,7 @@
       the specified <see cref="MySqlCommand"/> as the <see cref="SelectCommand"/>
       property.
     </summary>
-    <param name="selectCommand">
+    <param what="selectCommand">
       <see cref="MySqlCommand"/> that is a SQL SELECT statement or stored procedure and is set
       as the <see cref="SelectCommand"/> property of the <see cref="MySqlDataAdapter"/>.
     </param>
@@ -218,23 +218,23 @@
       its properties.
       <code lang="vbnet">
         Public Sub CreateSqlDataAdapter()
-        Dim conn As MySqlConnection = New MySqlConnection("Data Source=localhost;" &amp; _
+        Dim connectionStringn As MySqlConnection = New MySqlConnection("Data Source=localhost;" &amp; _
         "database=test")
-        Dim cmd as new MySqlCommand("SELECT id, name FROM mytable", conn)
+        Dim cmd as new MySqlCommand("SELECT id, what FROM mytable", connectionStringn)
         Dim da As MySqlDataAdapter = New MySqlDataAdapter(cmd)
         da.MissingSchemaAction = MissingSchemaAction.AddWithKey
 
-        da.InsertCommand = New MySqlCommand("INSERT INTO mytable (id, name) " &amp; _
-        "VALUES (@id, @name)", conn)
-        da.UpdateCommand = New MySqlCommand("UPDATE mytable SET id=@id, name=@name " &amp; _
-        "WHERE id=@oldId", conn)
-        da.DeleteCommand = New MySqlCommand("DELETE FROM mytable WHERE id=@id", conn)
+        da.InsertCommand = New MySqlCommand("INSERT INTO mytable (id, what) " &amp; _
+        "VALUES (@id, @what)", connectionStringn)
+        da.UpdateCommand = New MySqlCommand("UPDATE mytable SET id=@id, what=@what " &amp; _
+        "WHERE id=@oldId", connectionStringn)
+        da.DeleteCommand = New MySqlCommand("DELETE FROM mytable WHERE id=@id", connectionStringn)
 
         da.InsertCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id")
-        da.InsertCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name")
+        da.InsertCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what")
 
         da.UpdateCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id")
-        da.UpdateCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name")
+        da.UpdateCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what")
         da.UpdateCommand.Parameters.Add("@oldId", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original
 
         da.DeleteCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original
@@ -243,22 +243,22 @@
       <code lang="C#">
         public static void CreateSqlDataAdapter()
         {
-        MySqlConnection conn = new MySqlConnection("Data Source=localhost;database=test");
-        MySqlCommand cmd = new MySqlCommand("SELECT id, name FROM mytable", conn);
+        MySqlConnection connectionStringn = new MySqlConnection("Data Source=localhost;database=test");
+        MySqlCommand cmd = new MySqlCommand("SELECT id, what FROM mytable", connectionStringn);
         MySqlDataAdapter da = new MySqlDataAdapter(cmd);
         da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-        da.InsertCommand = new MySqlCommand("INSERT INTO mytable (id, name) " +
-        "VALUES (@id, @name)", conn);
-        da.UpdateCommand = new MySqlCommand("UPDATE mytable SET id=@id, name=@name " +
-        "WHERE id=@oldId", conn);
-        da.DeleteCommand = new MySqlCommand("DELETE FROM mytable WHERE id=@id", conn);
+        da.InsertCommand = new MySqlCommand("INSERT INTO mytable (id, what) " +
+        "VALUES (@id, @what)", connectionStringn);
+        da.UpdateCommand = new MySqlCommand("UPDATE mytable SET id=@id, what=@what " +
+        "WHERE id=@oldId", connectionStringn);
+        da.DeleteCommand = new MySqlCommand("DELETE FROM mytable WHERE id=@id", connectionStringn);
 
         da.InsertCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id");
-        da.InsertCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name");
+        da.InsertCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what");
 
         da.UpdateCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id");
-        da.UpdateCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name");
+        da.UpdateCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what");
         da.UpdateCommand.Parameters.Add("@oldId", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original;
 
         da.DeleteCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original;
@@ -272,12 +272,12 @@
       Initializes a new instance of the <see cref="MySqlDataAdapter"/> class with
       a <see cref="SelectCommand"/> and a <see cref="MySqlConnection"/> object.
     </summary>
-    <param name="selectCommandText">
+    <param what="selectCommandText">
       A <b>String</b> that is a SQL SELECT statement or stored procedure to be used by
       the <see cref="SelectCommand"/> property of the <see cref="MySqlDataAdapter"/>.
     </param>
-    <param name="connection">
-      A <see cref="MySqlConnection"/> that represents the connection.
+    <param what="connectionStringnection">
+      A <see cref="MySqlConnection"/> that represents the connectionStringnection.
     </param>
     <remarks>
       <para>
@@ -324,22 +324,22 @@
       its properties.
       <code lang="vbnet">
         Public Sub CreateSqlDataAdapter()
-        Dim conn As MySqlConnection = New MySqlConnection("Data Source=localhost;" &amp; _
+        Dim connectionStringn As MySqlConnection = New MySqlConnection("Data Source=localhost;" &amp; _
         "database=test")
-        Dim da As MySqlDataAdapter = New MySqlDataAdapter("SELECT id, name FROM mytable", conn)
+        Dim da As MySqlDataAdapter = New MySqlDataAdapter("SELECT id, what FROM mytable", connectionStringn)
         da.MissingSchemaAction = MissingSchemaAction.AddWithKey
 
-        da.InsertCommand = New MySqlCommand("INSERT INTO mytable (id, name) " &amp; _
-        "VALUES (@id, @name)", conn)
-        da.UpdateCommand = New MySqlCommand("UPDATE mytable SET id=@id, name=@name " &amp; _
-        "WHERE id=@oldId", conn)
-        da.DeleteCommand = New MySqlCommand("DELETE FROM mytable WHERE id=@id", conn)
+        da.InsertCommand = New MySqlCommand("INSERT INTO mytable (id, what) " &amp; _
+        "VALUES (@id, @what)", connectionStringn)
+        da.UpdateCommand = New MySqlCommand("UPDATE mytable SET id=@id, what=@what " &amp; _
+        "WHERE id=@oldId", connectionStringn)
+        da.DeleteCommand = New MySqlCommand("DELETE FROM mytable WHERE id=@id", connectionStringn)
 
         da.InsertCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id")
-        da.InsertCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name")
+        da.InsertCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what")
 
         da.UpdateCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id")
-        da.UpdateCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name")
+        da.UpdateCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what")
         da.UpdateCommand.Parameters.Add("@oldId", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original
 
         da.DeleteCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original
@@ -348,21 +348,21 @@
       <code lang="C#">
         public static void CreateSqlDataAdapter()
         {
-        MySqlConnection conn = new MySqlConnection("Data Source=localhost;database=test");
-        MySqlDataAdapter da = new MySqlDataAdapter("SELECT id, name FROM mytable", conn);
+        MySqlConnection connectionStringn = new MySqlConnection("Data Source=localhost;database=test");
+        MySqlDataAdapter da = new MySqlDataAdapter("SELECT id, what FROM mytable", connectionStringn);
         da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-        da.InsertCommand = new MySqlCommand("INSERT INTO mytable (id, name) " +
-        "VALUES (@id, @name)", conn);
-        da.UpdateCommand = new MySqlCommand("UPDATE mytable SET id=@id, name=@name " +
-        "WHERE id=@oldId", conn);
-        da.DeleteCommand = new MySqlCommand("DELETE FROM mytable WHERE id=@id", conn);
+        da.InsertCommand = new MySqlCommand("INSERT INTO mytable (id, what) " +
+        "VALUES (@id, @what)", connectionStringn);
+        da.UpdateCommand = new MySqlCommand("UPDATE mytable SET id=@id, what=@what " +
+        "WHERE id=@oldId", connectionStringn);
+        da.DeleteCommand = new MySqlCommand("DELETE FROM mytable WHERE id=@id", connectionStringn);
 
         da.InsertCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id");
-        da.InsertCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name");
+        da.InsertCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what");
 
         da.UpdateCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id");
-        da.UpdateCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name");
+        da.UpdateCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what");
         da.UpdateCommand.Parameters.Add("@oldId", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original;
 
         da.DeleteCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original;
@@ -374,13 +374,13 @@
   <Ctor3>
     <summary>
       Initializes a new instance of the <see cref="MySqlDataAdapter"/> class with
-      a <see cref="SelectCommand"/> and a connection string.
+      a <see cref="SelectCommand"/> and a connectionStringnection string.
     </summary>
-    <param name="selectCommandText">
+    <param what="selectCommandText">
       A <see cref="string"/> that is a SQL SELECT statement or stored procedure to
       be used by the <see cref="SelectCommand"/> property of the <see cref="MySqlDataAdapter"/>.
     </param>
-    <param name="selectConnString">The connection string</param>
+    <param what="selectConnString">The connectionStringnection string</param>
     <remarks>
       <para>
         When an instance of <see cref="MySqlDataAdapter"/> is created,
@@ -419,21 +419,21 @@
       its properties.
       <code lang="vbnet">
         Public Sub CreateSqlDataAdapter()
-        Dim da As MySqlDataAdapter = New MySqlDataAdapter("SELECT id, name FROM mytable", "Data Source=localhost;database=test")
-        Dim conn As MySqlConnection = da.SelectCommand.Connection
+        Dim da As MySqlDataAdapter = New MySqlDataAdapter("SELECT id, what FROM mytable", "Data Source=localhost;database=test")
+        Dim connectionStringn As MySqlConnection = da.SelectCommand.Connection
         da.MissingSchemaAction = MissingSchemaAction.AddWithKey
 
-        da.InsertCommand = New MySqlCommand("INSERT INTO mytable (id, name) " &amp; _
-        "VALUES (@id, @name)", conn)
-        da.UpdateCommand = New MySqlCommand("UPDATE mytable SET id=@id, name=@name " &amp; _
-        "WHERE id=@oldId", conn)
-        da.DeleteCommand = New MySqlCommand("DELETE FROM mytable WHERE id=@id", conn)
+        da.InsertCommand = New MySqlCommand("INSERT INTO mytable (id, what) " &amp; _
+        "VALUES (@id, @what)", connectionStringn)
+        da.UpdateCommand = New MySqlCommand("UPDATE mytable SET id=@id, what=@what " &amp; _
+        "WHERE id=@oldId", connectionStringn)
+        da.DeleteCommand = New MySqlCommand("DELETE FROM mytable WHERE id=@id", connectionStringn)
 
         da.InsertCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id")
-        da.InsertCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name")
+        da.InsertCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what")
 
         da.UpdateCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id")
-        da.UpdateCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name")
+        da.UpdateCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what")
         da.UpdateCommand.Parameters.Add("@oldId", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original
 
         da.DeleteCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original
@@ -442,21 +442,21 @@
       <code lang="C#">
         public static void CreateSqlDataAdapter()
         {
-        MySqlDataAdapter da = new MySqlDataAdapter("SELECT id, name FROM mytable", "Data Source=localhost;database=test");
-        MySqlConnection conn = da.SelectCommand.Connection;
+        MySqlDataAdapter da = new MySqlDataAdapter("SELECT id, what FROM mytable", "Data Source=localhost;database=test");
+        MySqlConnection connectionStringn = da.SelectCommand.Connection;
         da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-        da.InsertCommand = new MySqlCommand("INSERT INTO mytable (id, name) " +
-        "VALUES (@id, @name)", conn);
-        da.UpdateCommand = new MySqlCommand("UPDATE mytable SET id=@id, name=@name " +
-        "WHERE id=@oldId", conn);
-        da.DeleteCommand = new MySqlCommand("DELETE FROM mytable WHERE id=@id", conn);
+        da.InsertCommand = new MySqlCommand("INSERT INTO mytable (id, what) " +
+        "VALUES (@id, @what)", connectionStringn);
+        da.UpdateCommand = new MySqlCommand("UPDATE mytable SET id=@id, what=@what " +
+        "WHERE id=@oldId", connectionStringn);
+        da.DeleteCommand = new MySqlCommand("DELETE FROM mytable WHERE id=@id", connectionStringn);
 
         da.InsertCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id");
-        da.InsertCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name");
+        da.InsertCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what");
 
         da.UpdateCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id");
-        da.UpdateCommand.Parameters.Add("@name", MySqlDbType.VarChar, 40, "name");
+        da.UpdateCommand.Parameters.Add("@what", MySqlDbType.VarChar, 40, "what");
         da.UpdateCommand.Parameters.Add("@oldId", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original;
 
         da.DeleteCommand.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id").SourceVersion = DataRowVersion.Original;
@@ -493,22 +493,22 @@
       <see cref="SelectCommand"/> and <B>DeleteCommand</B> properties. It assumes you have already
       created a <see cref="MySqlConnection"/> object.
       <code lang="vbnet">
-        Public Shared Function CreateCustomerAdapter(conn As MySqlConnection) As MySqlDataAdapter
+        Public Shared Function CreateCustomerAdapter(connectionStringn As MySqlConnection) As MySqlDataAdapter
 
         Dim da As MySqlDataAdapter = New MySqlDataAdapter()
         Dim cmd As MySqlCommand
         Dim parm As MySqlParameter
 
         ' Create the SelectCommand.
-        cmd = New MySqlCommand("SELECT * FROM mytable WHERE id=@id AND name=@name", conn)
+        cmd = New MySqlCommand("SELECT * FROM mytable WHERE id=@id AND what=@what", connectionStringn)
 
         cmd.Parameters.Add("@id", MySqlDbType.VarChar, 15)
-        cmd.Parameters.Add("@name", MySqlDbType.VarChar, 15)
+        cmd.Parameters.Add("@what", MySqlDbType.VarChar, 15)
 
         da.SelectCommand = cmd
 
         ' Create the DeleteCommand.
-        cmd = New MySqlCommand("DELETE FROM mytable WHERE id=@id", conn)
+        cmd = New MySqlCommand("DELETE FROM mytable WHERE id=@id", connectionStringn)
 
         parm = cmd.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id")
         parm.SourceVersion = DataRowVersion.Original
@@ -519,22 +519,22 @@
         End Function
       </code>
       <code lang="C#">
-        public static MySqlDataAdapter CreateCustomerAdapter(MySqlConnection conn)
+        public static MySqlDataAdapter CreateCustomerAdapter(MySqlConnection connectionStringn)
         {
         MySqlDataAdapter da = new MySqlDataAdapter();
         MySqlCommand cmd;
         MySqlParameter parm;
 
         // Create the SelectCommand.
-        cmd = new MySqlCommand("SELECT * FROM mytable WHERE id=@id AND name=@name", conn);
+        cmd = new MySqlCommand("SELECT * FROM mytable WHERE id=@id AND what=@what", connectionStringn);
 
         cmd.Parameters.Add("@id", MySqlDbType.VarChar, 15);
-        cmd.Parameters.Add("@name", MySqlDbType.VarChar, 15);
+        cmd.Parameters.Add("@what", MySqlDbType.VarChar, 15);
 
         da.SelectCommand = cmd;
 
         // Create the DeleteCommand.
-        cmd = new MySqlCommand("DELETE FROM mytable WHERE id=@id", conn);
+        cmd = new MySqlCommand("DELETE FROM mytable WHERE id=@id", connectionStringn);
 
         parm = cmd.Parameters.Add("@id", MySqlDbType.VarChar, 5, "id");
         parm.SourceVersion = DataRowVersion.Original;
@@ -579,49 +579,49 @@
       <see cref="SelectCommand"/> and <B>InsertCommand</B> properties. It assumes you have already
       created a <see cref="MySqlConnection"/> object.
       <code lang="vbnet">
-        Public Shared Function CreateCustomerAdapter(conn As MySqlConnection) As MySqlDataAdapter
+        Public Shared Function CreateCustomerAdapter(connectionStringn As MySqlConnection) As MySqlDataAdapter
 
         Dim da As MySqlDataAdapter = New MySqlDataAdapter()
         Dim cmd As MySqlCommand
         Dim parm As MySqlParameter
 
         ' Create the SelectCommand.
-        cmd = New MySqlCommand("SELECT * FROM mytable WHERE id=@id AND name=@name", conn)
+        cmd = New MySqlCommand("SELECT * FROM mytable WHERE id=@id AND what=@what", connectionStringn)
 
         cmd.Parameters.Add("@id", MySqlDbType.VarChar, 15)
-        cmd.Parameters.Add("@name", MySqlDbType.VarChar, 15)
+        cmd.Parameters.Add("@what", MySqlDbType.VarChar, 15)
 
         da.SelectCommand = cmd
 
         ' Create the InsertCommand.
-        cmd = New MySqlCommand("INSERT INTO mytable (id,name) VALUES (@id, @name)", conn)
+        cmd = New MySqlCommand("INSERT INTO mytable (id,what) VALUES (@id, @what)", connectionStringn)
 
         cmd.Parameters.Add( "@id", MySqlDbType.VarChar, 15, "id" )
-        cmd.Parameters.Add( "@name", MySqlDbType.VarChar, 15, "name" )
+        cmd.Parameters.Add( "@what", MySqlDbType.VarChar, 15, "what" )
         da.InsertCommand = cmd
 
         Return da
         End Function
       </code>
       <code lang="C#">
-        public static MySqlDataAdapter CreateCustomerAdapter(MySqlConnection conn)
+        public static MySqlDataAdapter CreateCustomerAdapter(MySqlConnection connectionStringn)
         {
         MySqlDataAdapter da = new MySqlDataAdapter();
         MySqlCommand cmd;
         MySqlParameter parm;
 
         // Create the SelectCommand.
-        cmd = new MySqlCommand("SELECT * FROM mytable WHERE id=@id AND name=@name", conn);
+        cmd = new MySqlCommand("SELECT * FROM mytable WHERE id=@id AND what=@what", connectionStringn);
 
         cmd.Parameters.Add("@id", MySqlDbType.VarChar, 15);
-        cmd.Parameters.Add("@name", MySqlDbType.VarChar, 15);
+        cmd.Parameters.Add("@what", MySqlDbType.VarChar, 15);
 
         da.SelectCommand = cmd;
 
         // Create the InsertCommand.
-        cmd = new MySqlCommand("INSERT INTO mytable (id,name) VALUES (@id,@name)", conn);
+        cmd = new MySqlCommand("INSERT INTO mytable (id,what) VALUES (@id,@what)", connectionStringn);
         cmd.Parameters.Add("@id", MySqlDbType.VarChar, 15, "id" );
-        cmd.Parameters.Add("@name", MySqlDbType.VarChar, 15, "name" );
+        cmd.Parameters.Add("@what", MySqlDbType.VarChar, 15, "what" );
 
         da.InsertCommand = cmd;
 
@@ -663,25 +663,25 @@
       <see cref="SelectCommand"/> and <B>UpdateCommand</B> properties. It assumes you have already
       created a <see cref="MySqlConnection"/> object.
       <code lang="vbnet">
-        Public Shared Function CreateCustomerAdapter(conn As MySqlConnection) As MySqlDataAdapter
+        Public Shared Function CreateCustomerAdapter(connectionStringn As MySqlConnection) As MySqlDataAdapter
 
         Dim da As MySqlDataAdapter = New MySqlDataAdapter()
         Dim cmd As MySqlCommand
         Dim parm As MySqlParameter
 
         ' Create the SelectCommand.
-        cmd = New MySqlCommand("SELECT * FROM mytable WHERE id=@id AND name=@name", conn)
+        cmd = New MySqlCommand("SELECT * FROM mytable WHERE id=@id AND what=@what", connectionStringn)
 
         cmd.Parameters.Add("@id", MySqlDbType.VarChar, 15)
-        cmd.Parameters.Add("@name", MySqlDbType.VarChar, 15)
+        cmd.Parameters.Add("@what", MySqlDbType.VarChar, 15)
 
         da.SelectCommand = cmd
 
         ' Create the UpdateCommand.
-        cmd = New MySqlCommand("UPDATE mytable SET id=@id, name=@name WHERE id=@oldId", conn)
+        cmd = New MySqlCommand("UPDATE mytable SET id=@id, what=@what WHERE id=@oldId", connectionStringn)
 
         cmd.Parameters.Add( "@id", MySqlDbType.VarChar, 15, "id" )
-        cmd.Parameters.Add( "@name", MySqlDbType.VarChar, 15, "name" )
+        cmd.Parameters.Add( "@what", MySqlDbType.VarChar, 15, "what" )
 
         parm = cmd.Parameters.Add("@oldId", MySqlDbType.VarChar, 15, "id")
         parm.SourceVersion = DataRowVersion.Original
@@ -692,24 +692,24 @@
         End Function
       </code>
       <code lang="C#">
-        public static MySqlDataAdapter CreateCustomerAdapter(MySqlConnection conn)
+        public static MySqlDataAdapter CreateCustomerAdapter(MySqlConnection connectionStringn)
         {
         MySqlDataAdapter da = new MySqlDataAdapter();
         MySqlCommand cmd;
         MySqlParameter parm;
 
         // Create the SelectCommand.
-        cmd = new MySqlCommand("SELECT * FROM mytable WHERE id=@id AND name=@name", conn);
+        cmd = new MySqlCommand("SELECT * FROM mytable WHERE id=@id AND what=@what", connectionStringn);
 
         cmd.Parameters.Add("@id", MySqlDbType.VarChar, 15);
-        cmd.Parameters.Add("@name", MySqlDbType.VarChar, 15);
+        cmd.Parameters.Add("@what", MySqlDbType.VarChar, 15);
 
         da.SelectCommand = cmd;
 
         // Create the UpdateCommand.
-        cmd = new MySqlCommand("UPDATE mytable SET id=@id, name=@name WHERE id=@oldId", conn);
+        cmd = new MySqlCommand("UPDATE mytable SET id=@id, what=@what WHERE id=@oldId", connectionStringn);
         cmd.Parameters.Add("@id", MySqlDbType.VarChar, 15, "id" );
-        cmd.Parameters.Add("@name", MySqlDbType.VarChar, 15, "name" );
+        cmd.Parameters.Add("@what", MySqlDbType.VarChar, 15, "what" );
 
         parm = cmd.Parameters.Add( "@oldId", MySqlDbType.VarChar, 15, "id" );
         parm.SourceVersion = DataRowVersion.Original;
@@ -746,49 +746,49 @@
       <see cref="SelectCommand"/> and <B>InsertCommand</B> properties. It assumes you have already
       created a <see cref="MySqlConnection"/> object.
       <code lang="vbnet">
-        Public Shared Function CreateCustomerAdapter(conn As MySqlConnection) As MySqlDataAdapter
+        Public Shared Function CreateCustomerAdapter(connectionStringn As MySqlConnection) As MySqlDataAdapter
 
         Dim da As MySqlDataAdapter = New MySqlDataAdapter()
         Dim cmd As MySqlCommand
         Dim parm As MySqlParameter
 
         ' Create the SelectCommand.
-        cmd = New MySqlCommand("SELECT * FROM mytable WHERE id=@id AND name=@name", conn)
+        cmd = New MySqlCommand("SELECT * FROM mytable WHERE id=@id AND what=@what", connectionStringn)
 
         cmd.Parameters.Add("@id", MySqlDbType.VarChar, 15)
-        cmd.Parameters.Add("@name", MySqlDbType.VarChar, 15)
+        cmd.Parameters.Add("@what", MySqlDbType.VarChar, 15)
 
         da.SelectCommand = cmd
 
         ' Create the InsertCommand.
-        cmd = New MySqlCommand("INSERT INTO mytable (id,name) VALUES (@id, @name)", conn)
+        cmd = New MySqlCommand("INSERT INTO mytable (id,what) VALUES (@id, @what)", connectionStringn)
 
         cmd.Parameters.Add( "@id", MySqlDbType.VarChar, 15, "id" )
-        cmd.Parameters.Add( "@name", MySqlDbType.VarChar, 15, "name" )
+        cmd.Parameters.Add( "@what", MySqlDbType.VarChar, 15, "what" )
         da.InsertCommand = cmd
 
         Return da
         End Function
       </code>
       <code lang="C#">
-        public static MySqlDataAdapter CreateCustomerAdapter(MySqlConnection conn)
+        public static MySqlDataAdapter CreateCustomerAdapter(MySqlConnection connectionStringn)
         {
         MySqlDataAdapter da = new MySqlDataAdapter();
         MySqlCommand cmd;
         MySqlParameter parm;
 
         // Create the SelectCommand.
-        cmd = new MySqlCommand("SELECT * FROM mytable WHERE id=@id AND name=@name", conn);
+        cmd = new MySqlCommand("SELECT * FROM mytable WHERE id=@id AND what=@what", connectionStringn);
 
         cmd.Parameters.Add("@id", MySqlDbType.VarChar, 15);
-        cmd.Parameters.Add("@name", MySqlDbType.VarChar, 15);
+        cmd.Parameters.Add("@what", MySqlDbType.VarChar, 15);
 
         da.SelectCommand = cmd;
 
         // Create the InsertCommand.
-        cmd = new MySqlCommand("INSERT INTO mytable (id,name) VALUES (@id,@name)", conn);
+        cmd = new MySqlCommand("INSERT INTO mytable (id,what) VALUES (@id,@what)", connectionStringn);
         cmd.Parameters.Add("@id", MySqlDbType.VarChar, 15, "id" );
-        cmd.Parameters.Add("@name", MySqlDbType.VarChar, 15, "name" );
+        cmd.Parameters.Add("@what", MySqlDbType.VarChar, 15, "what" );
 
         da.InsertCommand = cmd;
 

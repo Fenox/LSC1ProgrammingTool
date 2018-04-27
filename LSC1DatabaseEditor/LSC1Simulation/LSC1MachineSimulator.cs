@@ -1,5 +1,4 @@
 ﻿using LSC1DatabaseLibrary.CommonMySql;
-using LSC1DatabaseLibrary.DatabaseModel;
 using LSC1DatabaseLibrary.LSC1JobRepresentation;
 using System;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Media.Media3D;
+using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
 
 namespace LSC1DatabaseLibrary.LSC1Simulation
 {

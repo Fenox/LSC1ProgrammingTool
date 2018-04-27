@@ -6,6 +6,7 @@ using LSC1DatabaseEditor.Messages;
 using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Input;
+using LSC1DatabaseEditor.LSC1CommonTool.Messages;
 
 namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
 {
@@ -22,7 +23,7 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
             CloseWindowCommand = new RelayCommand<Window>((wnd) => wnd.Close());
         }
 
-        void OnLoadJobClick()
+        private void OnLoadJobClick()
         {
             LSC1LoadJobWindow wnd = new LSC1LoadJobWindow();
             bool? result = wnd.ShowDialog();
@@ -36,7 +37,7 @@ namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels
             }
         }
 
-        void OnLoadModelClick()
+        private void OnLoadModelClick()
         {
             OpenFileDialog dialog = new OpenFileDialog();
             bool? dialogResult = dialog.ShowDialog().HasValue;

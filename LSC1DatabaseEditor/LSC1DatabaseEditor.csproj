@@ -144,47 +144,57 @@
     <Compile Include="Common\Messages\Model3DLoadedMessage.cs" />
     <Compile Include="Common\Messages\StartedTaskMessage.cs" />
     <Compile Include="Common\Messages\UpdateViewport3DMessage.cs" />
-    <Compile Include="LSC1DatabaseEditor\Controller\LSC1AsyncTaskExecuter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\TaskExecutionStatusToColorConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\DbRowFactory.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbFrameRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbJobDataRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbJobNameRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbMoveParamRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbPosRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcLaserDataRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcPlcRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcPulseRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcRobotRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcTurnRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\UpdatedDbRowViewModel.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbTableRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbToolRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\NormalRows\DbTwtRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\TypedDataTables\UpdatedDataTable.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingFrameRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingJobDataRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingJobNameRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingMoveParamRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingPosRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcLaserRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcPlcRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcPulseRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcRobotRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcTurnRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingTableRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingToolRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingWorkdataRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingWTRow.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\LSC1EditorMenuVM.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\SettingsVM.cs" />
-    <Compile Include="LSC1DatabaseEditor\Views\LSC1SettingsWindow.xaml.cs">
+    <Compile Include="LSC1Database\Queries\Inconsistencies\FindFrameOrphans.cs" />
+    <Compile Include="LSC1Database\Queries\Inconsistencies\FindJobOrphansQuery.cs" />
+    <Compile Include="LSC1Database\Queries\Inconsistencies\FindPosOrphansQuery.cs" />
+    <Compile Include="LSC1Database\Queries\Inconsistencies\FindProcLaserOrphansQuery.cs" />
+    <Compile Include="LSC1Database\Queries\Inconsistencies\FindProcRobotOrphansQuery.cs" />
+    <Compile Include="LSC1Database\Queries\Inconsistencies\FindProcTurnOrphans.cs" />
+    <Compile Include="LSC1Database\Queries\Inconsistencies\FindPulseOrphans.cs" />
+    <Compile Include="LSC1Database\Queries\Job\CountJobDataReferences.cs" />
+    <Compile Include="LSC1Database\Queries\Job\IncreaseJobDataStepQuery.cs" />
+    <Compile Include="LSC1Database\Queries\Job\IncreasProcStep.cs" />
+    <Compile Include="LSC1DbEditor\Controller\LSC1AsyncDBTaskExecuter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\TaskExecutionStatusToColorConverter.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbFrameRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbJobDataRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbJobNameRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbMoveParamRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbPosRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcLaserDataRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcPlcRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcPulseRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcRobotRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbProcTurnRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\UpdatedDbRowViewModel.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbTableRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbToolRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbTwtRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\TypedDataTables\UpdatedDataTable.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingFrameRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingJobDataRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingJobNameRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingMoveParamRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingPosRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcLaserRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcPlcRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcPulseRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcRobotRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingProcTurnRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingTableRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingToolRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingWorkdataRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\UpdatingRows\UpdatingWTRow.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\LSC1EditorMenuVM.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\LSC1TablePropertiesViewModelBase.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\SettingsVM.cs" />
+    <Compile Include="LSC1DbEditor\Views\LSC1SettingsWindow.xaml.cs">
       <DependentUpon>LSC1SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LSC1DatabaseEditor\Views\SettingsControls\DatabaseSettingsControl.xaml.cs">
+    <Compile Include="LSC1DbEditor\Views\SettingsControls\DatabaseSettingsControl.xaml.cs">
       <DependentUpon>DatabaseSettingsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LSC1DatabaseEditor\Views\SettingsControls\VisualisationSettingsControl.xaml.cs">
+    <Compile Include="LSC1DbEditor\Views\SettingsControls\VisualisationSettingsControl.xaml.cs">
       <DependentUpon>VisualisationSettingsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="LSC1CommonTool\LoadJob\LSC1LoadJobVM.cs" />
@@ -192,9 +202,18 @@
       <DependentUpon>LSC1LoadJobWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="LSC1CommonTool\Messages\DataGridCellValueChangedMessage.cs" />
-    <Compile Include="LSC1Database\LSC1DatabaseFacade.cs" />
-    <Compile Include="LSC1Database\LSC1InconsistencyHandler.cs" />
+    <Compile Include="LSC1Database\LSC1DbFunctionCollection.cs" />
     <Compile Include="LSC1Database\OfflineDatabase.cs" />
+    <Compile Include="LSC1Database\Queries\Job\CopyJobQuery.cs" />
+    <Compile Include="LSC1Database\Queries\Job\CountJobFrameReferences.cs" />
+    <Compile Include="LSC1Database\Queries\Job\DeleteJobQuery.cs" />
+    <Compile Include="LSC1Database\Queries\Job\ExistsJobQuery.cs" />
+    <Compile Include="LSC1Database\Queries\Job\GetFramesOfJobQuery.cs" />
+    <Compile Include="LSC1Database\Queries\Job\GetFreeJobNumberQuery.cs" />
+    <Compile Include="LSC1Database\Queries\Job\GetJobNrQuery.cs" />
+    <Compile Include="LSC1Database\Queries\Job\GetJobsQuery.cs" />
+    <Compile Include="LSC1Database\Queries\Job\GetNamesOfJobQuery.cs" />
+    <Compile Include="LSC1Database\Queries\Job\IsJobActiveQuery.cs" />
     <Compile Include="LSC1JobDataRepresentation\JobDataConverter\JobDataToJobSturctureConverter.cs" />
     <Compile Include="LSC1JobDataRepresentation\LSC1JobData.cs" />
     <Compile Include="LSC1JobDataRepresentation\LSC1StructuredJob.cs" />
@@ -214,30 +233,30 @@
     <Compile Include="Common\Messages\TextChangedMessage.cs" />
     <Compile Include="Common\Messages\TreeViewBuildMessage.cs" />
     <Compile Include="Common\Messages\UpdateDataGridMessage.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\CopyJobViewModel.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DataStructures\CheckableTreeViewStructure.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\CopyJobViewModel.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DataStructures\CheckableTreeViewStructure.cs" />
     <Compile Include="LSC1ProgramSimulator\ViewModels\DataStructures\LSC1TreeViewItem.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\DeleteJobViewModel.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\FindJobCorpsesViewModel.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\FindPosCorpsesViewModel.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\FindProcCorpsesViewModel.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\DeleteJobViewModel.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\FindJobCorpsesViewModel.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\FindPosCorpsesViewModel.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\FindProcCorpsesViewModel.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="LSC1ProgramSimulator\ViewModels\LSC1SimulatorViewModel.cs" />
-    <Compile Include="LSC1DatabaseEditor\ViewModels\TableViewModel.cs" />
+    <Compile Include="LSC1DbEditor\ViewModels\LSC1TablePropertiesViewModel.cs" />
     <Compile Include="Common\Viewmodels\TextMessageBoxViewModel.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\CellValueConverter\BeamOnToBackgroundConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\CellValueConverter\FrameToBackgroundConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\CellValueConverter\InterPolToBackgroundConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\CellValueConverter\IsNumericToBackgroundConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\CellValueConverter\KindToBackgroundConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\CellValueConverter\LaserProgNrToBackgroundConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\CellValueConverter\LockedToBackgroundConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\CellValueConverter\MoveParamToBackgroundConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\CellValueConverter\NameToBackgroundConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\CellValueConverter\ToolToBackgroundConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\CellValueConverter\WEMToBackgroundConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\CellValueConverter\WhatToBackgroundConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\CellValueConverter\WhoToBackgroundConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\CellValueConverter\BeamOnToBackgroundConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\CellValueConverter\FrameToBackgroundConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\CellValueConverter\InterPolToBackgroundConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\CellValueConverter\IsNumericToBackgroundConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\CellValueConverter\KindToBackgroundConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\CellValueConverter\LaserProgNrToBackgroundConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\CellValueConverter\LockedToBackgroundConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\CellValueConverter\MoveParamToBackgroundConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\CellValueConverter\NameToBackgroundConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\CellValueConverter\ToolToBackgroundConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\CellValueConverter\WEMToBackgroundConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\CellValueConverter\WhatToBackgroundConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\CellValueConverter\WhoToBackgroundConverter.cs" />
     <Compile Include="Common\Converter\ColorToBrushConverter.cs" />
     <Compile Include="Common\Converter\StringNullToBooleanConverter.cs" />
     <Compile Include="LSC1ProgramSimulator\Views\LSC1SimulatorWindow.xaml.cs">
@@ -248,35 +267,35 @@
     </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Page Include="LSC1DatabaseEditor\Views\CopyJobWindow.xaml">
+    <Page Include="LSC1DbEditor\Views\CopyJobWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LSC1DatabaseEditor\Views\DeleteJobWindow.xaml">
+    <Page Include="LSC1DbEditor\Views\DeleteJobWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LSC1DatabaseEditor\Views\FindJobCorpsesWindow.xaml">
+    <Page Include="LSC1DbEditor\Views\FindJobCorpsesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LSC1DatabaseEditor\Views\FindPosCorpsesWindow.xaml">
+    <Page Include="LSC1DbEditor\Views\FindPosCorpsesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LSC1DatabaseEditor\Views\FindProcCorpsesWindow.xaml">
+    <Page Include="LSC1DbEditor\Views\FindProcCorpsesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LSC1DatabaseEditor\Views\LSC1SettingsWindow.xaml">
+    <Page Include="LSC1DbEditor\Views\LSC1SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LSC1DatabaseEditor\Views\SettingsControls\DatabaseSettingsControl.xaml">
+    <Page Include="LSC1DbEditor\Views\SettingsControls\DatabaseSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LSC1DatabaseEditor\Views\SettingsControls\VisualisationSettingsControl.xaml">
+    <Page Include="LSC1DbEditor\Views\SettingsControls\VisualisationSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -292,7 +311,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LSC1DatabaseEditor\Views\MainWindow.xaml">
+    <Page Include="LSC1DbEditor\Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -300,25 +319,25 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="LSC1DatabaseEditor\Converter\BoolToDataGridSelectionUnitConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\SelectedTableToNameFilterEnabledConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Converter\TableToJobFilterCheckedConverter.cs" />
-    <Compile Include="LSC1DatabaseEditor\Views\CopyJobWindow.xaml.cs">
+    <Compile Include="LSC1DbEditor\Converter\BoolToDataGridSelectionUnitConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\SelectedTableToNameFilterEnabledConverter.cs" />
+    <Compile Include="LSC1DbEditor\Converter\TableToJobFilterCheckedConverter.cs" />
+    <Compile Include="LSC1DbEditor\Views\CopyJobWindow.xaml.cs">
       <DependentUpon>CopyJobWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LSC1DatabaseEditor\Views\DeleteJobWindow.xaml.cs">
+    <Compile Include="LSC1DbEditor\Views\DeleteJobWindow.xaml.cs">
       <DependentUpon>DeleteJobWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LSC1DatabaseEditor\Views\FindJobCorpsesWindow.xaml.cs">
+    <Compile Include="LSC1DbEditor\Views\FindJobCorpsesWindow.xaml.cs">
       <DependentUpon>FindJobCorpsesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LSC1DatabaseEditor\Views\FindPosCorpsesWindow.xaml.cs">
+    <Compile Include="LSC1DbEditor\Views\FindPosCorpsesWindow.xaml.cs">
       <DependentUpon>FindPosCorpsesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LSC1DatabaseEditor\Views\FindProcCorpsesWindow.xaml.cs">
+    <Compile Include="LSC1DbEditor\Views\FindProcCorpsesWindow.xaml.cs">
       <DependentUpon>FindProcCorpsesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LSC1DatabaseEditor\Views\MainWindow.xaml.cs">
+    <Compile Include="LSC1DbEditor\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -344,12 +363,13 @@
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
+      <DependentUpon>Settings.ConnectionString</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <AdditionalFiles Include="..\LSC1DependencyValidation\Level1.layerdiagram">
       <Link>Level1.layerdiagram</Link>
@@ -370,7 +390,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
+    <None Include="Properties\Settings.ConnectionString">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
@@ -426,9 +446,7 @@
   <ItemGroup>
     <Resource Include="docs\MySqlCommand.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="LSC1Database\Queries\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
