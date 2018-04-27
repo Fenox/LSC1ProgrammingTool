@@ -2,25 +2,12 @@
 
 namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows
 {
-    public class DbProcPulseRow : DbRow
+    public class DbProcPulseRow : DbProcRow
     {
         public override string TableName
         {
             get => "tprocpulse";
             set { }
-        }
-
-
-        public string Name
-        {
-            get => Values[0];
-            set => Values[0] = value;
-        }
-
-        public string Step
-        {
-            get => Values[1];
-            set => Values[1] = value;
         }
 
         public string PulseTime

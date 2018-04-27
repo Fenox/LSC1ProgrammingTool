@@ -153,7 +153,8 @@
     <Compile Include="LSC1Database\Queries\Inconsistencies\FindPulseOrphans.cs" />
     <Compile Include="LSC1Database\Queries\Job\CountJobDataReferences.cs" />
     <Compile Include="LSC1Database\Queries\Job\IncreaseJobDataStepQuery.cs" />
-    <Compile Include="LSC1Database\Queries\Job\IncreasProcStep.cs" />
+    <Compile Include="LSC1Database\Queries\Job\IncreaseProcRobotDataRow.cs" />
+    <Compile Include="LSC1Database\Queries\Job\IncreasProcLaserDataStep.cs" />
     <Compile Include="LSC1DbEditor\Controller\LSC1AsyncDBTaskExecuter.cs" />
     <Compile Include="LSC1DbEditor\Converter\TaskExecutionStatusToColorConverter.cs" />
     <Compile Include="LSC1DbEditor\ViewModels\DatabaseViewModel\NormalRows\DbFrameRow.cs" />

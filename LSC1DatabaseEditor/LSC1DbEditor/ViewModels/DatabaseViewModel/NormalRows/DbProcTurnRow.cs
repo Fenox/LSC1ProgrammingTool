@@ -2,26 +2,13 @@
 
 namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows
 {
-    public class DbProcTurnRow : DbRow
+    public class DbProcTurnRow : DbProcRow
     {
 
         public override string TableName
         {
             get => "tprocturn";
             set { }
-        }
-
-
-        public string Name
-        {
-            get => Values[0];
-            set => Values[0] = value;
-        }
-
-        public string Step
-        {
-            get => Values[1];
-            set => Values[1] = value;
         }
 
         public string Pos

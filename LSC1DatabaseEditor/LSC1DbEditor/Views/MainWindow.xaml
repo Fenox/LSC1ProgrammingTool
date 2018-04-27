@@ -412,14 +412,14 @@
                         </StackPanel>
                     </GroupBox.Header>
 
-                    <ListBox x:Name="nameFilterListBox" 
+                    <ListBox x:Name="nameFilterListBox" MinHeight="20" 
                              ItemsSource="{Binding SelectedTable.NameFilterItems}" SelectedValue="{Binding SelectedNameFilter, Mode=TwoWay}">
                     </ListBox>
                 </GroupBox>
 
                 <GroupBox Header="Nachrichten" Padding="10" Margin="10,5,0,0">
                     <StackPanel>
-                        <ListView x:Name="listViewMessages" ItemsSource="{Binding Messages}">
+                        <ListView x:Name="listViewMessages" ItemsSource="{Binding Messages}" MinHeight="20" Margin="0,0,0,5">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding}" Foreground="Red"/>
@@ -431,7 +431,7 @@
                 </GroupBox>
             </StackPanel>
 
-            <GroupBox Grid.Column="1" Header="Bearbeitung" VerticalAlignment="Top" Margin="10,5,0,0">
+            <GroupBox Grid.Column="1" Header="Bearbeitung" VerticalAlignment="Top" Margin="10,5,0,0" Visibility="Hidden">
                 <StackPanel Orientation="Horizontal">
                     <CheckBox Grid.Column="1" x:Name="checkBoxSelectionMode" Content="Reihenauswahl" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
                     <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="10,2" />

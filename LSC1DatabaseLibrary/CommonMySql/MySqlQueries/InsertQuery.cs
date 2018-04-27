@@ -28,8 +28,8 @@ namespace LSC1DatabaseLibrary.CommonMySql.MySqlQueries
         public InsertQuery(DataRow row, string tableName)
         {
             this.tableName = tableName;
-            columnNames = row.Table.Columns.Cast<string>();
-            values = (IEnumerable<string>) row.ItemArray.ToList().AsEnumerable();
+            columnNames = row.Table.Columns.Cast<DataColumn>().Select(col => col.ColumnName);
+            values = row.ItemArray.ToList().Select(item => item.ToString());
         }
 
         protected override object ProtectedExecution(MySqlConnection connection)

@@ -2,24 +2,12 @@
 
 namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows
 {
-    public class DbProcLaserDataRow : DbRow
+    public class DbProcLaserDataRow : DbProcRow
     {
         public override string TableName
         {
             get => "tproclaserdata";
             set { }
-        }
-
-        public string Name
-        {
-            get => Values[0];
-            set => Values[0] = value;
-        }
-
-        public string Step
-        {
-            get => Values[1];
-            set => Values[1] = value;
         }
 
         public string BeamOn

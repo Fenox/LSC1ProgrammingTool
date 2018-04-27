@@ -301,23 +301,20 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         }
 
-        private async void CopyToNextRow(DataGrid selectedItemsContentElement)
+        private void CopyToNextRow(DataGrid selectedItemsContentElement)
         {
-            int indexOfFirst = selectedItemsContentElement.SelectedIndex;
-            int indexOfLast = indexOfFirst + selectedItemsContentElement.SelectedItems.Count;
-
-            await CopyAndInsertAt(selectedItemsContentElement);
+            CopyAndInsertAt(selectedItemsContentElement);
 
             Logger.Info("Used CopyToNextRow");
         }
 
-        private async Task CopyAndInsertAt(MultiSelector selectedItemsContentElement)
+        private async void CopyAndInsertAt(MultiSelector selectedItemsContentElement)
         {
             var newRowsCopy = new MyDataRowCollection();
 
             //Kopieren der ausgewählten Reihen
             foreach (DataRowView row in selectedItemsContentElement.SelectedItems)
-            {
+            {    
                 DataRow newRow = SelectedTable.DataTable.NewRow();
                 row.Row.CopyValuesTo(newRow);
                 newRowsCopy.Add(newRow);
@@ -348,7 +345,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
                 newRowsCopy.ChangeRowElementAddIndex(1, highestStepInSelection + 1, "");
 
                 await AsyncDbExecuter.DoTaskAsync("Erhöhe Step-Nummern...", () =>
-                    new IncreasProcStepQuery(numSelectedItems.ToString(), highestStepInSelection - 1, SelectedTable.Table.ToString(),
+                    new IncreasProcLaserDataStepQuery(numSelectedItems.ToString(), highestStepInSelection - 1, SelectedTable.Table.ToString(),
                         SelectedNameFilter)
                         .Execute(Connection));
             }

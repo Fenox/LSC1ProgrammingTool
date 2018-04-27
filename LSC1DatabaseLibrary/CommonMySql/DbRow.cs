@@ -14,4 +14,19 @@ namespace LSC1DatabaseLibrary.CommonMySql
 
         public ObservableCollection<string> Values { get; set; } = new ObservableCollection<string>();
     }
+
+    public class DbProcRow : DbRow
+    {
+            public string Name
+            {
+                get => Values[0];
+                set => Values[0] = value;
+            }
+
+            public string Step
+            {
+                get => Values[1];
+                set => Values[1] = value;
+            }
+        }
 }

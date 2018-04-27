@@ -9,14 +9,14 @@ using MySql.Data.MySqlClient;
 
 namespace LSC1DatabaseEditor.LSC1Database.Queries.Job
 {
-    public class IncreasProcStepQuery : MySqlQuery<object>
+    public class IncreaseProcRobotDataRow : MySqlQuery<object>
     {
         private readonly string tableName;
         private readonly int startingStep;
         private readonly string increment;
         private readonly string procName;
 
-        public IncreasProcStepQuery(string increment, int startingStep, string tableName, string procName)
+        public IncreaseProcRobotDataRow(string increment, int startingStep, string tableName, string procName)
         {
             this.increment = increment;
             this.startingStep = startingStep;
@@ -29,7 +29,7 @@ namespace LSC1DatabaseEditor.LSC1Database.Queries.Job
             //Update all items with higher step  
             //TODO: async + save
             string getHigherStepsQuery = "SELECT Step FROM `" + tableName + "` WHERE Step > @StartingStep AND Name = @ProcName";
-            var higherSteps = new ReadRowsQuery<DbJobDataRow>(getHigherStepsQuery,
+            var higherSteps = new ReadRowsQuery<DbProcRobotRow>(getHigherStepsQuery,
                     new MySqlParameter("StartingStep", startingStep + 1),
                     new MySqlParameter("ProcName", procName))
                 .Execute(connection)
@@ -42,10 +42,10 @@ namespace LSC1DatabaseEditor.LSC1Database.Queries.Job
             {
                 string setStepHigherQuery = "UPDATE `" + tableName + "` SET Step = Step + '@Increment' WHERE Step = '@Step' AND Name = '@ProcName'";
                 new NonReturnSimpleQuery(setStepHigherQuery,
-                    new MySqlParameter("Increment", increment),
-                    new MySqlParameter("Step", step),
-                    new MySqlParameter("ProcName", procName))
-                        .Execute(connection);
+                        new MySqlParameter("Increment", increment),
+                        new MySqlParameter("Step", step),
+                        new MySqlParameter("ProcName", procName))
+                    .Execute(connection);
             }
 
             return null;
