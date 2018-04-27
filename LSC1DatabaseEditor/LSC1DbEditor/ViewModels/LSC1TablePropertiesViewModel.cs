@@ -133,10 +133,10 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         }
 
-        public override async Task UpdateNameFilter(string jobId)
+        public override async void UpdateNameFilter(string jobId)
         {
             var procLaserOfJob = await new LSC1AsyncDBTaskExecuter()
-                                    .DoTaskAsync("Aktualisiere Names Filter" ,() => OfflineDatabase.AllJobProcNameMappings
+                                    .DoTaskAsync("Aktualisiere Names Filter..." ,() => OfflineDatabase.AllJobProcNameMappings
                                         .Find(mapping => mapping.JobNr.Equals(jobId))
                                         .ProcLaserNames);
 
@@ -162,7 +162,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         }
 
-        public override async Task UpdateNameFilter(string jobId)
+        public override async void UpdateNameFilter(string jobId)
         {
             var procPulseOfJob = await new LSC1AsyncDBTaskExecuter()
                                     .DoTaskAsync("Aktualisiere Names Filter", () => OfflineDatabase.AllJobProcNameMappings
@@ -191,7 +191,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         }
 
-        public override async Task UpdateNameFilter(string jobId)
+        public override async void UpdateNameFilter(string jobId)
         {
             var procRobotOfJob = await new LSC1AsyncDBTaskExecuter()
                                     .DoTaskAsync("Aktualisiere Names Filter", () => OfflineDatabase.AllJobProcNameMappings
@@ -220,7 +220,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         }
 
-        public override async Task UpdateNameFilter(string jobId)
+        public override async void UpdateNameFilter(string jobId)
         {
             var procPLCOfJob = await new LSC1AsyncDBTaskExecuter()
                                     .DoTaskAsync("Aktualisiere Names Filter", () => OfflineDatabase.AllJobProcNameMappings
@@ -249,7 +249,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         public override bool UsesNameFilter => true;
         public override string DataGridName => "procTurnDataGrid";
 
-        public override async Task UpdateNameFilter(string jobId)
+        public override async void UpdateNameFilter(string jobId)
         {
             var procTurnOfJob = await new LSC1AsyncDBTaskExecuter()
                                     .DoTaskAsync("Aktualisiere Names Filter", () => OfflineDatabase.AllJobProcNameMappings

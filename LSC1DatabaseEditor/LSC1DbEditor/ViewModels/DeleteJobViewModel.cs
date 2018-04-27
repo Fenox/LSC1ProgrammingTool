@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.LSC1Database;
@@ -11,11 +7,13 @@ using LSC1DatabaseEditor.LSC1DbEditor.Controller;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DataStructures;
 using LSC1DatabaseEditor.Messages;
-using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.CommonMySql;
 using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
 using MySql.Data.MySqlClient;
-using NLog;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
 
 namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 {
@@ -24,12 +22,22 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         private static readonly LSC1AsyncDBTaskExecuter AsyncExecuter = new LSC1AsyncDBTaskExecuter();
         private static readonly MySqlConnection Connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString);
 
-        private static readonly LSC1DbFunctionCollection functions =
+        private static readonly LSC1DbFunctionCollection Functions =
             new LSC1DbFunctionCollection(LSC1UserSettings.Instance.DBSettings.ConnectionString);
 
         public ObservableCollection<TreeViewItem> TreeItems { get; set; } = new ObservableCollection<TreeViewItem>();
 
-        public List<DbJobNameRow> Jobs { get; set; }
+        private List<DbJobNameRow> jobs;
+
+        public List<DbJobNameRow> Jobs
+        {
+            get => jobs;
+            set
+            {
+                jobs = value;
+                RaisePropertyChanged();
+            }
+        }
 
         private DbJobNameRow selectedJob;
         public DbJobNameRow SelectedJob
@@ -60,6 +68,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         {
             TreeItems.Clear();
 
+            //TODO: make frame handling correct (consider both base frames)
             //Laden des BaseFrames
             string baseFrameQuery = "SELECT FrameT1 FROM `twt` WHERE `WtId` = '" + SelectedJob.JobNr + "'";
             string baseFrame = await AsyncExecuter.DoTaskAsync("Lade alle BaseFrames", () =>
@@ -75,23 +84,17 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             TreeItems.Add(CreateBaseFrameTreeViewItems(baseFrame, baseFrameOccurences));
 
             //Laden von tprocdata
-            //TODO: Refactor most of this into one method
-            string tprocdataQuery = "SELECT * FROM `tjobdata` WHERE `JobNr` = '" + SelectedJob.JobNr + "' AND `What` = 'proc' GROUP BY `Name`";
-            var procDataList = await AsyncExecuter.DoTaskAsync("Lade tprocdata", () =>
-                new ReadRowsQuery<DbJobDataRow>(tprocdataQuery).Execute(Connection).ToList());
-            TreeItems.Add(CreateTreeViewItem("tproc", procDataList));
-
+            TreeItems.Add(CreateTreeViewItem("tproc", await AsyncExecuter.DoTaskAsync("Lade tprocdata",
+                 () => new GetNamesOfJobQuery(SelectedJob.JobNr, "proc").Execute(Connection).ToList())));
             //Laden aller tpos
-            string tposQuery = "SELECT * FROM `tjobdata` WHERE `JobNr` = '" + SelectedJob.JobNr + "' AND `What` = 'pos' GROUP BY `Name`";
-            var posDataList = await AsyncExecuter.DoTaskAsync("Lade tpos", () =>
-                new ReadRowsQuery<DbJobDataRow>(tposQuery).Execute(Connection).ToList());
-            TreeItems.Add(CreateTreeViewItem("tpos", posDataList));
+            TreeItems.Add(CreateTreeViewItem("tpos", await AsyncExecuter.DoTaskAsync("Lade tpos", 
+                () => new GetNamesOfJobQuery(SelectedJob.JobNr, "pos").Execute(Connection).ToList())));
+            
+            TreeItems.Add(CreateTreeViewItem("tturn", await AsyncExecuter.DoTaskAsync("Lade tturn...", 
+                () => new GetNamesOfJobQuery(SelectedJob.JobNr, "turn").Execute(Connection).ToList())));
 
-
-            //TODO: Laden aller turns zu job
-
-
-            //TODO:Laden aller Pulses zu job
+            TreeItems.Add(CreateTreeViewItem("tpulse", await AsyncExecuter.DoTaskAsync("Lade tpulse...",
+                () => new GetNamesOfJobQuery(SelectedJob.JobNr, "pulse").Execute(Connection).ToList())));
 
             //Laden aller frames
             string framesQuery = "SELECT * FROM `tjobdata` WHERE `JobNr` = '" + SelectedJob.JobNr + "' GROUP BY `Frame`";
@@ -138,7 +141,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             foreach (DbJobDataRow item in frameList)
             {
                 var subSubItems = new ObservableCollection<TextItem>();
-                var jobsWithFrame = functions.FindJobsWithFrame(item.Frame);
+                var jobsWithFrame = Functions.FindJobsWithFrame(item.Frame);
 
                 foreach (DbJobNameRow job in jobsWithFrame)
                 {
@@ -159,16 +162,16 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             return item3;
         }
 
-        private static TreeViewItem CreateTreeViewItem(string name, List<DbJobDataRow> procDataList)
+        private static TreeViewItem CreateTreeViewItem(string name, List<string> jobDataNames)
         {
             var item1 = new TreeViewItem
             {
                 Text = name
             };
-            foreach (DbJobDataRow item in procDataList)
+            foreach (string item in jobDataNames)
             {
                 var subSubItems = new ObservableCollection<TextItem>();
-                var jobsWithProc = functions.FindJobsThatUseName(item.Name);
+                var jobsWithProc = Functions.FindJobsThatUseName(item);
 
                 foreach (DbJobNameRow job in jobsWithProc)
                 {
@@ -180,7 +183,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
                 item1.SubItems.Add(new CheckableItemWithSub()
                 {
-                    Text = item.Name,
+                    Text = item,
                     SubItems = subSubItems,
                     Checked = jobsWithProc.Count <= 1
                 });
@@ -191,19 +194,6 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         public async void DeleteJob(Window wnd)
         {
-            //TODO: implement
-            var selectedProc = new List<string>();
-            if (TreeItems.Count > 1)
-                selectedProc.AddRange(TreeItems[1].SubItems.Where(it => it.Checked).Select(item => item.Text));
-
-            var selectedPos = new List<string>();
-            if (TreeItems.Count > 2)
-                selectedPos.AddRange(TreeItems[2].SubItems.Where(it => it.Checked).Select(item => item.Text));
-
-            var selectedFrames = new List<string>();
-            if (TreeItems.Count > 3)
-                selectedFrames.AddRange(TreeItems[3].SubItems.Where(it => it.Checked).Select(item => item.Text));
-
             await AsyncExecuter.DoTaskAsync("Lösche Job" ,() =>
             {
                 if (TreeItems.Count > 0)

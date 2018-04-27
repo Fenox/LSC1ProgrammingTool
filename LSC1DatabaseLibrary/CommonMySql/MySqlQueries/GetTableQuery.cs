@@ -26,8 +26,6 @@ namespace LSC1DatabaseLibrary.CommonMySql.MySqlQueries
 
             connection.Close();
             connection.Open();
-            //TODO: try uncomment 
-            //var builder = new MySqlCommandBuilder(adapter);
             adapter.Fill(dt);
 
             return dt;

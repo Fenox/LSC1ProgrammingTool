@@ -35,9 +35,8 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         public abstract DataTable DataTable { get; set; }
         public ObservableCollection<string> NameFilterItems { get; set; } = new ObservableCollection<string>();
 
-        public virtual Task UpdateNameFilter(string jobId)
+        public virtual void UpdateNameFilter(string jobId)
         {
-            return null;
         }
     }
 }

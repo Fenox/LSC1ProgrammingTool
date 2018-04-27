@@ -48,7 +48,7 @@ namespace LSC1DatabaseLibrary.CommonMySql.MySqlQueries
                     var resultItem = new TItem();
                     if (resultItem.Values.Count < reader.FieldCount)
                         resultItem.Values = new ObservableCollection<string>(new string[reader.FieldCount].ToList()); //TODO should not be observable collection (thats View)
-                    for (int i = 0; i < reader.FieldCount; i++)
+                    for (int i = 0; i < reader.FieldCount; i++) 
                         resultItem.Values[i] = reader.GetString(i);
 
                     queryResults.Add(resultItem);

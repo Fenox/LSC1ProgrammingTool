@@ -22,8 +22,8 @@ namespace LSC1DatabaseEditor.LSC1Database.Queries.Job
         /// Goal of this class is to search for all entries in the given jobdata 
         /// that are a pos or proc and return their names.
         /// </summary>
-        /// <param what="jobNr">JobNr of job in which to search</param>
-        /// <param what="what">type of the entry (pos or proc)</param>
+        /// <param name="jobNr">JobNr of job in which to search</param>
+        /// <param name="what">type of the entry (pos or proc)</param>
         public GetNamesOfJobQuery(string jobNr, string what)
         {
             this.jobNr = jobNr;

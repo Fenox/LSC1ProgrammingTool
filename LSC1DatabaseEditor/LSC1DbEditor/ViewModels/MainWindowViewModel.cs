@@ -33,8 +33,6 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         private static readonly LSC1AsyncDBTaskExecuter AsyncDbExecuter = new LSC1AsyncDBTaskExecuter();
         private static readonly Logger Logger = LogManager.GetLogger("Usage");
         private static readonly MySqlConnection Connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString);
-        private static readonly LSC1DbFunctionCollection Functions =
-            new LSC1DbFunctionCollection(LSC1UserSettings.Instance.DBSettings.ConnectionString);
 
         public LSC1EditorMenuVM MenuVM { get; set; } = new LSC1EditorMenuVM();
 
@@ -176,14 +174,18 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
                 CopyToNextRowCommand.RaiseCanExecuteChanged();
             });
             Messenger.Default.Register<ConnectionChangedMessage>(this, (msg) => LoadData());
-            Messenger.Default.Register<StartedTaskMessage>(this, (msg) => CurrentTaskText = msg.TaskName);
-            Messenger.Default.Register<EndedTaskMessage>(this, (msg) => CurrentTaskText = "Bereit");
+            Messenger.Default.Register<StartedTaskMessage>(this, (msg) => UpdateTaskText(msg.TaskName));
+            Messenger.Default.Register<EndedTaskMessage>(this, (msg) => UpdateTaskText("Bereit"));
 
             Messages = new ObservableCollection<string>();
 
             Messenger.Default.Send(new ConnectionChangedMessage());
-        }         
+        }
 
+        private void UpdateTaskText(string text)
+        {
+            CurrentTaskText = text;
+        }
 
         private async void LoadData()
         {
@@ -475,26 +477,24 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         }
         #endregion Commands
 
-        private async void OnSelectedJobChanged()
+        private void OnSelectedJobChanged()
         {
             if (SelectedTable == null || SelectedJob == null)
                 return;
             
             Logger.Info("Changed Selected Job to: {0}", SelectedJob.JobNr);
             ReloadGridViewData();
-            await UpdateNameFilter();
+            UpdateNameFilter();
         }
 
-        private async void SelectedTableChanged()
+        private void SelectedTableChanged()
         {
             if (SelectedTable == null || SelectedJob == null)
                 return;
 
             //Wird an die View gesendet, um dort das Tabellen-Layout zu ändern.
             Messenger.Default.Send(new TableSelectionChangedMessage(SelectedTable));
-            Task updateNameFilterTask = UpdateNameFilter();
-            if(updateNameFilterTask != null)
-                await updateNameFilterTask;
+            UpdateNameFilter();
 
             Logger.Info("Changed table to {0} (Job {1}", SelectedTable.DataGridName, selectedJob.Name);
         }
@@ -523,13 +523,11 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         /// <summary>
         /// Lädt die Name Filter für die Ausgewählte Tabelle
         /// </summary>
-        private async Task UpdateNameFilter()
+        private void UpdateNameFilter()
         {
             //update Filter
-            Task updateTask = SelectedTable.UpdateNameFilter(SelectedJob.JobNr);
-            if (updateTask != null)
-                await updateTask;
-
+            SelectedTable.UpdateNameFilter(SelectedJob.JobNr);
+            
             if (SelectedTable.NameFilterItems.Count > 0
                 && (SelectedTable.UsesNameFilter))
             {
