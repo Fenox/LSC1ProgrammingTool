@@ -14,7 +14,6 @@ namespace LSC1DatabaseEditor.LSC1Database.Queries.Job
             this.what = what;
         }
 
-
         protected override int ProtectedExecution(MySqlConnection connection)
         {
             const string query = "SELECT COUNT(*) as `count` FROM (SELECT 0 as `dummy` FROM tjobdata WHERE Name = @Name AND What = @What GROUP BY JobNr) sq";

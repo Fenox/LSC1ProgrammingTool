@@ -143,34 +143,34 @@ namespace LSC1DatabaseEditor.LSC1Database
             switch (table)
             {
                 case TablesEnum.tframe:
-                    OfflineDatabase.UpdateAllFrameNames(connectionString);
+                    UpdateAllFrameNames(connectionString);
                     break;
                 case TablesEnum.tmoveparam:
-                    OfflineDatabase.UpdateAllMoveParamNames(connectionString);
+                    UpdateAllMoveParamNames(connectionString);
                     break;
                 case TablesEnum.tpos:
-                    OfflineDatabase.UpdateAllPosNames(connectionString);
+                    UpdateAllPosNames(connectionString);
                     break;
                 case TablesEnum.tproclaserdata:
-                    OfflineDatabase.UpdateAllProcNames(connectionString);
+                    UpdateAllProcNames(connectionString);
                     break;
                 case TablesEnum.tprocplc:
-                    OfflineDatabase.UpdateAllProcPLCNames(connectionString);
+                    UpdateAllProcPLCNames(connectionString);
                     break;
                 case TablesEnum.tprocpulse:
-                    OfflineDatabase.UpdateAllProcPulseNames(connectionString);
+                    UpdateAllProcPulseNames(connectionString);
                     break;
                 case TablesEnum.tprocrobot:
-                    OfflineDatabase.UpdateAllProcNames(connectionString);
+                    UpdateAllProcNames(connectionString);
                     break;
                 case TablesEnum.tprocturn:
-                    OfflineDatabase.UpdateAllProcTurnNames(connectionString);
+                    UpdateAllProcTurnNames(connectionString);
                     break;
                 case TablesEnum.ttool:
-                    OfflineDatabase.UpdateAllToolNames(connectionString);
+                    UpdateAllToolNames(connectionString);
                     break;
                 case TablesEnum.tjobname:
-                    OfflineDatabase.UpdateAllJobNames(connectionString);
+                    UpdateAllJobNames(connectionString);
                     break;
             }
         }

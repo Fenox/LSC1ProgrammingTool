@@ -7,7 +7,6 @@
         xmlns:helix="http://helix-toolkit.org/wpf"
         xmlns:dataStruct="clr-namespace:LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels.DataStructures"
         mc:Ignorable="d"
-        xmlns:conv="clr-namespace:LSC1DatabaseEditor.Views.Converter"
         xmlns:converter="clr-namespace:LSC1DatabaseEditor.Common.Converter"
         Title="LSC1Simulator" Height="500" Width="1000">
 

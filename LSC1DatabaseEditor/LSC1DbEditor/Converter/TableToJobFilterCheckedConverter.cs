@@ -1,10 +1,10 @@
-﻿using LSC1DatabaseLibrary;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels;
+using LSC1DatabaseLibrary;
 
-namespace LSC1DatabaseEditor.Views.Converter
+namespace LSC1DatabaseEditor.LSC1DbEditor.Converter
 {
     public class TableToJobFilterCheckedConverter : IValueConverter
     {

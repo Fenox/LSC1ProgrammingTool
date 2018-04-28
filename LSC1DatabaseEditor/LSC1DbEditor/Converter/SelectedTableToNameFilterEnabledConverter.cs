@@ -1,9 +1,9 @@
-﻿using LSC1DatabaseLibrary;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using LSC1DatabaseLibrary;
 
-namespace LSC1DatabaseEditor.Views.Converter
+namespace LSC1DatabaseEditor.LSC1DbEditor.Converter
 {
     public class SelectedTableToNameFilterEnabledConverter : IValueConverter
     {
@@ -12,7 +12,7 @@ namespace LSC1DatabaseEditor.Views.Converter
             if (value == null)
                 return false;
 
-            TablesEnum selectedTable = (TablesEnum)value;
+            var selectedTable = (TablesEnum)value;
 
             return selectedTable == TablesEnum.tproclaserdata
                 || selectedTable == TablesEnum.tprocrobot

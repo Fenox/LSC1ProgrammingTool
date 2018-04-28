@@ -4,16 +4,16 @@ using System.Windows.Data;
 using System.Windows.Media;
 using LSC1DatabaseEditor.LSC1Database;
 
-namespace LSC1DatabaseEditor.Views.Converter.CellValueConverter
+namespace LSC1DatabaseEditor.LSC1DbEditor.Converter.CellValueConverter
 {
     public class NameToBackgroundConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value.GetType() != typeof(string))
+            if (value != null && value.GetType() != typeof(string))
                 return Brushes.Red;
 
-            string name = (string)value;
+            var name = (string)value;
 
             if (OfflineDatabase.AllPosNames.Contains(name)
                 || OfflineDatabase.AllProcNames.Contains(name)
@@ -22,8 +22,7 @@ namespace LSC1DatabaseEditor.Views.Converter.CellValueConverter
                 || OfflineDatabase.AllProcTurnNames.Contains(name)
                 || name == "?")
                 return null;
-            else
-                return Brushes.Red;
+            return Brushes.Red;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

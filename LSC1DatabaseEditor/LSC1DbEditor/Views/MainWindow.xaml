@@ -4,8 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LSC1DatabaseEditor"
-        xmlns:conv="clr-namespace:LSC1DatabaseEditor.Views.Converter"
-        xmlns:conv2="clr-namespace:LSC1DatabaseEditor.Views.Converter.CellValueConverter"
         mc:Ignorable="d"        
         Title="LSC1 Database Tool" Height="auto" Width="auto"
         x:Name="mainWindow">
