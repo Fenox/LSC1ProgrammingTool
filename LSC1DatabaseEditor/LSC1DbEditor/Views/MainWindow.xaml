@@ -431,9 +431,9 @@
                 </GroupBox>
             </StackPanel>
 
-            <GroupBox Grid.Column="1" Header="Bearbeitung" VerticalAlignment="Top" Margin="10,5,0,0" Visibility="Hidden">
+            <GroupBox Grid.Column="1" Header="Bearbeitung" VerticalAlignment="Top" Margin="10,5,0,0" Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox Grid.Column="1" x:Name="checkBoxSelectionMode" Content="Reihenauswahl" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="checkBoxSelectionMode" Content="Reihenauswahl" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
                     <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="10,2" />
                     <Button Content="Kopiere nach Ende"
                             Command="{Binding CopyToEndCommand}"
