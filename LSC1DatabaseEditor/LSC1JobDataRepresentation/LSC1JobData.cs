@@ -1,10 +1,6 @@
 ﻿using LSC1DatabaseEditor;
-using LSC1DatabaseLibrary;
-using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
 using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
 using MySql.Data.MySqlClient;

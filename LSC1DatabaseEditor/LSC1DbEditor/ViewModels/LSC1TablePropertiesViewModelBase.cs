@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Data;
-using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using LSC1DatabaseLibrary;
 

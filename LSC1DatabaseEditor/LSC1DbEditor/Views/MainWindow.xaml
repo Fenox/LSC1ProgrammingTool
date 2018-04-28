@@ -18,7 +18,7 @@
                 <ResourceDictionary>
                     <!-- Frame Data Grid -->
                     <DataGrid x:Key="frameDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource rowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -29,35 +29,35 @@
                             <DataGridTextColumn Header="x" Binding="{Binding x}" CellStyle="{StaticResource DataGridXCellStyle}"/>
                             <DataGridTextColumn Header="y" Binding="{Binding y}" CellStyle="{StaticResource DataGridYCellStyle}"/>
                             <DataGridTextColumn Header="z" Binding="{Binding z}" CellStyle="{StaticResource DataGridZCellStyle}"/>
-                            <DataGridTextColumn Header="rx" Binding="{Binding rx}" CellStyle="{StaticResource DataGridRXCellStyle}"/>
-                            <DataGridTextColumn Header="ry" Binding="{Binding ry}" CellStyle="{StaticResource DataGridRYCellStyle}"/>
-                            <DataGridTextColumn Header="rz" Binding="{Binding rz}" CellStyle="{StaticResource DataGridRZCellStyle}"/>
+                            <DataGridTextColumn Header="rx" Binding="{Binding rx}" CellStyle="{StaticResource DataGridRxCellStyle}"/>
+                            <DataGridTextColumn Header="ry" Binding="{Binding ry}" CellStyle="{StaticResource DataGridRyCellStyle}"/>
+                            <DataGridTextColumn Header="rz" Binding="{Binding rz}" CellStyle="{StaticResource DataGridRzCellStyle}"/>
                             <DataGridTextColumn Header="Locked" Binding="{Binding Locked}" CellStyle="{StaticResource DataGridLockedCellStyle}" />
                             <DataGridTextColumn Header="P0x" Binding="{Binding P0x}" CellStyle="{StaticResource DataGridP0XCellStyle}"/>
                             <DataGridTextColumn Header="P0y" Binding="{Binding P0y}" CellStyle="{StaticResource DataGridP0YCellStyle}"/>
                             <DataGridTextColumn Header="P0z" Binding="{Binding P0z}" CellStyle="{StaticResource DataGridP0ZCellStyle}"/>
-                            <DataGridTextColumn Header="P0rx" Binding="{Binding P0rx}" CellStyle="{StaticResource DataGridP0RXCellStyle}"/>
-                            <DataGridTextColumn Header="P0rz" Binding="{Binding P0rz}" CellStyle="{StaticResource DataGridP0RYCellStyle}"/>
-                            <DataGridTextColumn Header="P0ry" Binding="{Binding P0ry}" CellStyle="{StaticResource DataGridP0RZCellStyle}"/>
-                            <DataGridTextColumn Header="PXx" Binding="{Binding PXx}" CellStyle="{StaticResource DataGridPXXCellStyle}"/>
-                            <DataGridTextColumn Header="PXy" Binding="{Binding PXy}" CellStyle="{StaticResource DataGridPXYCellStyle}"/>
-                            <DataGridTextColumn Header="PXz" Binding="{Binding PXz}" CellStyle="{StaticResource DataGridPXZCellStyle}"/>
-                            <DataGridTextColumn Header="PXrx" Binding="{Binding PXrx}" CellStyle="{StaticResource DataGridPXRXCellStyle}"/>
-                            <DataGridTextColumn Header="PXry" Binding="{Binding PXry}" CellStyle="{StaticResource DataGridPXRYCellStyle}"/>
-                            <DataGridTextColumn Header="PXrz" Binding="{Binding PXrz}" CellStyle="{StaticResource DataGridPXRZCellStyle}"/>
-                            <DataGridTextColumn Header="PYx" Binding="{Binding PYx}" CellStyle="{StaticResource DataGridPYXCellStyle}"/>
-                            <DataGridTextColumn Header="PYy" Binding="{Binding PYy}" CellStyle="{StaticResource DataGridPYYCellStyle}"/>
-                            <DataGridTextColumn Header="PYz" Binding="{Binding PYz}" CellStyle="{StaticResource DataGridPYZCellStyle}"/>
-                            <DataGridTextColumn Header="PYrx" Binding="{Binding PYrx}" CellStyle="{StaticResource DataGridPYRXCellStyle}"/>
-                            <DataGridTextColumn Header="PYry" Binding="{Binding PYry}" CellStyle="{StaticResource DataGridPYRYCellStyle}"/>
-                            <DataGridTextColumn Header="PYrz" Binding="{Binding PYrz}" CellStyle="{StaticResource DataGridPYRZCellStyle}"/>
+                            <DataGridTextColumn Header="P0rx" Binding="{Binding P0rx}" CellStyle="{StaticResource DataGridP0RxCellStyle}"/>
+                            <DataGridTextColumn Header="P0rz" Binding="{Binding P0rz}" CellStyle="{StaticResource DataGridP0RyCellStyle}"/>
+                            <DataGridTextColumn Header="P0ry" Binding="{Binding P0ry}" CellStyle="{StaticResource DataGridP0RzCellStyle}"/>
+                            <DataGridTextColumn Header="PXx" Binding="{Binding PXx}" CellStyle="{StaticResource DataGridPxxCellStyle}"/>
+                            <DataGridTextColumn Header="PXy" Binding="{Binding PXy}" CellStyle="{StaticResource DataGridPxyCellStyle}"/>
+                            <DataGridTextColumn Header="PXz" Binding="{Binding PXz}" CellStyle="{StaticResource DataGridPxzCellStyle}"/>
+                            <DataGridTextColumn Header="PXrx" Binding="{Binding PXrx}" CellStyle="{StaticResource DataGridPxrxCellStyle}"/>
+                            <DataGridTextColumn Header="PXry" Binding="{Binding PXry}" CellStyle="{StaticResource DataGridPxryCellStyle}"/>
+                            <DataGridTextColumn Header="PXrz" Binding="{Binding PXrz}" CellStyle="{StaticResource DataGridPxrzCellStyle}"/>
+                            <DataGridTextColumn Header="PYx" Binding="{Binding PYx}" CellStyle="{StaticResource DataGridPyxCellStyle}"/>
+                            <DataGridTextColumn Header="PYy" Binding="{Binding PYy}" CellStyle="{StaticResource DataGridPyyCellStyle}"/>
+                            <DataGridTextColumn Header="PYz" Binding="{Binding PYz}" CellStyle="{StaticResource DataGridPyzCellStyle}"/>
+                            <DataGridTextColumn Header="PYrx" Binding="{Binding PYrx}" CellStyle="{StaticResource DataGridPyrxCellStyle}"/>
+                            <DataGridTextColumn Header="PYry" Binding="{Binding PYry}" CellStyle="{StaticResource DataGridPyryCellStyle}"/>
+                            <DataGridTextColumn Header="PYrz" Binding="{Binding PYrz}" CellStyle="{StaticResource DataGridPyrzCellStyle}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <!-- End Frame Data -->
 
                     <!--Job Data Grid-->
                     <DataGrid x:Key="jobDataDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource rowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -71,7 +71,7 @@
                             <DataGridTextColumn Header="MoveParam" Binding="{Binding MoveParam}"  CellStyle="{StaticResource DataGridMoveParamNameCellStyle}"/>
                             <DataGridTextColumn Header="Frame" Binding="{Binding Frame}"  CellStyle="{StaticResource DataGridFrameNameCellStyle}"/>
                             <DataGridTextColumn Header="Interpol" Binding="{Binding Interpol}"  CellStyle="{StaticResource DataGridInterpolNameCellStyle}"/>
-                            <DataGridTextColumn Header="WEM" Binding="{Binding WEM}"  CellStyle="{StaticResource DataGridWEMNameCellStyle}"/>
+                            <DataGridTextColumn Header="WEM" Binding="{Binding WEM}"  CellStyle="{StaticResource DataGridWemNameCellStyle}"/>
                             <DataGridTextColumn Header="LaserProgNr" Binding="{Binding LaserProgNr}"  CellStyle="{StaticResource DataGridLaserProgNrNameCellStyle}"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -79,7 +79,7 @@
 
                     <!--Job Name-->
                     <DataGrid x:Key="jobNameDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource rowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -93,7 +93,7 @@
 
                     <!-- Move Param Grid -->
                     <DataGrid x:Key="moveParamDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource rowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -113,7 +113,7 @@
                     <!-- Pos -->
                     <!--Pos Data Grid-->
                     <DataGrid x:Key="posDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource rowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -121,12 +121,12 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                             <DataGridTextColumn Header="Kind" Binding="{Binding Kind}" CellStyle="{StaticResource DataGridKindCellStyle}" />
-                            <DataGridTextColumn Header="x_a1" Binding="{Binding x_a1}" CellStyle="{StaticResource DataGridX_a1CellStyle}"/>
-                            <DataGridTextColumn Header="y_a2" Binding="{Binding y_a2}" CellStyle="{StaticResource DataGridY_a2CellStyle}"/>
-                            <DataGridTextColumn Header="z_a3" Binding="{Binding z_a3}" CellStyle="{StaticResource DataGridZ_a3CellStyle}"/>
-                            <DataGridTextColumn Header="rx_a4" Binding="{Binding rx_a4}" CellStyle="{StaticResource DataGridRX_a4CellStyle}"/>
-                            <DataGridTextColumn Header="ry_a5" Binding="{Binding ry_a5}" CellStyle="{StaticResource DataGridRY_a5CellStyle}"/>
-                            <DataGridTextColumn Header="rz_a6" Binding="{Binding rz_a6}" CellStyle="{StaticResource DataGridRZ_a6CellStyle}"/>
+                            <DataGridTextColumn Header="x_a1" Binding="{Binding x_a1}" CellStyle="{StaticResource DataGridXA1CellStyle}"/>
+                            <DataGridTextColumn Header="y_a2" Binding="{Binding y_a2}" CellStyle="{StaticResource DataGridYA2CellStyle}"/>
+                            <DataGridTextColumn Header="z_a3" Binding="{Binding z_a3}" CellStyle="{StaticResource DataGridZA3CellStyle}"/>
+                            <DataGridTextColumn Header="rx_a4" Binding="{Binding rx_a4}" CellStyle="{StaticResource DataGridRxA4CellStyle}"/>
+                            <DataGridTextColumn Header="ry_a5" Binding="{Binding ry_a5}" CellStyle="{StaticResource DataGridRyA5CellStyle}"/>
+                            <DataGridTextColumn Header="rz_a6" Binding="{Binding rz_a6}" CellStyle="{StaticResource DataGridRzA6CellStyle}"/>
                             <DataGridTextColumn Header="Locked" Binding="{Binding Locked}" CellStyle="{StaticResource DataGridLockedCellStyle}" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -134,7 +134,7 @@
                     
                     <!--LaserData Grid-->
                     <DataGrid x:Key="laserDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource rowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -144,14 +144,14 @@
                             <DataGridTextColumn Header="Step" Binding="{Binding Step}" CellStyle="{StaticResource DataGridNumericStepCellStyle}"/>
                             <DataGridTextColumn Header="BeamOn" Binding="{Binding BeamOn}" CellStyle="{StaticResource DataGridBeamOnNameCellStyle}"/>
                             <DataGridTextColumn Header="Power" Binding="{Binding Power}" CellStyle="{StaticResource DataGridPowerNameCellStyle}"/>
-                            <DataGridTextColumn Header="C_Grip" Binding="{Binding C_Grip}" CellStyle="{StaticResource DataGridC_GripNameCellStyle}"/>
+                            <DataGridTextColumn Header="C_Grip" Binding="{Binding C_Grip}" CellStyle="{StaticResource DataGridCGripNameCellStyle}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <!--End Laser data-->
 
                     <!-- Proc PLC Data Grid -->
                     <DataGrid x:Key="procplcDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource rowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -168,7 +168,7 @@
                     
                     <!-- Proc Pulse Data Grid -->
                     <DataGrid x:Key="procpulseDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource rowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -186,7 +186,7 @@
 
                     <!--Proc Robot DataGrid Style -->
                     <DataGrid x:Key="procRobotDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource rowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -196,12 +196,12 @@
                             <DataGridTextColumn Header="Step" Binding="{Binding Step}" CellStyle="{StaticResource DataGridNumericStepCellStyle}"/>
                             <DataGridTextColumn Header="Kind" Binding="{Binding Kind}" CellStyle="{StaticResource DataGridKindCellStyle}"/>
                             <DataGridTextColumn Header="Interpol" Binding="{Binding Interpol}" />
-                            <DataGridTextColumn Header="x_a1" Binding="{Binding x_a1}" CellStyle="{StaticResource DataGridX_a1CellStyle}"/>
-                            <DataGridTextColumn Header="y_a2" Binding="{Binding y_a2}" CellStyle="{StaticResource DataGridY_a2CellStyle}"/>
-                            <DataGridTextColumn Header="z_a3" Binding="{Binding z_a3}" CellStyle="{StaticResource DataGridZ_a3CellStyle}"/>
-                            <DataGridTextColumn Header="rx_a4" Binding="{Binding rx_a4}" CellStyle="{StaticResource DataGridRX_a4CellStyle}"/>
-                            <DataGridTextColumn Header="ry_a5" Binding="{Binding ry_a5}" CellStyle="{StaticResource DataGridRY_a5CellStyle}"/>
-                            <DataGridTextColumn Header="rz_a6" Binding="{Binding rz_a6}" CellStyle="{StaticResource DataGridRZ_a6CellStyle}"/>
+                            <DataGridTextColumn Header="x_a1" Binding="{Binding x_a1}" CellStyle="{StaticResource DataGridXA1CellStyle}"/>
+                            <DataGridTextColumn Header="y_a2" Binding="{Binding y_a2}" CellStyle="{StaticResource DataGridYA2CellStyle}"/>
+                            <DataGridTextColumn Header="z_a3" Binding="{Binding z_a3}" CellStyle="{StaticResource DataGridZA3CellStyle}"/>
+                            <DataGridTextColumn Header="rx_a4" Binding="{Binding rx_a4}" CellStyle="{StaticResource DataGridRxA4CellStyle}"/>
+                            <DataGridTextColumn Header="ry_a5" Binding="{Binding ry_a5}" CellStyle="{StaticResource DataGridRyA5CellStyle}"/>
+                            <DataGridTextColumn Header="rz_a6" Binding="{Binding rz_a6}" CellStyle="{StaticResource DataGridRzA6CellStyle}"/>
                             <DataGridTextColumn Header="accel" Binding="{Binding accel}" CellStyle="{StaticResource DataGridAccelCellStyle}"/>
                             <DataGridTextColumn Header="vel" Binding="{Binding vel}" CellStyle="{StaticResource DataGridVelCellStyle}"/>
                             <DataGridTextColumn Header="deccel" Binding="{Binding deccel}" CellStyle="{StaticResource DataGridDeccelCellStyle}"/>
@@ -214,7 +214,7 @@
 
                     <!-- Proc Turn DataGrid -->
                     <DataGrid x:Key="procTurnDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource rowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -227,7 +227,7 @@
                             <DataGridTextColumn Header="Velocity" Binding="{Binding Velocity}" CellStyle="{StaticResource DataGridVelocityCellStyle}"/>
                             <DataGridTextColumn Header="Power" Binding="{Binding Power}" CellStyle="{StaticResource DataGridPowerCellStyle}"/>
                             <DataGridTextColumn Header="BeamOn" Binding="{Binding BeamOn}" CellStyle="{StaticResource DataGridBeamOnNameCellStyle}"/>
-                            <DataGridTextColumn Header="WEM" Binding="{Binding WEM}" CellStyle="{StaticResource DataGridWEMNameCellStyle}"/>
+                            <DataGridTextColumn Header="WEM" Binding="{Binding WEM}" CellStyle="{StaticResource DataGridWemNameCellStyle}"/>
                             <DataGridTextColumn Header="PulseTime" Binding="{Binding PulseTime}" CellStyle="{StaticResource DataGridPulseTimeCellStyle}"/>
                             <DataGridTextColumn Header="AnzPulse" Binding="{Binding AnzPulse}" CellStyle="{StaticResource DataGridAnzPulseCellStyle}"/>
                         </DataGrid.Columns>
@@ -235,7 +235,7 @@
 
                     <!-- Table DataGrid -->
                     <DataGrid x:Key="tableDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                SelectionUnit="{Binding Converter={StaticResource rowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
                 AutoGenerateColumns="False"
                 CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                 SelectionChanged="DataGrid_SelectionChanged"
@@ -254,7 +254,7 @@
                     <!-- Tool -->
                     <!-- Tool DataGrid -->
                     <DataGrid x:Key="toolDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                SelectionUnit="{Binding Converter={StaticResource rowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
                 AutoGenerateColumns="False"
                 CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                 SelectionChanged="DataGrid_SelectionChanged"
@@ -264,9 +264,9 @@
                             <DataGridTextColumn Header="x" Binding="{Binding x}" CellStyle="{StaticResource DataGridXCellStyle}"/>
                             <DataGridTextColumn Header="y" Binding="{Binding y}" CellStyle="{StaticResource DataGridYCellStyle}"/>
                             <DataGridTextColumn Header="z" Binding="{Binding z}" CellStyle="{StaticResource DataGridZCellStyle}" />
-                            <DataGridTextColumn Header="rx" Binding="{Binding rx}" CellStyle="{StaticResource DataGridRXCellStyle}"/>
-                            <DataGridTextColumn Header="ry" Binding="{Binding ry}" CellStyle="{StaticResource DataGridRYCellStyle}"/>
-                            <DataGridTextColumn Header="rz" Binding="{Binding rz}" CellStyle="{StaticResource DataGridRZCellStyle}"/>
+                            <DataGridTextColumn Header="rx" Binding="{Binding rx}" CellStyle="{StaticResource DataGridRxCellStyle}"/>
+                            <DataGridTextColumn Header="ry" Binding="{Binding ry}" CellStyle="{StaticResource DataGridRyCellStyle}"/>
+                            <DataGridTextColumn Header="rz" Binding="{Binding rz}" CellStyle="{StaticResource DataGridRzCellStyle}"/>
                             <DataGridTextColumn Header="Locked" Binding="{Binding Locked}" CellStyle="{StaticResource DataGridLockedCellStyle}"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -274,7 +274,7 @@
 
                     <!-- twt DataGrid -->
                     <DataGrid x:Key="twtDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                SelectionUnit="{Binding Converter={StaticResource rowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
                 AutoGenerateColumns="False"
                 CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                 SelectionChanged="DataGrid_SelectionChanged"
@@ -386,7 +386,7 @@
 
                 </GroupBox>
                 <GroupBox Padding="10" Margin="10,5,0,10" VerticalAlignment="Top"
-                          IsEnabled="{Binding ElementName=listBoxTables, Path=SelectedItem, Converter={StaticResource tableToJobFilterCheckedConverter}}">
+                          IsEnabled="{Binding ElementName=listBoxTables, Path=SelectedItem, Converter={StaticResource TableToJobFilterCheckedConverter}}">
                     <GroupBox.Header>
                         <StackPanel Orientation="Horizontal">
                             <CheckBox IsChecked="{Binding JobFilterEnabled}"/>
@@ -452,7 +452,7 @@
             <ContentControl x:Name="contentDataGridControl" Grid.Column="1" Margin="10,55,10,10" Content="{StaticResource frameDataGrid}" />
         </Grid>
 
-        <StatusBar Grid.Row="2" Background="{Binding ElementName=statusTextBlock, Path=Text, Converter={StaticResource taskExecutionStatusToColorConverter}}">
+        <StatusBar Grid.Row="2" Background="{Binding ElementName=statusTextBlock, Path=Text, Converter={StaticResource TaskExecutionStatusToColorConverter}}">
             
             <StatusBarItem>
                 <Grid>

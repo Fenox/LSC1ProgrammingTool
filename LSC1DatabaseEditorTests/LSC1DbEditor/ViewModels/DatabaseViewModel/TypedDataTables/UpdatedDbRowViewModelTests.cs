@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using LSC1DatabaseEditor.LSC1DbEditor.Controller;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
-using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.TypedDataTables;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

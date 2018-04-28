@@ -2,7 +2,6 @@
 using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.Common.Messages;
 using LSC1DatabaseEditor.LSC1CommonTool.LoadJob;
-using LSC1DatabaseEditor.Messages;
 using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Input;

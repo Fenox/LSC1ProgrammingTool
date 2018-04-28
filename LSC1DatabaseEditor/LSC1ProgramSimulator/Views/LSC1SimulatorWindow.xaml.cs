@@ -1,13 +1,12 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Media3D;
-using LSC1DatabaseEditor.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.Messages;
 using HelixToolkit.Wpf;
-using LSC1DatabaseEditor.Messages.Common;
 using LSC1DatabaseEditor.LSC1ProgramSimulator.Messages;
 using System.Data;
+using LSC1DatabaseEditor.Common.Messages;
 using LSC1DatabaseEditor.LSC1CommonTool.Messages;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels;

@@ -2,12 +2,10 @@
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using LSC1DatabaseEditor.LSC1Database;
 using LSC1DatabaseEditor.LSC1Database.Queries.Inconsistencies;
 using LSC1DatabaseEditor.LSC1DbEditor.Controller;
 using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
 using MySql.Data.MySqlClient;
-using NLog;
 
 namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 {

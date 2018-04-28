@@ -1,13 +1,9 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
-namespace LSC1DatabaseEditor.ViewModel
+namespace LSC1DatabaseEditor.Common.Viewmodels
 {
     public class TextMessageBoxViewModel : ViewModelBase
     {
@@ -17,14 +13,12 @@ namespace LSC1DatabaseEditor.ViewModel
 
         public ICommand CloseSuccesfully { get; set; }
 
-        //public DialogResultEnum DialogResult { get; set; } = DialogResultEnum.Failed;
-
         public TextMessageBoxViewModel()
         {
             CloseSuccesfully = new RelayCommand<Window>(CloseWindowSuccessfully);
         }
 
-        private void CloseWindowSuccessfully(Window wnd)
+        private static void CloseWindowSuccessfully(Window wnd)
         {
             wnd.DialogResult = true;
             wnd.Close();

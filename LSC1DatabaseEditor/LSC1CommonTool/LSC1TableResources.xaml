@@ -3,256 +3,256 @@
                     xmlns:conv="clr-namespace:LSC1DatabaseEditor.Views.Converter"
                     xmlns:conv2="clr-namespace:LSC1DatabaseEditor.Views.Converter.CellValueConverter"
                     >
-    <conv:BoolToDataGridSelectionUnitConverter x:Key="rowConverter"/>
-    <conv:SelectedTableToNameFilterEnabledConverter x:Key="selectedTableToNameFilterEnabled"/>
-    <conv:TaskExecutionStatusToColorConverter x:Key="taskExecutionStatusToColorConverter"/>
-    <conv2:IsNumericToBackgroundConverter x:Key="isNumToBackground"/>
+    <conv:BoolToDataGridSelectionUnitConverter x:Key="RowConverter"/>
+    <conv:SelectedTableToNameFilterEnabledConverter x:Key="SelectedTableToNameFilterEnabled"/>
+    <conv:TaskExecutionStatusToColorConverter x:Key="TaskExecutionStatusToColorConverter"/>
+    <conv2:IsNumericToBackgroundConverter x:Key="IsNumToBackground"/>
 
     <!-- tableToJobFilterCheckedConverter -->
-    <conv:TableToJobFilterCheckedConverter x:Key="tableToJobFilterCheckedConverter" />
+    <conv:TableToJobFilterCheckedConverter x:Key="TableToJobFilterCheckedConverter" />
 
     <!--JobData Cell Style Background Converter-->
-    <conv2:WhoToBackgroundConverter x:Key="whoToBackground"/>
-    <conv2:WhatToBackgroundConverter x:Key="whatToBackground"/>
-    <conv2:NameToBackgroundConverter x:Key="nameToBackground"/>
-    <conv2:MoveParamToBackgroundConverter x:Key="moveParamToBackground"/>
-    <conv2:FrameToBackgroundConverter x:Key="frameToBackground"/>
-    <conv2:ToolToBackgroundConverter x:Key="toolToBackground"/>
-    <conv2:InterPolToBackgroundConverter x:Key="interpolToBackground"/>
-    <conv2:WEMToBackgroundConverter x:Key="wemToBackground"/>
-    <conv2:LaserProgNrToBackgroundConverter x:Key="laserprogToBackground"/>
+    <conv2:WhoToBackgroundConverter x:Key="WhoToBackground"/>
+    <conv2:WhatToBackgroundConverter x:Key="WhatToBackground"/>
+    <conv2:NameToBackgroundConverter x:Key="NameToBackground"/>
+    <conv2:MoveParamToBackgroundConverter x:Key="MoveParamToBackground"/>
+    <conv2:FrameToBackgroundConverter x:Key="FrameToBackground"/>
+    <conv2:ToolToBackgroundConverter x:Key="ToolToBackground"/>
+    <conv2:InterPolToBackgroundConverter x:Key="InterpolToBackground"/>
+    <conv2:WEMToBackgroundConverter x:Key="WemToBackground"/>
+    <conv2:LaserProgNrToBackgroundConverter x:Key="LaserprogToBackground"/>
 
     <!--LaserProg Cell Style Background Converter-->
-    <conv2:BeamOnToBackgroundConverter x:Key="beamOnToBackground"/>
+    <conv2:BeamOnToBackgroundConverter x:Key="BeamOnToBackground"/>
 
     <!--Proc Robot Cell Style Background Converter-->
-    <conv2:KindToBackgroundConverter x:Key="kindToBackground"/>
-    <conv2:LockedToBackgroundConverter x:Key="lockedToBackground"/>
+    <conv2:KindToBackgroundConverter x:Key="KindToBackground"/>
+    <conv2:LockedToBackgroundConverter x:Key="LockedToBackground"/>
 
     <!-- Common Cell Styles-->
     <Style x:Key="DataGridNumericStepCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Step, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Step, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridNumericJobNrCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding JobNr, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding JobNr, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridInterpolNameCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Interpol, Converter={StaticResource interpolToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Interpol, Converter={StaticResource InterpolToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridLockedCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Locked, Converter={StaticResource lockedToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Locked, Converter={StaticResource LockedToBackground}}"/>
     </Style>
 
     <!-- Proc Robot spezifische Cell Styles -->
     <Style x:Key="DataGridKindCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Kind, Converter={StaticResource kindToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Kind, Converter={StaticResource KindToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridX_a1CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding x_a1, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridXA1CellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding x_a1, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridY_a2CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding y_a2, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridYA2CellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding y_a2, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridZ_a3CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding z_a3, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridZA3CellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding z_a3, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridRX_a4CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding rx_a4, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridRxA4CellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding rx_a4, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridRY_a5CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding ry_a5, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridRyA5CellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding ry_a5, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridRZ_a6CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding rz_a6, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridRzA6CellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding rz_a6, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridAccelCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding accel, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding accel, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridVelCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding vel, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding vel, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridDeccelCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding deccel, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding deccel, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridTvelCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding tvel, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding tvel, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridLeaveCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding leave, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding leave, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridReachCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding reach, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding reach, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <!--Frame Data Numeric Styles-->
     <Style x:Key="DataGridXCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding x, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding x, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridYCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding y, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding y, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridZCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding z, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding z, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridRXCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding rx, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridRxCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding rx, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridRYCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding ry, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridRyCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding ry, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridRZCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding rz, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridRzCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding rz, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridP0XCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding P0x, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding P0x, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridP0YCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding P0y, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding P0y, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridP0ZCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding P0z, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding P0z, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridP0RXCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding P0rx, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridP0RxCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding P0rx, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridP0RYCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding P0ry, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridP0RyCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding P0ry, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridP0RZCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding P0rz, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridP0RzCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding P0rz, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridPXXCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding PXx, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridPxxCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding PXx, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridPXYCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding PXy, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridPxyCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding PXy, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridPXZCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding PXz, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridPxzCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding PXz, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridPXRXCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding PXrx, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridPxrxCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding PXrx, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridPXRYCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding PXry, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridPxryCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding PXry, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridPXRZCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding PXrz, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridPxrzCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding PXrz, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridPYRXCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding PYrx, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridPyrxCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding PYrx, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridPYRYCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding PYry, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridPyryCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding PYry, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridPYRZCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding PYrz, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridPyrzCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding PYrz, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridPYXCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding PYx, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridPyxCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding PYx, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridPYYCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding PYy, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridPyyCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding PYy, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridPYZCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding PYz, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridPyzCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding PYz, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <!--Job Data Cell Styles-->
     <Style x:Key="DataGridNameCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Name, Converter={StaticResource nameToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Name, Converter={StaticResource NameToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridWhoCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Who, Converter={StaticResource whoToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Who, Converter={StaticResource WhoToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridWhatNameCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding What, Converter={StaticResource whatToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding What, Converter={StaticResource WhatToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridMoveParamNameCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding MoveParam, Converter={StaticResource moveParamToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding MoveParam, Converter={StaticResource MoveParamToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridFrameNameCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Frame, Converter={StaticResource frameToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Frame, Converter={StaticResource FrameToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridToolNameCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Tool, Converter={StaticResource toolToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Tool, Converter={StaticResource ToolToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridWEMNameCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding WEM, Converter={StaticResource wemToBackground}}"/>
+    <Style x:Key="DataGridWemNameCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding WEM, Converter={StaticResource WemToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridLaserProgNrNameCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding LaserProgNr, Converter={StaticResource laserprogToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding LaserProgNr, Converter={StaticResource LaserprogToBackground}}"/>
     </Style>
     
     <!-- Laserdata spezifische Cell Styles -->
     <Style x:Key="DataGridBeamOnNameCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding BeamOn, Converter={StaticResource beamOnToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding BeamOn, Converter={StaticResource BeamOnToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridPowerNameCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Power, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Power, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
-    <Style x:Key="DataGridC_GripNameCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding C_Grip, Converter={StaticResource isNumToBackground}}"/>
+    <Style x:Key="DataGridCGripNameCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="BorderBrush" Value="{Binding C_Grip, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <!-- Proc PLC Styles-->
     <Style x:Key="DataGridActorCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Actor, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Actor, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridValueCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Value, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Value, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridParameterCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Parameter, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Parameter, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
   
@@ -265,23 +265,23 @@
     <!-- Proc Turn -->
     <!-- Proc Turn Styles -->
     <Style x:Key="DataGridAngleCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Angle, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Angle, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
     <Style x:Key="DataGridSpeedCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Speed, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Speed, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridVelocityCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Velocity, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Velocity, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridPowerCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Power, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Power, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridPulseTimeCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding PulseTime, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding PulseTime, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridAnzPulseCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding AnzPulse, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding AnzPulse, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
  
@@ -290,19 +290,19 @@
     <!-- Table -->
     <!-- Table Styles-->
     <Style x:Key="DataGridWtIdCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding WtId, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding WtId, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridStatusCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Status, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Status, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridGasCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Gas, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Gas, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridBackWtIdCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding BackWtId, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding BackWtId, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridBackStatusCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding BackStatus, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding BackStatus, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 
    
@@ -310,39 +310,39 @@
     <!-- twt -->
     <!-- twt Styles -->
     <Style x:Key="DataGridWtTypCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding WtTyp, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding WtTyp, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridFrameT1CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding FrameT1, Converter={StaticResource frameToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding FrameT1, Converter={StaticResource FrameToBackground}}"/>
     </Style>
     <Style x:Key="DataGridFrameT2CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding FrameT2, Converter={StaticResource frameToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding FrameT2, Converter={StaticResource FrameToBackground}}"/>
     </Style>
     <Style x:Key="DataGridJobT1CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding JobT1, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding JobT1, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridJobT2CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding JobT2, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding JobT2, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridCPos1CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding CPos1, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding CPos1, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridCPos2CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding CPos2, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding CPos2, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridTypCellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding Typ, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding Typ, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridEnableT1CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding EnableT1, Converter={StaticResource beamOnToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding EnableT1, Converter={StaticResource BeamOnToBackground}}"/>
     </Style>
     <Style x:Key="DataGridEnableT2CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding EnableT2, Converter={StaticResource beamOnToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding EnableT2, Converter={StaticResource BeamOnToBackground}}"/>
     </Style>
     <Style x:Key="DataGridCPos3CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding CPos3, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding CPos3, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
     <Style x:Key="DataGridCPos4CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="BorderBrush" Value="{Binding CPos4, Converter={StaticResource isNumToBackground}}"/>
+        <Setter Property="BorderBrush" Value="{Binding CPos4, Converter={StaticResource IsNumToBackground}}"/>
     </Style>
 </ResourceDictionary>

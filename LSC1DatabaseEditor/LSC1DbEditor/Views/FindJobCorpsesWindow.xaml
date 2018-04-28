@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LSC1DatabaseEditor.Views"
         xmlns:conv="clr-namespace:LSC1DatabaseEditor.Views.Converter"
+        xmlns:converter="clr-namespace:LSC1DatabaseEditor.Common.Converter"
         mc:Ignorable="d"
          Title="Lösche Job Leichen" Height="300" Width="300">
     <Window.Resources>
-        <conv:StringNullToBooleanConverter x:Key="converter"/>
+        <converter:StringNullToBooleanConverter x:Key="converter"/>
     </Window.Resources>
 
     <Grid>

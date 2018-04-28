@@ -5,7 +5,6 @@ using LSC1DatabaseEditor.LSC1Database;
 using LSC1DatabaseEditor.LSC1DbEditor.Controller;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
-using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement;
 using MySql.Data.MySqlClient;
 
 namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.TypedDataTables

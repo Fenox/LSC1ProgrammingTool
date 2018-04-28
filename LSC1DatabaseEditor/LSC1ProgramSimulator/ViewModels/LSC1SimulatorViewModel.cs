@@ -4,10 +4,10 @@ using HelixToolkit.Wpf;
 using LSC1DatabaseEditor.LSC1ProgramSimulator.Messages;
 using LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels.DataStructures;
 using LSC1DatabaseEditor.Messages;
-using LSC1DatabaseEditor.Messages.Common;
 using PresentationCoreExtensions;
 using System;
 using System.Windows.Media.Media3D;
+using LSC1DatabaseEditor.Common.Messages;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
 
 namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels

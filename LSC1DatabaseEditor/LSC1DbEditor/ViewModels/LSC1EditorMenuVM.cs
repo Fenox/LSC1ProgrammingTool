@@ -5,7 +5,6 @@ using LSC1DatabaseEditor.LSC1Database.Queries.Inconsistencies;
 using LSC1DatabaseEditor.LSC1DbEditor.Controller;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
 using LSC1DatabaseEditor.Messages;
-using LSC1DatabaseEditor.ViewModel;
 using LSC1DatabaseEditor.Views;
 using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
 using Microsoft.Win32;
@@ -13,6 +12,7 @@ using MySql.Data.MySqlClient;
 using NLog;
 using System.Windows;
 using System.Windows.Input;
+using LSC1DatabaseEditor.Common.Viewmodels;
 using LSC1DatabaseEditor.LSC1Database;
 
 namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels

@@ -1,5 +1,4 @@
-﻿using LSC1DatabaseEditor.LSC1Database;
-using LSC1DatabaseEditor.LSC1Database.Queries.Job;
+﻿using LSC1DatabaseEditor.LSC1Database.Queries.Job;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySql.Data.MySqlClient;
 

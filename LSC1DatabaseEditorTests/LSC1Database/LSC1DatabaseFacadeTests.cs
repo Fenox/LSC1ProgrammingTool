@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using LSC1DatabaseEditor.LSC1Database;
 using LSC1DatabaseEditor.LSC1Database.Queries.Inconsistencies;
 using LSC1DatabaseEditor.LSC1Database.Queries.Job;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;

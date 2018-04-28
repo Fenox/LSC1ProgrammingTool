@@ -1,9 +1,6 @@
 ﻿using LSC1DatabaseLibrary;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Windows.Data;
 
 namespace LSC1DatabaseEditor.Views.Converter

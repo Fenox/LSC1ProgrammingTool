@@ -1,6 +1,4 @@
-﻿using System;
-using System.Data;
-using System.Threading.Tasks;
+﻿using System.Data;
 using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.LSC1Database;
 using LSC1DatabaseEditor.LSC1DbEditor.Controller;
@@ -8,7 +6,6 @@ using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.TypedDataTabl
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.UpdatingRows;
 using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
-using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement;
 
 namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 {

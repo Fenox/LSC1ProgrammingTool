@@ -1,6 +1,5 @@
 ﻿using System.Collections.Specialized;
 using LSC1DatabaseEditor.LSC1DbEditor.Controller;
-using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.CommonMySql;
 using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
 using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement;

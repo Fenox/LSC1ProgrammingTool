@@ -3,7 +3,6 @@ using GalaSoft.MvvmLight.Messaging;
 using HelixToolkit.Wpf;
 using LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels.DataStructures;
 using LSC1DatabaseEditor.Messages;
-using LSC1DatabaseEditor.Messages.Common;
 using LSC1DatabaseLibrary.LSC1JobRepresentation;
 using LSC1DatabaseLibrary.LSC1JobRepresentation.JobDataConverter;
 using LSC1DatabaseLibrary.LSC1Simulation;
@@ -12,6 +11,7 @@ using PresentationCoreExtensions;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using LSC1DatabaseEditor.Common.Messages;
 using LSC1DatabaseEditor.LSC1CommonTool.Messages;
 
 namespace LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels

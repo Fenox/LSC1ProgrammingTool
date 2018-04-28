@@ -4,7 +4,6 @@ using System.Linq;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.CommonMySql;
 using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
-using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement;
 using MySql.Data.MySqlClient;
 
 namespace LSC1DatabaseEditor.LSC1Database

@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -280,23 +279,33 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             var procRobotOrphans = (await AsyncDbExecuter.DoTaskAsync("Suche ProcRobot Waisen...", () => new FindProcRobotOrphansQuery().Execute(Connection))).ToList();
             var procLaserOrphans = (await AsyncDbExecuter.DoTaskAsync("Suche ProcLaser Waisen...", () => new FindProcLaserOrphansQuery().Execute(Connection))).ToList();
             var procFrameOrphans = (await AsyncDbExecuter.DoTaskAsync("Suche Frame Waisen...", () => new FindFrameOrphans().Execute(Connection))).ToList();
+            var procTurnOrphans = (await AsyncDbExecuter.DoTaskAsync("Suche proc turn Waisen...",
+                () => new FindProcTurnOrphans().Execute(Connection))).ToList();
+            var procPulseOrphans = (await AsyncDbExecuter.DoTaskAsync("Suche proc pulse Waisen...",
+                () => new FindPulseOrphans().Execute(Connection))).ToList();
 
             if (jobOrphans.Any())
                 Messages.Add("Job Leichen entdeckt! Bitte beseitigen!");
-
             if (posOrphans.Any())
                 Messages.Add("pos Leichen entdeckt! Bitte beseitigen!");
-
             if (procRobotOrphans.Any())
                 Messages.Add("proc robot Leichen entdeckt! Bitte beseitigen!");
-
             if (procLaserOrphans.Any())
                 Messages.Add("proc laser Leichen entdeckt! Bitte beseitigen!");
-
             if (procFrameOrphans.Any())
                 Messages.Add("proc frame Leichen entdeckt! Bitte beseitigen!");
+            if (procTurnOrphans.Any())
+                Messages.Add("proc turn Leichen entdeckt! Bitte beseitigen!");
+            if (procPulseOrphans.Any())
+                Messages.Add("proc pulse Leichen entdeckt! Bitte beseitigen!");
 
-            if (!jobOrphans.Any() && !posOrphans.Any() && !procRobotOrphans.Any())
+            if (!jobOrphans.Any() && 
+                !posOrphans.Any() && 
+                !procRobotOrphans.Any() &&
+                !procLaserOrphans.Any() &&
+                !procFrameOrphans.Any() &&
+                !procTurnOrphans.Any() &&
+                !procPulseOrphans.Any())
                 Messages.Add("No Messages");
 
         }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
+﻿using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
 using MySql.Data.MySqlClient;
 
 namespace LSC1DatabaseEditor.LSC1Database.Queries.Job

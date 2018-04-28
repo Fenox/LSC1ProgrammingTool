@@ -1,19 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySql.Data.MySqlClient;
-using LSC1DatabaseLibrary.LSC1ProgramDatabaseManagement;
 
-namespace LSC1DatabaseLibrary.CommonMySql.MySqlQueries.Tests
+namespace LSC1LibraryTests.CommonMySql.MySqlQueries
 {
     [TestClass()]
     public class CountQueryTests
     {
-        private static MySqlConnectionStringBuilder connStringBuilder = new MySqlConnectionStringBuilder
+        private static readonly MySqlConnectionStringBuilder ConnStringBuilder = new MySqlConnectionStringBuilder
         {
             Server = "127.0.0.1",
             Database = "lsc1test",
@@ -24,7 +18,7 @@ namespace LSC1DatabaseLibrary.CommonMySql.MySqlQueries.Tests
         [TestMethod()]
         public void ExecuteTest()
         {
-            int result = new CountQuery("SELECT COUNT(*) FROM tpos").Execute(new MySqlConnection(connStringBuilder.ConnectionString));
+            int result = new CountQuery("SELECT COUNT(*) FROM tpos").Execute(new MySqlConnection(ConnStringBuilder.ConnectionString));
 
             Assert.AreEqual(66, result);
         }

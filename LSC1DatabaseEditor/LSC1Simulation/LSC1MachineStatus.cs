@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace LSC1DatabaseLibrary.LSC1Simulation
+﻿namespace LSC1DatabaseLibrary.LSC1Simulation
 {
     public class LSC1MachineState
     {

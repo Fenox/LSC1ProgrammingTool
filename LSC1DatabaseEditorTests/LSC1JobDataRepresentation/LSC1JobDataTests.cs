@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using LSC1DatabaseEditor.LSC1Database.Queries.Job;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySql.Data.MySqlClient;

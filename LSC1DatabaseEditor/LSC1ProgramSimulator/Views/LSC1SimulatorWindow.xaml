@@ -8,6 +8,7 @@
         xmlns:dataStruct="clr-namespace:LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels.DataStructures"
         mc:Ignorable="d"
         xmlns:conv="clr-namespace:LSC1DatabaseEditor.Views.Converter"
+        xmlns:converter="clr-namespace:LSC1DatabaseEditor.Common.Converter"
         Title="LSC1Simulator" Height="500" Width="1000">
 
     <Window.Resources>
@@ -16,7 +17,7 @@
                 <ResourceDictionary Source="/LSC1DatabaseEditor;component/LSC1CommonTool/LSC1TableResources.xaml"/>
                 
                 <ResourceDictionary>
-                    <conv:ColorToBrushConverter x:Key="colorBrushConverter" />
+                    <converter:ColorToBrushConverter x:Key="colorBrushConverter" />
 
                     <!--Job Data Grid-->
                     <DataGrid x:Key="jobDataDataGrid" ItemsSource="{Binding Items1.DataTable}"
@@ -33,7 +34,7 @@
                             <DataGridTextColumn Header="MoveParam" Binding="{Binding MoveParam}"  CellStyle="{StaticResource DataGridMoveParamNameCellStyle}"/>
                             <DataGridTextColumn Header="Frame" Binding="{Binding Frame}"  CellStyle="{StaticResource DataGridFrameNameCellStyle}"/>
                             <DataGridTextColumn Header="Interpol" Binding="{Binding Interpol}"  CellStyle="{StaticResource DataGridInterpolNameCellStyle}"/>
-                            <DataGridTextColumn Header="WEM" Binding="{Binding WEM}"  CellStyle="{StaticResource DataGridWEMNameCellStyle}"/>
+                            <DataGridTextColumn Header="WEM" Binding="{Binding WEM}"  CellStyle="{StaticResource DataGridWemNameCellStyle}"/>
                             <DataGridTextColumn Header="LaserProgNr" Binding="{Binding LaserProgNr}"  CellStyle="{StaticResource DataGridLaserProgNrNameCellStyle}"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -47,12 +48,12 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                             <DataGridTextColumn Header="Kind" Binding="{Binding Kind}" CellStyle="{StaticResource DataGridKindCellStyle}" />
-                            <DataGridTextColumn Header="x_a1" Binding="{Binding x_a1}" CellStyle="{StaticResource DataGridX_a1CellStyle}"/>
-                            <DataGridTextColumn Header="y_a2" Binding="{Binding y_a2}" CellStyle="{StaticResource DataGridY_a2CellStyle}"/>
-                            <DataGridTextColumn Header="z_a3" Binding="{Binding z_a3}" CellStyle="{StaticResource DataGridZ_a3CellStyle}"/>
-                            <DataGridTextColumn Header="rx_a4" Binding="{Binding rx_a4}" CellStyle="{StaticResource DataGridRX_a4CellStyle}"/>
-                            <DataGridTextColumn Header="ry_a5" Binding="{Binding ry_a5}" CellStyle="{StaticResource DataGridRY_a5CellStyle}"/>
-                            <DataGridTextColumn Header="rz_a6" Binding="{Binding rz_a6}" CellStyle="{StaticResource DataGridRZ_a6CellStyle}"/>
+                            <DataGridTextColumn Header="x_a1" Binding="{Binding x_a1}" CellStyle="{StaticResource DataGridXA1CellStyle}"/>
+                            <DataGridTextColumn Header="y_a2" Binding="{Binding y_a2}" CellStyle="{StaticResource DataGridYA2CellStyle}"/>
+                            <DataGridTextColumn Header="z_a3" Binding="{Binding z_a3}" CellStyle="{StaticResource DataGridZA3CellStyle}"/>
+                            <DataGridTextColumn Header="rx_a4" Binding="{Binding rx_a4}" CellStyle="{StaticResource DataGridRxA4CellStyle}"/>
+                            <DataGridTextColumn Header="ry_a5" Binding="{Binding ry_a5}" CellStyle="{StaticResource DataGridRyA5CellStyle}"/>
+                            <DataGridTextColumn Header="rz_a6" Binding="{Binding rz_a6}" CellStyle="{StaticResource DataGridRzA6CellStyle}"/>
                             <DataGridTextColumn Header="Locked" Binding="{Binding Locked}" CellStyle="{StaticResource DataGridLockedCellStyle}" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -68,7 +69,7 @@
                             <DataGridTextColumn Header="Step" Binding="{Binding Step}" CellStyle="{StaticResource DataGridNumericStepCellStyle}"/>
                             <DataGridTextColumn Header="BeamOn" Binding="{Binding BeamOn}" CellStyle="{StaticResource DataGridBeamOnNameCellStyle}"/>
                             <DataGridTextColumn Header="Power" Binding="{Binding Power}" CellStyle="{StaticResource DataGridPowerNameCellStyle}"/>
-                            <DataGridTextColumn Header="C_Grip" Binding="{Binding C_Grip}" CellStyle="{StaticResource DataGridC_GripNameCellStyle}"/>
+                            <DataGridTextColumn Header="C_Grip" Binding="{Binding C_Grip}" CellStyle="{StaticResource DataGridCGripNameCellStyle}"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -112,12 +113,12 @@
                             <DataGridTextColumn Header="Step" Binding="{Binding Step}" CellStyle="{StaticResource DataGridNumericStepCellStyle}"/>
                             <DataGridTextColumn Header="Kind" Binding="{Binding Kind}" CellStyle="{StaticResource DataGridKindCellStyle}"/>
                             <DataGridTextColumn Header="Interpol" Binding="{Binding Interpol}" />
-                            <DataGridTextColumn Header="x_a1" Binding="{Binding x_a1}" CellStyle="{StaticResource DataGridX_a1CellStyle}"/>
-                            <DataGridTextColumn Header="y_a2" Binding="{Binding y_a2}" CellStyle="{StaticResource DataGridY_a2CellStyle}"/>
-                            <DataGridTextColumn Header="z_a3" Binding="{Binding z_a3}" CellStyle="{StaticResource DataGridZ_a3CellStyle}"/>
-                            <DataGridTextColumn Header="rx_a4" Binding="{Binding rx_a4}" CellStyle="{StaticResource DataGridRX_a4CellStyle}"/>
-                            <DataGridTextColumn Header="ry_a5" Binding="{Binding ry_a5}" CellStyle="{StaticResource DataGridRY_a5CellStyle}"/>
-                            <DataGridTextColumn Header="rz_a6" Binding="{Binding rz_a6}" CellStyle="{StaticResource DataGridRZ_a6CellStyle}"/>
+                            <DataGridTextColumn Header="x_a1" Binding="{Binding x_a1}" CellStyle="{StaticResource DataGridXA1CellStyle}"/>
+                            <DataGridTextColumn Header="y_a2" Binding="{Binding y_a2}" CellStyle="{StaticResource DataGridYA2CellStyle}"/>
+                            <DataGridTextColumn Header="z_a3" Binding="{Binding z_a3}" CellStyle="{StaticResource DataGridZA3CellStyle}"/>
+                            <DataGridTextColumn Header="rx_a4" Binding="{Binding rx_a4}" CellStyle="{StaticResource DataGridRxA4CellStyle}"/>
+                            <DataGridTextColumn Header="ry_a5" Binding="{Binding ry_a5}" CellStyle="{StaticResource DataGridRyA5CellStyle}"/>
+                            <DataGridTextColumn Header="rz_a6" Binding="{Binding rz_a6}" CellStyle="{StaticResource DataGridRzA6CellStyle}"/>
                             <DataGridTextColumn Header="accel" Binding="{Binding accel}" CellStyle="{StaticResource DataGridAccelCellStyle}"/>
                             <DataGridTextColumn Header="vel" Binding="{Binding vel}" CellStyle="{StaticResource DataGridVelCellStyle}"/>
                             <DataGridTextColumn Header="deccel" Binding="{Binding deccel}" CellStyle="{StaticResource DataGridDeccelCellStyle}"/>
@@ -141,7 +142,7 @@
                             <DataGridTextColumn Header="Velocity" Binding="{Binding Velocity}" CellStyle="{StaticResource DataGridVelocityCellStyle}"/>
                             <DataGridTextColumn Header="Power" Binding="{Binding Power}" CellStyle="{StaticResource DataGridPowerCellStyle}"/>
                             <DataGridTextColumn Header="BeamOn" Binding="{Binding BeamOn}" CellStyle="{StaticResource DataGridBeamOnNameCellStyle}"/>
-                            <DataGridTextColumn Header="WEM" Binding="{Binding WEM}" CellStyle="{StaticResource DataGridWEMNameCellStyle}"/>
+                            <DataGridTextColumn Header="WEM" Binding="{Binding WEM}" CellStyle="{StaticResource DataGridWemNameCellStyle}"/>
                             <DataGridTextColumn Header="PulseTime" Binding="{Binding PulseTime}" CellStyle="{StaticResource DataGridPulseTimeCellStyle}"/>
                             <DataGridTextColumn Header="AnzPulse" Binding="{Binding AnzPulse}" CellStyle="{StaticResource DataGridAnzPulseCellStyle}"/>
                         </DataGrid.Columns>
