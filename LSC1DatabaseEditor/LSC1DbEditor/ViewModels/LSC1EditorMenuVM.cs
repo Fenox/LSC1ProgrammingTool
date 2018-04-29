@@ -20,7 +20,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
     public class LSC1EditorMenuVM
     {
         private static readonly LSC1AsyncDBTaskExecuter AsyncDbExecuter = new LSC1AsyncDBTaskExecuter();
-        private static readonly Logger Logger = LogManager.GetLogger("Usage");
+        private readonly Logger Logger;
         private static readonly MySqlConnection Connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString);
 
 
@@ -50,8 +50,9 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         public ICommand SaveVersionCommand { get; set; }
         public ICommand LoadVersionCommand { get; set; }
 
-        public LSC1EditorMenuVM()
+        public LSC1EditorMenuVM(Logger usageLogger)
         {
+            Logger = usageLogger;
             //Menu Datei Commands
             CloseWindowCommand = new RelayCommand<Window>((wnd) => wnd.Close());
             OpenSettingsCommand = new RelayCommand(OpenSettings);
@@ -129,7 +130,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             windows.Show();
         }
 
-        private static async void CreateNewFrame()
+        private async void CreateNewFrame()
         {
             var form = new MyTextMessageBox();
             var dataContext = form.DataContext as TextMessageBoxViewModel;
@@ -148,7 +149,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             Logger.Info("Created new frame {0}", dataContext.TextBoxText);
         }
 
-        private static async void CreateNewPos()
+        private async void CreateNewPos()
         {
             var form = new MyTextMessageBox();
             var dataContext = form.DataContext as TextMessageBoxViewModel;
@@ -166,7 +167,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             Logger.Info("Created new pos {0}", dataContext.TextBoxText);
         }
 
-        public static async void CreateNewProc()
+        public async void CreateNewProc()
         {
             var form = new MyTextMessageBox();
             if (!(form.DataContext is TextMessageBoxViewModel dataContext)) return;
@@ -192,7 +193,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             Logger.Info("Created new proc {0}", dataContext.TextBoxText);
         }
 
-        private static async void CreateNewProcPlc()
+        private async void CreateNewProcPlc()
         {
             var form = new MyTextMessageBox();
             var dataContext = form.DataContext as TextMessageBoxViewModel;
@@ -210,7 +211,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             Logger.Info("Created new procplc {0}", dataContext.TextBoxText);
         }
 
-        private static async void CreateNewMoveparam()
+        private async void CreateNewMoveparam()
         {
             var form = new MyTextMessageBox();
             var dataContext = form.DataContext as TextMessageBoxViewModel;

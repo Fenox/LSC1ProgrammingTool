@@ -29,10 +29,9 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         private static readonly LSC1AsyncDBTaskExecuter AsyncDbExecuter = new LSC1AsyncDBTaskExecuter();
-        private static readonly Logger Logger = LogManager.GetLogger("Usage");
+        private readonly Logger Logger;
         private static readonly MySqlConnection Connection = new MySqlConnection(LSC1UserSettings.Instance.DBSettings.ConnectionString);
 
-        public LSC1EditorMenuVM MenuVM { get; set; } = new LSC1EditorMenuVM();
 
         private ObservableCollection<LSC1TablePropertiesViewModelBase> tables;
         public ObservableCollection<LSC1TablePropertiesViewModelBase> Tables
@@ -151,8 +150,9 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         public RelayCommand<DataGrid> CopyToNextRowCommand { get; set; }
         public RelayCommand CheckMessages { get; set; }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(Logger usageLogger)
         {
+            Logger = usageLogger;
             //Bearbeiten Commands
             CopyToEndCommand = new RelayCommand<DataGrid>(CopyToEnd, (d) => SelectedTable != null && (
                                         SelectedTable.Table == TablesEnum.tjobdata && JobFilterEnabled && selectedItems.Count > 0
@@ -221,7 +221,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             CheckAllMessages();
         }
 
-        private static bool TryConnectToDatabase()
+        private bool TryConnectToDatabase()
         {
             try
             {

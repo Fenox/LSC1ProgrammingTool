@@ -28,7 +28,7 @@ namespace LSC1DatabaseEditor.ViewModel
         /// <summary>
         /// Initializes a new instance of the ViewModelLocator class.
         /// </summary>
-        static ViewModelLocator()
+        public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
@@ -43,20 +43,28 @@ namespace LSC1DatabaseEditor.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
+            SimpleIoc.Default.Unregister<NLog.Logger>();
+            SimpleIoc.Default.Register<NLog.Logger>(LoggerFactory);
+
             SimpleIoc.Default.Register<MainWindowViewModel>();
+            SimpleIoc.Default.Register<LSC1EditorMenuVM>();
         }
 
         public MainWindowViewModel Main
         {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainWindowViewModel>();
-            }
+            get => ServiceLocator.Current.GetInstance<MainWindowViewModel>();
+        }
+
+        public LSC1EditorMenuVM MenuVM
+        {
+            get => ServiceLocator.Current.GetInstance<LSC1EditorMenuVM>();
         }
         
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
         }
+
+        private NLog.Logger LoggerFactory() => NLog.LogManager.GetLogger("Usage");
     }
 }

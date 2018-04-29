@@ -309,7 +309,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Menu DataContext="{Binding MenuVM}" x:Name="menu" VerticalAlignment="Top" Margin="0,0,-0.4,0">
+        <Menu DataContext="{Binding MenuVM, Source={StaticResource Locator}}" x:Name="menu" VerticalAlignment="Top" Margin="0,0,-0.4,0">
             <MenuItem Header="_Datei" >
                 <MenuItem Header="_Visualisierung"
                           Command="{Binding OpenVisualisationCommand}" />
