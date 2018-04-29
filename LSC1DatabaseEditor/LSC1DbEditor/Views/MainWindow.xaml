@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LSC1DatabaseEditor"
         mc:Ignorable="d"        
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
         Title="LSC1 Database Tool" Height="auto" Width="auto"
         x:Name="mainWindow">
     <Window.Resources>

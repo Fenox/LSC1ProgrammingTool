@@ -2,7 +2,6 @@
 using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.LSC1CommonTool.Messages;
 using LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels.DataStructures;
-using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
 using System;
 using System.Collections.ObjectModel;

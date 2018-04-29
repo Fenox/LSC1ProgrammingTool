@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media.Media3D;
 
-namespace LSC1DatabaseEditor.Messages
+namespace LSC1DatabaseEditor.Common.Messages
 {
     public class UpdateViewport3DMessage
     {

@@ -266,7 +266,6 @@
     <Compile Include="Common\Views\MyTextMessageBox.xaml.cs">
       <DependentUpon>MyTextMessageBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="LSC1DbEditor\Views\CopyJobWindow.xaml">
       <SubType>Designer</SubType>

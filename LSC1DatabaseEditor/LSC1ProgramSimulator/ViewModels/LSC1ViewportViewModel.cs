@@ -2,7 +2,6 @@
 using GalaSoft.MvvmLight.Messaging;
 using HelixToolkit.Wpf;
 using LSC1DatabaseEditor.LSC1ProgramSimulator.ViewModels.DataStructures;
-using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary.LSC1JobRepresentation;
 using LSC1DatabaseLibrary.LSC1JobRepresentation.JobDataConverter;
 using LSC1DatabaseLibrary.LSC1Simulation;

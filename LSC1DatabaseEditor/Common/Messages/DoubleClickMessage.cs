@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace LSC1DatabaseEditor.Messages
+namespace LSC1DatabaseEditor.Common.Messages
 {
     public class DoubleClickMessage
     {

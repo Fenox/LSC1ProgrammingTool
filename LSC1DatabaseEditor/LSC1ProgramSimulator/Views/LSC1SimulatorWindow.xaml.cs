@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using System.Windows.Media.Media3D;
 using GalaSoft.MvvmLight.Messaging;
-using LSC1DatabaseEditor.Messages;
 using HelixToolkit.Wpf;
 using LSC1DatabaseEditor.LSC1ProgramSimulator.Messages;
 using System.Data;

@@ -10,7 +10,6 @@ using LSC1DatabaseEditor.LSC1Database.Queries.Inconsistencies;
 using LSC1DatabaseEditor.LSC1Database.Queries.Job;
 using LSC1DatabaseEditor.LSC1DbEditor.Controller;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
-using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
 using LSC1DatabaseLibrary.CommonMySql;
 using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
@@ -186,7 +185,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             CurrentTaskText = text;
         }
 
-        private async void LoadData()
+        public async void LoadData()
         {
             var taskExecuter = new LSC1AsyncDBTaskExecuter();
             if (!await taskExecuter.DoTaskAsync("Versuche Verbindungsaufbau...", TryConnectToDatabase)) return;

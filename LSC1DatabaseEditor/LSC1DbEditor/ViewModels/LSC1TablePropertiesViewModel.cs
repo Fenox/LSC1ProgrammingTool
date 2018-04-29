@@ -1,10 +1,10 @@
 ﻿using System.Data;
 using GalaSoft.MvvmLight.Messaging;
+using LSC1DatabaseEditor.Common.Messages;
 using LSC1DatabaseEditor.LSC1Database;
 using LSC1DatabaseEditor.LSC1DbEditor.Controller;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.TypedDataTables;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.UpdatingRows;
-using LSC1DatabaseEditor.Messages;
 using LSC1DatabaseLibrary;
 
 namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels

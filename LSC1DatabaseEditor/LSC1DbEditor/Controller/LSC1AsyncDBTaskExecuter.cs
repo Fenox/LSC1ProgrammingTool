@@ -12,6 +12,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.Controller
         private static readonly Mutex DbMutex = new Mutex(false, "DatabaseMutex");
         private static readonly Logger Logger = LogManager.GetLogger("Usage");
 
+
         public async Task<T> DoTaskAsync<T>(string taskName, Func<T> task)
         {
             Logger.Info("Added task " + taskName + "to task query");

@@ -1,12 +1,12 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.LSC1CommonTool.Messages;
-using LSC1DatabaseEditor.Messages;
 using System.Collections;
 using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels;
+using LSC1DatabaseEditor.Common.Messages;
 
 namespace LSC1DatabaseEditor
 {
@@ -15,14 +15,9 @@ namespace LSC1DatabaseEditor
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainWindowViewModel viewModel = new MainWindowViewModel();
-
         public MainWindow()
         {
             InitializeComponent();
-
-            DataContext = viewModel;
-
             Messenger.Default.Register<TableSelectionChangedMessage>(this, ChangeTableResource);
         }
 

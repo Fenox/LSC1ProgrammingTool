@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LSC1DatabaseEditor.Messages
+namespace LSC1DatabaseEditor.Common.Messages
 {
     public class SelectionChangedMessage
     {

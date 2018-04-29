@@ -1,8 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using LSC1DatabaseEditor.Messages;
 using System.Windows;
 using System.Windows.Controls;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels;
+using LSC1DatabaseEditor.Common.Messages;
 
 namespace LSC1DatabaseEditor.Views
 {
