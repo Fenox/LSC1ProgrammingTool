@@ -44,7 +44,7 @@
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type dataStruc:CheckableItemWithSub}" ItemsSource="{Binding SubItems}">
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding Checked}" Margin="0,0,10,0"/>
+                        <CheckBox IsChecked="{Binding Checked}" IsEnabled="False" Margin="0,0,10,0"/>
                         <TextBlock Text="{Binding Text}" />
                         <TextBlock Text="{Binding NumSubs}" Foreground="Green" Margin="10,0,0,0"/>
                     </StackPanel>

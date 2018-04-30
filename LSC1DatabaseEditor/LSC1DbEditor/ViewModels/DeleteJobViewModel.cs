@@ -202,7 +202,9 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
             Messenger.Default.Send(new JobsChangedMessage());
 
-            OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings.ConnectionString);
+            await AsyncExecuter.DoTaskAsync("Aktualisiere Datenbank...",
+               () => OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings.ConnectionString));
+
             MessageBox.Show("Löschen war erfolgreich!");
             wnd.Close();
         }
