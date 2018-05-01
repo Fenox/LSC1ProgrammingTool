@@ -140,6 +140,21 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             }
         }
 
+        public DataGridSelectionUnit SelectionUnit => rowSelection ? DataGridSelectionUnit.FullRow : DataGridSelectionUnit.Cell;
+        public DataGridSelectionMode SelectionMode => rowSelection ? DataGridSelectionMode.Single : DataGridSelectionMode.Extended;    
+
+        private bool rowSelection = false;
+        public bool RowSelection
+        {
+            get { return rowSelection; }
+            set
+            {
+                rowSelection = value;
+                RaisePropertyChanged("SelectionUnit");
+                RaisePropertyChanged("SelectionMode");
+            }
+        }
+
         public bool NameFilterPossible => SelectedTable != null && SelectedTable.HasNameColumn;
 
         private List<object> selectedItems = new List<object>();
@@ -318,6 +333,9 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         private async void CopyAndInsertAt(MultiSelector selectedItemsContentElement)
         {
+            //Approach
+            //1. Read highest 
+
             var newRowsCopy = new MyDataRowCollection();
 
             //Kopieren der ausgewählten Reihen
@@ -387,6 +405,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             ReloadGridViewData();
         }
 
+        //TODO: kann gelöscht werden, da copy to end dasselbe ist wie copy to next mit dem letzten element.
         private void CopyToEnd(DataGrid selectedItemsContentElement)
         {
             var coll = new MyDataRowCollection();

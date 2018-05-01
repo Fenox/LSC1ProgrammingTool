@@ -17,7 +17,8 @@
                 <ResourceDictionary>
                     <!-- Frame Data Grid -->
                     <DataGrid x:Key="frameDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Path=SelectionUnit, Mode=OneWay}" 
+                        SelectionMode="{Binding Path=SelectionMode, Mode=OneWay}"
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -56,7 +57,8 @@
 
                     <!--Job Data Grid-->
                     <DataGrid x:Key="jobDataDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Path=SelectionUnit, Mode=OneWay}" 
+                        SelectionMode="{Binding Path=SelectionMode, Mode=OneWay}"
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -78,7 +80,8 @@
 
                     <!--Job Name-->
                     <DataGrid x:Key="jobNameDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Path=SelectionUnit, Mode=OneWay}" 
+                        SelectionMode="{Binding Path=SelectionMode, Mode=OneWay}"
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -92,7 +95,8 @@
 
                     <!-- Move Param Grid -->
                     <DataGrid x:Key="moveParamDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Path=SelectionUnit, Mode=OneWay}" 
+                        SelectionMode="{Binding Path=SelectionMode, Mode=OneWay}"
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -112,7 +116,8 @@
                     <!-- Pos -->
                     <!--Pos Data Grid-->
                     <DataGrid x:Key="posDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Path=SelectionUnit, Mode=OneWay}" 
+                        SelectionMode="{Binding Path=SelectionMode, Mode=OneWay}"
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -133,7 +138,8 @@
                     
                     <!--LaserData Grid-->
                     <DataGrid x:Key="laserDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Path=SelectionUnit, Mode=OneWay}" 
+                        SelectionMode="{Binding Path=SelectionMode, Mode=OneWay}"
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -150,7 +156,8 @@
 
                     <!-- Proc PLC Data Grid -->
                     <DataGrid x:Key="procplcDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Path=SelectionUnit, Mode=OneWay}" 
+                        SelectionMode="{Binding Path=SelectionMode, Mode=OneWay}"
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -167,7 +174,8 @@
                     
                     <!-- Proc Pulse Data Grid -->
                     <DataGrid x:Key="procpulseDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Path=SelectionUnit, Mode=OneWay}" 
+                        SelectionMode="{Binding Path=SelectionMode, Mode=OneWay}"
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -185,7 +193,8 @@
 
                     <!--Proc Robot DataGrid Style -->
                     <DataGrid x:Key="procRobotDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Path=SelectionUnit, Mode=OneWay}" 
+                        SelectionMode="{Binding Path=SelectionMode, Mode=OneWay}"
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -213,7 +222,8 @@
 
                     <!-- Proc Turn DataGrid -->
                     <DataGrid x:Key="procTurnDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                        SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Path=SelectionUnit, Mode=OneWay}" 
+                        SelectionMode="{Binding Path=SelectionMode, Mode=OneWay}"
                         AutoGenerateColumns="False"
                         CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                         SelectionChanged="DataGrid_SelectionChanged"
@@ -234,7 +244,8 @@
 
                     <!-- Table DataGrid -->
                     <DataGrid x:Key="tableDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Path=SelectionUnit, Mode=OneWay}" 
+                        SelectionMode="{Binding Path=SelectionMode, Mode=OneWay}"
                 AutoGenerateColumns="False"
                 CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                 SelectionChanged="DataGrid_SelectionChanged"
@@ -253,7 +264,8 @@
                     <!-- Tool -->
                     <!-- Tool DataGrid -->
                     <DataGrid x:Key="toolDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Path=SelectionUnit, Mode=OneWay}" 
+                        SelectionMode="{Binding Path=SelectionMode, Mode=OneWay}"
                 AutoGenerateColumns="False"
                 CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                 SelectionChanged="DataGrid_SelectionChanged"
@@ -273,7 +285,8 @@
 
                     <!-- twt DataGrid -->
                     <DataGrid x:Key="twtDataGrid" ItemsSource="{Binding SelectedTable.DataTable}"
-                SelectionUnit="{Binding Converter={StaticResource RowConverter}, ElementName=checkBoxSelectionMode, Path=IsChecked}" 
+                        SelectionUnit="{Binding Path=SelectionUnit, Mode=OneWay}" 
+                        SelectionMode="{Binding Path=SelectionMode, Mode=OneWay}"
                 AutoGenerateColumns="False"
                 CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows="False"
                 SelectionChanged="DataGrid_SelectionChanged"
@@ -430,9 +443,9 @@
                 </GroupBox>
             </StackPanel>
 
-            <GroupBox Grid.Column="1" Header="Bearbeitung" VerticalAlignment="Top" Margin="10,5,0,0" Visibility="Collapsed">
+            <GroupBox Grid.Column="1" Header="Bearbeitung" VerticalAlignment="Top" Margin="10,5,0,0">
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox x:Name="checkBoxSelectionMode" Content="Reihenauswahl" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="checkBoxSelectionMode" Content="Reihenauswahl" IsChecked="{Binding RowSelection, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
                     <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="10,2" />
                     <Button Content="Kopiere nach Ende"
                             Command="{Binding CopyToEndCommand}"
