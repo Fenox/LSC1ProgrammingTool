@@ -50,6 +50,7 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
                 if (selectedTable == value) return;
 
                 selectedTable = value;
+                selectedTable.DataTable?.Clear();
                 CopyToNextRowCommand.RaiseCanExecuteChanged();
                 SelectedTableChanged();
 
@@ -190,13 +191,12 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         public async void LoadData()
         {
-            var taskExecuter = new LSC1AsyncDBTaskExecuter();
-            if (!await taskExecuter.DoTaskAsync("Versuche Verbindungsaufbau...", TryConnectToDatabase)) return;
+            if (!await AsyncDbExecuter.DoTaskAsync("Versuche Verbindungsaufbau...", TryConnectToDatabase)) return;
 
 
-            await taskExecuter.DoTaskAsync("Aktualisiere Datenbank...",
+            await AsyncDbExecuter.DoTaskAsync("Aktualisiere Datenbank...",
                 () => OfflineDatabase.UpdateAll(LSC1UserSettings.Instance.DBSettings.ConnectionString));
-            Jobs = await taskExecuter.DoTaskAsync("Aktualisiere Jobs...",
+            Jobs = await AsyncDbExecuter.DoTaskAsync("Aktualisiere Jobs...",
                 () => new ObservableCollection<DbJobNameRow>(new GetJobsQuery().Execute(Connection).ToList()));
 
             Tables = new ObservableCollection<LSC1TablePropertiesViewModelBase>
@@ -220,8 +220,6 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
                 SelectedJob = Jobs[0];
 
             SelectedTable = Tables.First((t) => t.Table == TablesEnum.tframe);
-
-            CheckAllMessages();
         }
 
         private bool TryConnectToDatabase()
@@ -379,7 +377,6 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
                 return;
             
             Logger.Info("Changed Selected Job to: {0}", SelectedJob.JobNr);
-            ReloadGridViewData();
             UpdateNameFilter();
         }
 
@@ -421,8 +418,18 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         /// </summary>
         private void UpdateNameFilter()
         {
+            Logger.Info("Updated Name Filters (job {0}, table {1})", SelectedJob, SelectedTable.DataGridName);
+            //Problem: mit await entstehen hier deadlocks, ohne await ist der selected name filter null
             //update Filter
-            SelectedTable.UpdateNameFilter(SelectedJob.JobNr);
+            var nameFilters = SelectedTable.UpdateNameFilter(SelectedJob.JobNr);
+
+            if (nameFilters == null)
+            {
+                SelectedTable.NameFilterItems = new ObservableCollection<string>();
+                return;
+            }
+
+            SelectedTable.NameFilterItems = new ObservableCollection<string>(nameFilters);
             
             if (SelectedTable.NameFilterItems.Count > 0
                 && (SelectedTable.UsesNameFilter))
@@ -433,10 +440,6 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             {
                 SelectedNameFilter = null;
             }
-
-            Logger.Info("Updated Name Filters (job {0}, table {1})", SelectedJob, SelectedTable.DataGridName);
         }
     }
-
-   
 }

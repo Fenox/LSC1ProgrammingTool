@@ -21,6 +21,7 @@ namespace LSC1DatabaseLibrary.CommonMySql.MySqlQueries
 
             connection.Close();
             connection.Open();
+
             adapter.Fill(dt);
 
             return dt;

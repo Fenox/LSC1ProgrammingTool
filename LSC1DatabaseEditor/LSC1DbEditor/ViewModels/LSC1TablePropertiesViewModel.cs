@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using LSC1DatabaseEditor.Common.Messages;
 using LSC1DatabaseEditor.LSC1Database;
@@ -50,6 +52,11 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         {
 
         }
+
+        public override List<string> UpdateNameFilter(string jobId)
+        {
+            return new List<string>();
+        }
     }
 
     public class JobDataTableViewModel : LSC1TablePropertiesViewModel<UpdatingJobDataRow>
@@ -62,6 +69,11 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         public JobDataTableViewModel(string connectionString) : base(connectionString, TablesEnum.tjobdata)
         {
 
+        }
+
+        public override List<string> UpdateNameFilter(string jobId)
+        {
+            return new List<string>();
         }
     }
 
@@ -90,6 +102,11 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
                 Messenger.Default.Send(new JobsChangedMessage());
             }
         }
+
+        public override List<string> UpdateNameFilter(string jobId)
+        {
+            return new List<string>();
+        }
     }
 
     public class MoveParamTableViewModel : LSC1TablePropertiesViewModel<UpdatingMoveParamRow>
@@ -103,6 +120,11 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         {
 
         }
+
+        public override List<string> UpdateNameFilter(string jobId)
+        {
+            return new List<string>();
+        }
     }
 
     public class PosTableViewModel : LSC1TablePropertiesViewModel<UpdatingPosRow>
@@ -115,6 +137,11 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         public PosTableViewModel(string connectionString) : base(connectionString, TablesEnum.tpos)
         {
 
+        }
+
+        public override List<string> UpdateNameFilter(string jobId)
+        {
+            return new List<string>();
         }
     }
 
@@ -130,20 +157,13 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         }
 
-        public override async void UpdateNameFilter(string jobId)
+        public override List<string> UpdateNameFilter(string jobId)
         {
-            var procLaserOfJob = await new LSC1AsyncDBTaskExecuter()
-                                    .DoTaskAsync("Aktualisiere Names Filter..." ,() => OfflineDatabase.AllJobProcNameMappings
+            var procLaserOfJob = OfflineDatabase.AllJobProcNameMappings
                                         .Find(mapping => mapping.JobNr.Equals(jobId))
-                                        .ProcLaserNames);
+                                        .ProcLaserNames;
 
-            NameFilterItems.Clear();
-            RaisePropertyChanged($"NameFilterItems");
-            if (procLaserOfJob == null)
-                return;
-
-            foreach (string item in procLaserOfJob)
-                NameFilterItems.Add(item);
+            return procLaserOfJob;
         }
     }
 
@@ -159,20 +179,12 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         }
 
-        public override async void UpdateNameFilter(string jobId)
+        public override List<string> UpdateNameFilter(string jobId)
         {
-            var procPulseOfJob = await new LSC1AsyncDBTaskExecuter()
-                                    .DoTaskAsync("Aktualisiere Names Filter", () => OfflineDatabase.AllJobProcNameMappings
+            var procPulseOfJob = OfflineDatabase.AllJobProcNameMappings
                                            .Find(mapping => mapping.JobNr.Equals(jobId))
-                                           .ProcPulseNames);
-
-            NameFilterItems.Clear();
-            RaisePropertyChanged($"NameFilterItems");
-            if (procPulseOfJob == null)
-                return;
-
-            foreach (var item in procPulseOfJob)
-                NameFilterItems.Add(item);
+                                           .ProcPulseNames;
+            return procPulseOfJob;
         }
     }
 
@@ -188,20 +200,13 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         }
 
-        public override async void UpdateNameFilter(string jobId)
+        public override List<string> UpdateNameFilter(string jobId)
         {
-            var procRobotOfJob = await new LSC1AsyncDBTaskExecuter()
-                                    .DoTaskAsync("Aktualisiere Names Filter", () => OfflineDatabase.AllJobProcNameMappings
-                                       .Find(mapping => mapping.JobNr.Equals(jobId))
-                                       .ProcRobotNames);
+            var procRobotOfJob = OfflineDatabase.AllJobProcNameMappings
+                                  .Find(mapping => mapping.JobNr.Equals(jobId))
+                                  .ProcRobotNames;
 
-            NameFilterItems.Clear();
-            RaisePropertyChanged($"NameFilterItems");
-            if (procRobotOfJob == null)
-                return;
-            
-            foreach (string item in procRobotOfJob)
-                NameFilterItems.Add(item);            
+            return procRobotOfJob;
         }
     }
 
@@ -217,21 +222,21 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         }
 
-        public override async void UpdateNameFilter(string jobId)
+        public override List<string> UpdateNameFilter(string jobId)
         {
-            var procPLCOfJob = await new LSC1AsyncDBTaskExecuter()
-                                    .DoTaskAsync("Aktualisiere Names Filter", () => OfflineDatabase.AllJobProcNameMappings
+            var procPLCOfJob = OfflineDatabase.AllJobProcNameMappings
                                     .Find(mapping => mapping.JobNr.Equals(jobId))
-                                    .ProcPLCNames);
+                                    .ProcPLCNames;
 
-            NameFilterItems.Clear();
-            RaisePropertyChanged($"NameFilterItems");
-            if (procPLCOfJob == null)
-                return;
+            //NameFilterItems.Clear();
+            //RaisePropertyChanged($"NameFilterItems");
+            //if (procPLCOfJob == null)
+            //    return;
 
-            foreach (string item in procPLCOfJob)
-                NameFilterItems.Add(item);
+            //foreach (string item in procPLCOfJob)
+            //    NameFilterItems.Add(item);
 
+            return procPLCOfJob;
         }
     }
 
@@ -246,19 +251,13 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         public override bool UsesNameFilter => true;
         public override string DataGridName => "procTurnDataGrid";
 
-        public override async void UpdateNameFilter(string jobId)
+        public override List<string> UpdateNameFilter(string jobId)
         {
-            var procTurnOfJob = await new LSC1AsyncDBTaskExecuter()
-                                    .DoTaskAsync("Aktualisiere Names Filter", () => OfflineDatabase.AllJobProcNameMappings
+            var procTurnOfJob = OfflineDatabase.AllJobProcNameMappings
                                         .Find(mapping => mapping.JobNr.Equals(jobId))
-                                        .ProcTurnNames);
+                                        .ProcTurnNames;
 
-            NameFilterItems.Clear();
-            if (procTurnOfJob == null)
-                return;
-
-            foreach (var item in procTurnOfJob)
-                NameFilterItems.Add(item);
+            return procTurnOfJob;
         }
     }
 
@@ -273,6 +272,11 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         public override bool HasNameColumn => false;
         public override bool UsesNameFilter => false;
         public override string DataGridName => "tableDataGrid";
+
+        public override List<string> UpdateNameFilter(string jobId)
+        {
+            return new List<string>();
+        }
     }
 
     public class ToolTableViewModel : LSC1TablePropertiesViewModel<UpdatingToolRow>
@@ -285,6 +289,11 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         public override bool HasNameColumn => true;
         public override bool UsesNameFilter => false;
         public override string DataGridName => "toolDataGrid";
+
+        public override List<string> UpdateNameFilter(string jobId)
+        {
+            return new List<string>();
+        }
     }
 
     public class TWTTableViewModel : LSC1TablePropertiesViewModel<UpdatingWTRow>
@@ -297,5 +306,10 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         public override bool HasNameColumn => false;
         public override bool UsesNameFilter => false;
         public override string DataGridName => "twtDataGrid";
+
+        public override List<string> UpdateNameFilter(string jobId)
+        {
+            return new List<string>();
+        }
     }
 }

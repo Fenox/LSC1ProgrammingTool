@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using LSC1DatabaseLibrary;
 
@@ -34,8 +36,6 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         public abstract DataTable DataTable { get; set; }
         public ObservableCollection<string> NameFilterItems { get; set; } = new ObservableCollection<string>();
 
-        public virtual void UpdateNameFilter(string jobId)
-        {
-        }
+        public abstract List<string> UpdateNameFilter(string jobId);
     }
 }
