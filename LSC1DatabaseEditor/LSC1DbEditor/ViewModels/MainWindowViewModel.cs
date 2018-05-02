@@ -1,5 +1,4 @@
 ﻿using ExtensionsAndCodeSnippets.RandomTools;
-using ExtensionsAndCodeSnippets.SystemData.Classes;
 using ExtensionsAndCodeSnippets.SystemData.Extensions;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -11,7 +10,6 @@ using LSC1DatabaseEditor.LSC1Database.Queries.Job;
 using LSC1DatabaseEditor.LSC1DbEditor.Controller;
 using LSC1DatabaseEditor.LSC1DbEditor.ViewModels.DatabaseViewModel.NormalRows;
 using LSC1DatabaseLibrary;
-using LSC1DatabaseLibrary.CommonMySql;
 using LSC1DatabaseLibrary.CommonMySql.MySqlQueries;
 using MySql.Data.MySqlClient;
 using NLog;
@@ -22,7 +20,6 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 {
@@ -53,7 +50,6 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
                 if (selectedTable == value) return;
 
                 selectedTable = value;
-                CopyToEndCommand.RaiseCanExecuteChanged();
                 CopyToNextRowCommand.RaiseCanExecuteChanged();
                 SelectedTableChanged();
 
@@ -84,7 +80,6 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
                 if (selectedJob == value) return;
 
                 selectedJob = value;
-                CopyToEndCommand.RaiseCanExecuteChanged();
                 CopyToNextRowCommand.RaiseCanExecuteChanged();
                 RaisePropertyChanged();
                 OnSelectedJobChanged();
@@ -134,7 +129,6 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             {
                 nameFilterEnabled = value;
                 RaisePropertyChanged();
-                CopyToEndCommand.RaiseCanExecuteChanged();
                 CopyToNextRowCommand.RaiseCanExecuteChanged();
                 ReloadGridViewData();
             }
@@ -161,7 +155,6 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         //Commands     
         //Bearbeitung Commands
-        public RelayCommand<DataGrid> CopyToEndCommand { get; set; }
         public RelayCommand<DataGrid> CopyToNextRowCommand { get; set; }
         public RelayCommand CheckMessages { get; set; }
 
@@ -169,10 +162,6 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         {
             Logger = usageLogger;
             //Bearbeiten Commands
-            CopyToEndCommand = new RelayCommand<DataGrid>(CopyToEnd, (d) => SelectedTable != null && (
-                                        SelectedTable.Table == TablesEnum.tjobdata && JobFilterEnabled && selectedItems.Count > 0
-                                        || NameFilterEnabled && NameFilterPossible && selectedItems.Count > 0));
-
             CopyToNextRowCommand = new RelayCommand<DataGrid>(CopyToNextRow, (d) => (SelectedTable != null && selectedItems != null) && (
                                         SelectedTable.Table == TablesEnum.tjobdata && JobFilterEnabled && selectedItems.Count > 0
                                         || NameFilterEnabled && NameFilterPossible && selectedItems.Count > 0));
@@ -183,7 +172,6 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
             Messenger.Default.Register<SelectionChangedMessage>(this, (list) =>
             {
                 selectedItems = list.SelectedObjects;
-                CopyToEndCommand.RaiseCanExecuteChanged();
                 CopyToNextRowCommand.RaiseCanExecuteChanged();
             });
             Messenger.Default.Register<ConnectionChangedMessage>(this, (msg) => LoadData());
@@ -326,178 +314,62 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
 
         private void CopyToNextRow(DataGrid selectedItemsContentElement)
         {
-            CopyAndInsertAt(selectedItemsContentElement);
+            //CopyAndInsertAt(selectedItemsContentElement);
+
+            CopyToNext(((DataRowView)selectedItemsContentElement.SelectedItems[0]).Row);
 
             Logger.Info("Used CopyToNextRow");
         }
 
-        private async void CopyAndInsertAt(MultiSelector selectedItemsContentElement)
+        private async void CopyToNext(DataRow row)
         {
-            //Approach
-            //1. Read highest 
 
-            var newRowsCopy = new MyDataRowCollection();
-
-            //Kopieren der ausgewählten Reihen
-            foreach (DataRowView row in selectedItemsContentElement.SelectedItems)
-            {    
-                DataRow newRow = SelectedTable.DataTable.NewRow();
-                row.Row.CopyValuesTo(newRow);
-                newRowsCopy.Add(newRow);
-            }
-
-            int numSelectedItems = selectedItemsContentElement.SelectedItems.Count;
-            int highestStepInSelection = int.Parse(newRowsCopy.Last().ItemArray[1].ToString());
-
-            //TODO darf nur möglich sein, wenn:
-            //1. Der Job Filter aktiv ist
-            //Bei Auswahl von tjobdata
             if (SelectedTable.Table == TablesEnum.tjobdata)
             {
-                newRowsCopy.ChangeRowElementAddIndex(1, highestStepInSelection + 1, "");
-
+                var step = int.Parse(row.ItemArray[1].ToString());
                 await AsyncDbExecuter.DoTaskAsync("Erhöhe Step-Nummern...", task: () =>
-                    new IncreaseJobDataStepQuery(SelectedJob.JobNr, highestStepInSelection - 1,
-                         numSelectedItems.ToString())
+                    new IncreaseJobDataStepQuery(SelectedJob.JobNr, step, "1")
                      .Execute(Connection));
             }
 
             if (SelectedTable.Table == TablesEnum.tprocpulse
-                || SelectedTable.Table == TablesEnum.tprocplc
-                || SelectedTable.Table == TablesEnum.tprocrobot
-                || SelectedTable.Table == TablesEnum.tprocturn
-                || SelectedTable.Table == TablesEnum.tproclaserdata)
+               || SelectedTable.Table == TablesEnum.tprocplc
+               || SelectedTable.Table == TablesEnum.tprocrobot
+               || SelectedTable.Table == TablesEnum.tprocturn
+               || SelectedTable.Table == TablesEnum.tproclaserdata)
             {
-                newRowsCopy.ChangeRowElementAddIndex(1, highestStepInSelection + 1, "");
-
+                var step = int.Parse(row.ItemArray[1].ToString());
                 await AsyncDbExecuter.DoTaskAsync("Erhöhe Step-Nummern...", () =>
-                    new IncreasProcLaserDataStepQuery(numSelectedItems.ToString(), highestStepInSelection - 1, SelectedTable.Table.ToString(),
+                    new IncreasProcLaserDataStepQuery("1", step, SelectedTable.Table.ToString(),
                         SelectedNameFilter)
                         .Execute(Connection));
             }
+            
+            //Create copy with higher step.
+            var copy = SelectedTable.DataTable.NewRow();
+            row.CopyValuesTo(copy);
 
-            if(SelectedTable.Table == TablesEnum.tmoveparam
-                || SelectedTable.Table == TablesEnum.tframe
-                || SelectedTable.Table == TablesEnum.tjobname)
+            if(SelectedTable.Table == TablesEnum.tprocpulse
+               || SelectedTable.Table == TablesEnum.tprocplc
+               || SelectedTable.Table == TablesEnum.tprocrobot
+               || SelectedTable.Table == TablesEnum.tprocturn
+               || SelectedTable.Table == TablesEnum.tproclaserdata
+               || SelectedTable.Table == TablesEnum.tjobdata)
+            copy.SetField(1, int.Parse(row.ItemArray[1].ToString()) + 1);
+
+
+            if (SelectedTable.Table == TablesEnum.tmoveparam
+               || SelectedTable.Table == TablesEnum.tframe
+               || SelectedTable.Table == TablesEnum.tjobname
+               || SelectedTable.Table == TablesEnum.tpos)
             {
-                foreach (DataRow newRow in newRowsCopy)
-                {
-                    newRow[0] += RandomSnippets.RandomString(2);
-                }
+                copy[0] += RandomSnippets.RandomString(2);
             }
 
-            //Schreiben der veränderten Werte in die Datenbank!!
-            try
-            {
-                foreach (DataRow item in newRowsCopy)
-                {
-                    new InsertQuery(item, SelectedTable.Table.ToString()).Execute(Connection);
-                    //TODO SelectedTable.DataTable.Rows.Add(item);
-                }
-            }
-            catch (MySqlException e)
-            {
-                MessageBox.Show("Fehler, womöglich wurde ein Primärschlüssel doppelt eingefügt. Einfach nochmal probieren...");
-                Logger.Error(e, "Error in Copy to end");
-            }
+            new InsertQuery(copy, SelectedTable.Table.ToString()).Execute(Connection);
 
-            Logger.Info("Used: Copy and Insert At");
+            Logger.Info("Used: Copy and Insert");
             ReloadGridViewData();
-        }
-
-        //TODO: kann gelöscht werden, da copy to end dasselbe ist wie copy to next mit dem letzten element.
-        private void CopyToEnd(DataGrid selectedItemsContentElement)
-        {
-            var coll = new MyDataRowCollection();
-
-            //Kopieren der ausgewählten Reihen
-            foreach (DataRowView row in selectedItemsContentElement.SelectedItems)
-            {
-                DataRow newRow = SelectedTable.DataTable.NewRow();
-                row.Row.CopyValuesTo(newRow);
-                coll.Add(newRow);
-            }
-
-            //Bei Auswahl von tframe
-            if (SelectedTable.Table == TablesEnum.tframe)//Hinzufügen eines Random Strings an den Framename (Primärschlüssel)
-            {
-                coll.ChangeRowElementAddIndex(0, "f" + SelectedJob.Name + RandomSnippets.RandomString(3) + "Nr");
-            }
-
-            //Bei Auswahl von tjobdata
-            if (SelectedTable.Table == TablesEnum.tjobdata)
-            {
-                //Höchste Step Nummer herausfinden
-                string highestStepQuery = "SELECT MAX(CAST(Step AS SIGNED)) FROM `tjobdata` WHERE JobNr = '" + SelectedJob.JobNr + "'";
-
-                
-                int highestStep = new ReadRowsQuery<DbRow>(highestStepQuery).Execute(Connection)
-                    .Select(val => int.Parse(val.Values[0]))
-                    .First();
-
-                coll.ChangeRowElementAddIndex(1, highestStep + 1, "");
-            }
-
-            //jobname
-            if (SelectedTable.Table == TablesEnum.tjobname)
-                coll.ChangeRowElementAddIndex(0, "newJob" + SelectedJob.Name + RandomSnippets.RandomString(5) + "Nr");
-
-            //moveParam
-            if (SelectedTable.Table == TablesEnum.tmoveparam)
-                coll.ChangeRowElementAddIndex(0, "newMove" + SelectedJob.Name + RandomSnippets.RandomString(3) + "Nr");
-
-            //Bei Auswahl von tpos
-            if (SelectedTable.Table == TablesEnum.tpos)
-                coll.ChangeRowElementAddIndex(0, "p" + SelectedJob.Name + RandomSnippets.RandomString(3) + "Nr");
-
-            //Bei Auswahl von ...
-            if (SelectedTable.Table == TablesEnum.tprocpulse
-                || SelectedTable.Table == TablesEnum.tprocplc
-                || SelectedTable.Table == TablesEnum.tprocrobot
-                || SelectedTable.Table == TablesEnum.tprocturn
-                || SelectedTable.Table == TablesEnum.tproclaserdata)
-            {
-                string highestStepQuery = SQLStringGenerator.HighestStep(SelectedTable.Table, SelectedNameFilter);
-                int highestStep = new ReadRowsQuery<DbRow>(highestStepQuery).Execute(Connection)
-                  .Select(val => int.Parse(val.Values[0]))
-                  .First();
-
-                coll.ChangeRowElementAddIndex(1, highestStep + 1, "");
-            }
-
-            //Bei Auswahl von ttool
-            if (SelectedTable.Table == TablesEnum.ttool)
-                coll.ChangeRowElementAddIndex(0, "newTool" + SelectedJob.Name + RandomSnippets.RandomString(3) + "Nr");
-
-            //Bei Auswahl von twt
-            const string highestNumQuery = "SELECT MAX(CAST(WtId AS SIGNED)) FROM `twt`";
-            if (SelectedTable.Table == TablesEnum.twt)
-            {
-                int highestId = new ReadRowsQuery<DbRow>(highestNumQuery).Execute(Connection)
-                  .Select(val => int.Parse(val.Values[0]))
-                  .First();
-
-                coll.ChangeRowElementAddIndex(1, highestId + 1, "");
-            }
-
-            //Neue Reihen zum dataGrid hinzufügen
-            foreach (DataRow row in coll)
-                SelectedTable.DataTable.Rows.Add(row);
-
-            //Schreiben der veränderten Werte in die Datenbank!!
-            try
-            {
-                //TODO: insertMulti funktion
-                foreach (DataRow item in coll)
-                    new InsertQuery(item, SelectedTable.Table.ToString()).Execute(Connection);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Fehler, womöglich wurde ein Primärschlüssel doppelt eingefügt. Einfach nochmal probieren...");
-                Logger.Error("Error in Copy to end");
-            }
-
-            Logger.Info("Used: Copy to end");
         }
         #endregion Commands
 

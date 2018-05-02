@@ -24,25 +24,22 @@ namespace LSC1DatabaseEditor.LSC1Database.Queries.Job
         {
             //Update all items with higher step  
             //TODO: async + save
-            string getHigherStepsQuery = "SELECT * FROM `" + tableName + "` WHERE Step > @StartingStep AND Name = @ProcName";
-            var higherSteps = new ReadRowsQuery<DbProcRow>(getHigherStepsQuery,
-                    new MySqlParameter("StartingStep", startingStep + 1),
-                    new MySqlParameter("ProcName", procName))
-                .Execute(connection)
-                .Select(item => int.Parse(item.Step)).ToList();
+            //string getHigherStepsQuery = "SELECT * FROM `" + tableName + "` WHERE Step > @StartingStep AND Name = @ProcName";
+            //var higherSteps = new ReadRowsQuery<DbProcRow>(getHigherStepsQuery,
+            //        new MySqlParameter("StartingStep", startingStep),
+            //        new MySqlParameter("ProcName", procName))
+            //    .Execute(connection)
+            //    .Select(item => int.Parse(item.Step)).ToList();
 
-            higherSteps.Sort();
-            higherSteps.Reverse();
+            //higherSteps.Sort();
+            //higherSteps.Reverse();
 
-            foreach (int step in higherSteps)
-            {
-                string setStepHigherQuery = "UPDATE `" + tableName + "` SET Step = Step + '@Increment' WHERE Step = '@Step' AND Name = '@ProcName'";
-                new NonReturnSimpleQuery(setStepHigherQuery,
-                    new MySqlParameter("Increment", increment),
-                    new MySqlParameter("Step", step),
-                    new MySqlParameter("ProcName", procName))
-                        .Execute(connection);
-            }
+            string setStepHigherQuery = "UPDATE `" + tableName + "` SET Step = Step + @Increment WHERE Step > @Step AND Name = @ProcName";
+            new NonReturnSimpleQuery(setStepHigherQuery,
+                new MySqlParameter("Increment", increment),
+                new MySqlParameter("Step", startingStep),
+                new MySqlParameter("ProcName", procName))
+                    .Execute(connection);
 
             return null;
         }

@@ -447,11 +447,6 @@
                 <StackPanel Orientation="Horizontal">
                     <CheckBox x:Name="checkBoxSelectionMode" Content="Reihenauswahl" IsChecked="{Binding RowSelection, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
                     <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="10,2" />
-                    <Button Content="Kopiere nach Ende"
-                            Command="{Binding CopyToEndCommand}"
-                            CommandParameter="{Binding ElementName=contentDataGridControl, Path=Content}"
-                            IsEnabled="{Binding ElementName=checkBoxSelectionMode, Path=IsChecked}"
-                            HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" />
 
                     <Button Content="Kopiere in nächste Zeile"
                             Command="{Binding CopyToNextRowCommand}"
