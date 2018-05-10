@@ -419,8 +419,6 @@ namespace LSC1DatabaseEditor.LSC1DbEditor.ViewModels
         private void UpdateNameFilter()
         {
             Logger.Info("Updated Name Filters (job {0}, table {1})", SelectedJob, SelectedTable.DataGridName);
-            //Problem: mit await entstehen hier deadlocks, ohne await ist der selected name filter null
-            //update Filter
             var nameFilters = SelectedTable.UpdateNameFilter(SelectedJob.JobNr);
 
             if (nameFilters == null)
